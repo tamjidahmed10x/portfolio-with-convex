@@ -1,5 +1,8 @@
 import { BorderBeam } from '@/components/magicui/border-beam'
 import { DotPattern } from '@/components/magicui/dot-pattern'
+import { AnimatedGridPattern } from '@/components/ui/animated-grid-pattern'
+import { LightRays } from '@/components/ui/light-rays'
+import { useState } from 'react'
 
 type PersonalInfo = {
   name: string
@@ -27,7 +30,7 @@ const personalInfo: PersonalInfo = {
 
 const contactInfo: ContactInfo = {
   email: 'tamjidahammad10@gmail.com',
-  phone: '01625910775',
+  phone: '+880 1625-910775',
   linkedin: 'https://www.linkedin.com/in/tamjid-ahmed-b11683230/',
   presentAddress: 'Mirpur 2, Dhaka',
   permanentAddress: 'Tangail, Bangladesh',
@@ -57,21 +60,37 @@ const calculateExperience = (startDate: Date) => {
 
 const AboutMe = () => {
   const experience = calculateExperience(personalInfo.startDate)
+  const [showPhone, setShowPhone] = useState(false)
 
   return (
     <section
       id="aboutMe"
-      className="relative w-full overflow-hidden bg-muted/40 py-12 dark:bg-muted/10 sm:py-16 lg:py-24"
+      className="relative w-full overflow-hidden bg-gradient-to-br from-slate-50 via-white to-slate-100 py-16 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 sm:py-20 lg:py-24"
     >
-      <DotPattern className="absolute inset-0 z-0 text-foreground/10 [mask-image:radial-gradient(400px_circle_at_center,white,transparent)]" />
+      <DotPattern
+        className="absolute inset-0 z-0 text-slate-300/40 dark:text-foreground/10 [mask-image:radial-gradient(800px_circle_at_center,white,transparent)]"
+        width={24}
+        height={24}
+        cx={1}
+        cy={1}
+        cr={1.5}
+      />
+      <LightRays
+        className="absolute inset-0 z-[1]"
+        count={10}
+        color="rgba(148, 163, 184, 0.15)"
+        blur={40}
+        speed={16}
+        length="80vh"
+      />
 
       <div className="container relative z-10 mx-auto max-w-6xl px-4 sm:px-6">
         <div className="space-y-6">
-          <div className="space-y-2 px-3 text-center">
-            <h2 className="text-2xl font-bold tracking-tight sm:text-3xl md:text-4xl">
+          <div className="space-y-3 px-3 text-center">
+            <h2 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-4xl md:text-5xl">
               About Me
             </h2>
-            <p className="text-sm text-muted-foreground sm:text-base md:text-lg">
+            <p className="mx-auto max-w-3xl text-base text-slate-600 dark:text-muted-foreground sm:text-lg md:text-xl">
               For the past {experience} I have been crafting user-centered web
               experiences that balance delightful UI with resilient
               architecture. I thrive on translating ambiguous product ideas into
@@ -81,90 +100,117 @@ const AboutMe = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <div className="relative rounded-2xl bg-background/95 p-6 shadow-lg shadow-black/5 dark:bg-background/60">
-              <h3 className="mb-3 text-lg font-semibold">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+            <div className="group relative overflow-hidden rounded-2xl bg-white/80 p-6 shadow-xl shadow-slate-900/5 backdrop-blur-sm transition-all duration-300 hover:shadow-2xl hover:shadow-slate-900/10 dark:bg-slate-800/60 dark:shadow-black/20">
+              <h3 className="mb-4 text-xl font-semibold text-slate-900 dark:text-white">
                 Personal Information
               </h3>
-              <dl className="space-y-2 text-sm text-muted-foreground sm:text-base">
-                <div className="flex justify-between gap-4">
-                  <dt className="font-medium text-foreground">Name</dt>
-                  <dd>{personalInfo.name}</dd>
+              <dl className="space-y-3 text-sm text-slate-600 dark:text-muted-foreground sm:text-base">
+                <div className="flex justify-between gap-4 border-b border-slate-200/50 pb-2 dark:border-slate-700/50">
+                  <dt className="font-semibold text-slate-900 dark:text-foreground">
+                    Name
+                  </dt>
+                  <dd className="text-right">{personalInfo.name}</dd>
+                </div>
+                <div className="flex justify-between gap-4 border-b border-slate-200/50 pb-2 dark:border-slate-700/50">
+                  <dt className="font-semibold text-slate-900 dark:text-foreground">
+                    Current Job
+                  </dt>
+                  <dd className="text-right">{personalInfo.currentJob}</dd>
+                </div>
+                <div className="flex justify-between gap-4 border-b border-slate-200/50 pb-2 dark:border-slate-700/50">
+                  <dt className="font-semibold text-slate-900 dark:text-foreground">
+                    Position
+                  </dt>
+                  <dd className="text-right">{personalInfo.position}</dd>
+                </div>
+                <div className="flex justify-between gap-4 border-b border-slate-200/50 pb-2 dark:border-slate-700/50">
+                  <dt className="font-semibold text-slate-900 dark:text-foreground">
+                    Age
+                  </dt>
+                  <dd className="text-right">{personalInfo.age}</dd>
                 </div>
                 <div className="flex justify-between gap-4">
-                  <dt className="font-medium text-foreground">Current Job</dt>
-                  <dd>{personalInfo.currentJob}</dd>
-                </div>
-                <div className="flex justify-between gap-4">
-                  <dt className="font-medium text-foreground">Position</dt>
-                  <dd>{personalInfo.position}</dd>
-                </div>
-                <div className="flex justify-between gap-4">
-                  <dt className="font-medium text-foreground">Age</dt>
-                  <dd>{personalInfo.age}</dd>
-                </div>
-                <div className="flex justify-between gap-4">
-                  <dt className="font-medium text-foreground">Experience</dt>
-                  <dd>{experience}</dd>
+                  <dt className="font-semibold text-slate-900 dark:text-foreground">
+                    Experience
+                  </dt>
+                  <dd className="text-right font-medium text-emerald-600 dark:text-emerald-400">
+                    {experience}
+                  </dd>
                 </div>
               </dl>
-              <BorderBeam size={220} duration={12} delay={3} />
+              <BorderBeam size={250} duration={12} delay={3} />
             </div>
 
-            <div className="relative rounded-2xl bg-background/95 p-6 shadow-lg shadow-black/5 dark:bg-background/60">
-              <h3 className="mb-3 text-lg font-semibold">
+            <div className="group relative overflow-hidden rounded-2xl bg-white/80 p-6 shadow-xl shadow-slate-900/5 backdrop-blur-sm transition-all duration-300 hover:shadow-2xl hover:shadow-slate-900/10 dark:bg-slate-800/60 dark:shadow-black/20">
+              <h3 className="mb-4 text-xl font-semibold text-slate-900 dark:text-white">
                 Contact Information
               </h3>
-              <dl className="space-y-2 text-sm text-muted-foreground sm:text-base">
-                <div className="flex justify-between gap-4">
-                  <dt className="font-medium text-foreground">Email</dt>
-                  <dd>
+              <dl className="space-y-3 text-sm text-slate-600 dark:text-muted-foreground sm:text-base">
+                <div className="flex justify-between gap-4 border-b border-slate-200/50 pb-2 dark:border-slate-700/50">
+                  <dt className="font-semibold text-slate-900 dark:text-foreground">
+                    Email
+                  </dt>
+                  <dd className="text-right">
                     <a
                       href={`mailto:${contactInfo.email}`}
-                      className="hover:text-foreground"
+                      className="transition-colors hover:text-emerald-600 dark:hover:text-emerald-400"
                     >
                       {contactInfo.email}
                     </a>
                   </dd>
                 </div>
-                <div className="flex justify-between gap-4">
-                  <dt className="font-medium text-foreground">Phone</dt>
-                  <dd>
-                    <a
-                      href={`tel:${contactInfo.phone}`}
-                      className="hover:text-foreground"
-                    >
-                      {contactInfo.phone}
-                    </a>
+                <div className="flex justify-between gap-4 border-b border-slate-200/50 pb-2 dark:border-slate-700/50">
+                  <dt className="font-semibold text-slate-900 dark:text-foreground">
+                    Phone
+                  </dt>
+                  <dd className="text-right">
+                    {showPhone ? (
+                      <a
+                        href={`tel:${contactInfo.phone}`}
+                        className="transition-colors hover:text-emerald-600 dark:hover:text-emerald-400"
+                      >
+                        {contactInfo.phone}
+                      </a>
+                    ) : (
+                      <button
+                        onClick={() => setShowPhone(true)}
+                        className="text-slate-500 transition-colors hover:text-emerald-600 dark:hover:text-emerald-400"
+                      >
+                        Click to reveal
+                      </button>
+                    )}
                   </dd>
                 </div>
-                <div className="flex justify-between gap-4">
-                  <dt className="font-medium text-foreground">LinkedIn</dt>
-                  <dd>
+                <div className="flex justify-between gap-4 border-b border-slate-200/50 pb-2 dark:border-slate-700/50">
+                  <dt className="font-semibold text-slate-900 dark:text-foreground">
+                    LinkedIn
+                  </dt>
+                  <dd className="text-right">
                     <a
                       href={contactInfo.linkedin}
                       target="_blank"
                       rel="noreferrer"
-                      className="text-primary underline-offset-4 hover:underline"
+                      className="text-emerald-600 underline-offset-4 transition-all hover:underline dark:text-emerald-400"
                     >
-                      linkedin.com/tamjid-ahmed-b11683230
+                      View Profile
                     </a>
                   </dd>
                 </div>
-                <div className="flex justify-between gap-4">
-                  <dt className="font-medium text-foreground">
+                <div className="flex justify-between gap-4 border-b border-slate-200/50 pb-2 dark:border-slate-700/50">
+                  <dt className="font-semibold text-slate-900 dark:text-foreground">
                     Present Address
                   </dt>
-                  <dd>{contactInfo.presentAddress}</dd>
+                  <dd className="text-right">{contactInfo.presentAddress}</dd>
                 </div>
                 <div className="flex justify-between gap-4">
-                  <dt className="font-medium text-foreground">
+                  <dt className="font-semibold text-slate-900 dark:text-foreground">
                     Permanent Address
                   </dt>
-                  <dd>{contactInfo.permanentAddress}</dd>
+                  <dd className="text-right">{contactInfo.permanentAddress}</dd>
                 </div>
               </dl>
-              <BorderBeam size={220} duration={12} delay={8} />
+              <BorderBeam size={250} duration={12} delay={8} />
             </div>
           </div>
         </div>
