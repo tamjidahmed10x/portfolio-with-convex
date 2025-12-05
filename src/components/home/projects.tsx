@@ -1,287 +1,587 @@
-'use client'
+import { BorderBeam } from '@/components/magicui/border-beam'
+import { DotPattern } from '@/components/magicui/dot-pattern'
+import { cn } from '@/lib/utils'
+import { motion, type Variants } from 'motion/react'
+import {
+  SiReact,
+  SiNextdotjs,
+  SiTypescript,
+  SiJavascript,
+  SiTailwindcss,
+  SiZod,
+} from '@icons-pack/react-simple-icons'
+import {
+  ExternalLink,
+  Sparkles,
+  Globe,
+  Server,
+  Palette,
+  Layers,
+  ArrowUpRight,
+  Code2,
+  Rocket,
+  Star,
+  TrendingUp,
+  type LucideIcon,
+} from 'lucide-react'
+import { useState } from 'react'
 
-import React, { useEffect, useId, useRef, useState } from 'react'
-import { AnimatePresence, LayoutGroup, motion } from 'motion/react'
-import { useOutsideClick } from '@/hooks/use-outside-click'
-
-const Projects = () => {
-  const [active, setActive] = useState<(typeof cards)[number] | boolean | null>(
-    null,
-  )
-  const id = useId()
-  const ref = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    function onKeyDown(event: KeyboardEvent) {
-      if (event.key === 'Escape') {
-        setActive(false)
-      }
-    }
-
-    if (active && typeof active === 'object') {
-      document.body.style.overflow = 'hidden'
-    } else {
-      document.body.style.overflow = 'auto'
-    }
-
-    window.addEventListener('keydown', onKeyDown)
-    return () => window.removeEventListener('keydown', onKeyDown)
-  }, [active])
-
-  useOutsideClick(ref, () => setActive(null))
-
-  return (
-    <LayoutGroup>
-      <section className="py-20">
-        <h2 className="text-3xl font-bold text-center mb-12 text-neutral-800 dark:text-neutral-200">
-          My Projects
-        </h2>
-        <AnimatePresence>
-          {active && typeof active === 'object' && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-black/20 h-full w-full z-10"
-            />
-          )}
-        </AnimatePresence>
-        <AnimatePresence mode="popLayout">
-          {active && typeof active === 'object' ? (
-            <div className="fixed inset-0 grid place-items-center z-[100]">
-              <motion.button
-                key={`button-${active.title}-${id}`}
-                layout
-                initial={{
-                  opacity: 0,
-                }}
-                animate={{
-                  opacity: 1,
-                }}
-                exit={{
-                  opacity: 0,
-                  transition: {
-                    duration: 0.05,
-                  },
-                }}
-                className="flex absolute top-2 right-2 lg:hidden items-center justify-center bg-white rounded-full h-6 w-6"
-                onClick={() => setActive(null)}
-              >
-                <CloseIcon />
-              </motion.button>
-              <motion.div
-                layoutId={`card-${active.title}-${id}`}
-                ref={ref}
-                className="w-full max-w-[500px] h-full md:h-fit md:max-h-[90%] flex flex-col bg-white dark:bg-neutral-900 sm:rounded-3xl overflow-hidden"
-              >
-                <motion.div layoutId={`image-${active.title}-${id}`}>
-                  <img
-                    width={200}
-                    height={200}
-                    src={active.src}
-                    alt={active.title}
-                    className="w-full h-80 lg:h-80 sm:rounded-tr-lg sm:rounded-tl-lg object-cover object-top"
-                  />
-                </motion.div>
-
-                <div>
-                  <div className="flex justify-between items-start p-4">
-                    <div className="">
-                      <motion.h3
-                        layoutId={`title-${active.title}-${id}`}
-                        className="font-medium text-neutral-700 dark:text-neutral-200 text-base"
-                      >
-                        {active.title}
-                      </motion.h3>
-                      <motion.p
-                        layoutId={`description-${active.description}-${id}`}
-                        className="text-neutral-600 dark:text-neutral-400 text-base"
-                      >
-                        {active.description}
-                      </motion.p>
-                    </div>
-
-                    <motion.a
-                      layout
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      href={active.ctaLink}
-                      target="_blank"
-                      className="px-4 py-3 text-sm rounded-full font-bold bg-green-500 text-white"
-                    >
-                      {active.ctaText}
-                    </motion.a>
-                  </div>
-                  <div className="pt-4 relative px-4">
-                    <motion.div
-                      layout
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      className="text-neutral-600 text-xs md:text-sm lg:text-base h-40 md:h-fit pb-10 flex flex-col items-start gap-4 overflow-auto dark:text-neutral-400 [mask:linear-gradient(to_bottom,white,white,transparent)] [scrollbar-width:none] [-ms-overflow-style:none] [-webkit-overflow-scrolling:touch]"
-                    >
-                      {typeof active.content === 'function'
-                        ? active.content()
-                        : active.content}
-                    </motion.div>
-                  </div>
-                </div>
-              </motion.div>
-            </div>
-          ) : null}
-        </AnimatePresence>
-        <ul className="max-w-2xl mx-auto w-full grid grid-cols-1 md:grid-cols-2 items-start gap-4">
-          {cards.map((card) => (
-            <motion.div
-              layoutId={`card-${card.title}-${id}`}
-              key={card.title}
-              onClick={() => setActive(card)}
-              className="p-4 flex flex-col hover:bg-neutral-50 dark:hover:bg-neutral-800 rounded-xl cursor-pointer"
-            >
-              <div className="flex gap-4 flex-col w-full">
-                <motion.div layoutId={`image-${card.title}-${id}`}>
-                  <img
-                    width={100}
-                    height={100}
-                    src={card.src}
-                    alt={card.title}
-                    className="h-60 w-full rounded-lg object-cover object-top"
-                  />
-                </motion.div>
-                <div className="flex justify-center items-center flex-col">
-                  <motion.h3
-                    layoutId={`title-${card.title}-${id}`}
-                    className="font-medium text-neutral-800 dark:text-neutral-200 text-center md:text-left text-base"
-                  >
-                    {card.title}
-                  </motion.h3>
-                  <motion.p
-                    layoutId={`description-${card.description}-${id}`}
-                    className="text-neutral-600 dark:text-neutral-400 text-center md:text-left text-base"
-                  >
-                    {card.description}
-                  </motion.p>
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </ul>
-      </section>
-    </LayoutGroup>
-  )
+type TechItem = {
+  name: string
+  icon: React.ElementType
+  color: string
 }
 
-export const CloseIcon = () => {
-  return (
-    <motion.svg
-      initial={{
-        opacity: 0,
-      }}
-      animate={{
-        opacity: 1,
-      }}
-      exit={{
-        opacity: 0,
-        transition: {
-          duration: 0.05,
-        },
-      }}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className="h-4 w-4 text-black"
-    >
-      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-      <path d="M18 6l-12 12" />
-      <path d="M6 6l12 12" />
-    </motion.svg>
-  )
+type Project = {
+  id: number
+  title: string
+  description: string
+  image: string
+  liveUrl: string
+  category: string
+  categoryIcon: LucideIcon
+  categoryColor: string
+  techStack: TechItem[]
+  highlights: string[]
 }
 
-const cards = [
+const projects: Project[] = [
   {
-    description: 'Full-stack E-commerce Platform',
-    title: 'ShopHub',
-    src: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&auto=format&fit=crop&q=60',
-    ctaText: 'View Demo',
-    ctaLink: 'https://github.com',
-    content: () => {
-      return (
-        <p>
-          A comprehensive e-commerce platform built with React, Node.js, and
-          MongoDB. Features include user authentication, product management,
-          shopping cart functionality, and secure payment integration with
-          Stripe. <br /> <br /> The platform supports multiple vendors, order
-          tracking, and an admin dashboard for managing products and orders.
-          Implemented responsive design for seamless experience across all
-          devices.
-        </p>
-      )
-    },
+    id: 1,
+    title: 'Walton Digitech',
+    description:
+      'A comprehensive product catalogue platform with dynamic filtering, optimized images, and fully responsive UI/UX design.',
+    image: '/projects/walton-digitech.png',
+    liveUrl: 'https://waltondigitech.com/',
+    category: 'E-Commerce',
+    categoryIcon: Layers,
+    categoryColor: 'text-blue-500',
+    techStack: [
+      { name: 'React', icon: SiReact, color: '#61DAFB' },
+      { name: 'Next.js', icon: SiNextdotjs, color: '#000000' },
+      { name: 'TypeScript', icon: SiTypescript, color: '#3178C6' },
+      { name: 'JavaScript', icon: SiJavascript, color: '#F7DF1E' },
+      { name: 'Tailwind CSS', icon: SiTailwindcss, color: '#06B6D4' },
+    ],
+    highlights: [
+      'Product catalogue with dynamic filtering',
+      'Fully responsive layout',
+      'Optimized images & dynamic routing',
+      'Form handling with validation',
+    ],
   },
   {
-    description: 'Real-time Chat Application',
-    title: 'ChatConnect',
-    src: 'https://images.unsplash.com/photo-1611746872915-64382b5c76da?w=800&auto=format&fit=crop&q=60',
-    ctaText: 'View Demo',
-    ctaLink: 'https://github.com',
-    content: () => {
-      return (
-        <p>
-          A real-time messaging application powered by Socket.io and React.
-          Users can create chat rooms, send private messages, and share files
-          instantly. <br /> <br /> Features include message encryption, read
-          receipts, typing indicators, and push notifications. The backend is
-          built with Express.js and uses Redis for caching and session
-          management.
-        </p>
-      )
-    },
+    id: 2,
+    title: 'Expotech Global',
+    description:
+      'Corporate landing pages with clean UI, modern animations, and SEO-optimized architecture using Next.js metadata.',
+    image: '/projects/expotech-global.png',
+    liveUrl: 'https://expotechglobal.com/',
+    category: 'Corporate',
+    categoryIcon: Globe,
+    categoryColor: 'text-emerald-500',
+    techStack: [
+      { name: 'React', icon: SiReact, color: '#61DAFB' },
+      { name: 'Next.js', icon: SiNextdotjs, color: '#000000' },
+      { name: 'TypeScript', icon: SiTypescript, color: '#3178C6' },
+      { name: 'Tailwind CSS', icon: SiTailwindcss, color: '#06B6D4' },
+    ],
+    highlights: [
+      'Corporate landing pages with clean UI',
+      'Dynamic pages & reusable components',
+      'Modern animations & micro-interactions',
+      'SEO optimization with Next.js metadata',
+    ],
   },
   {
-    description: 'Task Management Dashboard',
-    title: 'TaskFlow',
-    src: 'https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=800&auto=format&fit=crop&q=60',
-    ctaText: 'View Demo',
-    ctaLink: 'https://github.com',
-    content: () => {
-      return (
-        <p>
-          A Kanban-style project management tool built with Next.js and Prisma.
-          Features drag-and-drop task organization, team collaboration, and
-          progress tracking. <br /> <br /> Includes features like task
-          assignments, due dates, labels, and activity logs. Integrated with
-          GitHub for issue syncing and Slack for notifications. Uses PostgreSQL
-          for data persistence.
-        </p>
-      )
-    },
+    id: 3,
+    title: 'FoodExpo BD',
+    description:
+      'Event-focused branding platform with fast-loading UI, dynamic sections for gallery, schedule, and sponsors.',
+    image: '/projects/foodexpo.png',
+    liveUrl: 'https://foodexpobd.com/',
+    category: 'Events',
+    categoryIcon: Palette,
+    categoryColor: 'text-orange-500',
+    techStack: [
+      { name: 'React', icon: SiReact, color: '#61DAFB' },
+      { name: 'Next.js', icon: SiNextdotjs, color: '#000000' },
+      { name: 'TypeScript', icon: SiTypescript, color: '#3178C6' },
+      { name: 'Tailwind CSS', icon: SiTailwindcss, color: '#06B6D4' },
+    ],
+    highlights: [
+      'Event-focused branding',
+      'Fast-loading optimized UI',
+      'Dynamic gallery & schedule sections',
+      'SEO-friendly site structure',
+    ],
   },
   {
-    description: 'AI-Powered Portfolio Generator',
-    title: 'PortfolioAI',
-    src: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&auto=format&fit=crop&q=60',
-    ctaText: 'View Demo',
-    ctaLink: 'https://github.com',
-    content: () => {
-      return (
-        <p>
-          An AI-powered tool that generates stunning portfolio websites from
-          simple prompts. Built with OpenAI API, React, and Tailwind CSS.
-          <br /> <br /> Users can customize themes, layouts, and content through
-          an intuitive interface. Features automatic SEO optimization, dark mode
-          support, and one-click deployment to Vercel or Netlify.
-        </p>
-      )
-    },
+    id: 4,
+    title: 'JustGo – Class Management',
+    description:
+      'Complete form management system with schema-driven UI using Zod, scalable context structure for enterprise applications.',
+    image: '/projects/class.webp',
+    liveUrl: 'https://justgo.com/features/class-management/',
+    category: 'SaaS Product',
+    categoryIcon: Server,
+    categoryColor: 'text-purple-500',
+    techStack: [
+      { name: 'React', icon: SiReact, color: '#61DAFB' },
+      { name: 'TypeScript', icon: SiTypescript, color: '#3178C6' },
+      { name: 'Zod', icon: SiZod, color: '#3E67B1' },
+    ],
+    highlights: [
+      'Built complete form management logic',
+      'Schema-driven UI using Zod',
+      'Scalable context structure for large apps',
+      'High-performance React patterns',
+    ],
   },
 ]
+
+const containerVariants: Variants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+    },
+  },
+}
+
+const itemVariants: Variants = {
+  hidden: { opacity: 0, y: 20, scale: 0.95 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      duration: 0.5,
+      ease: [0.25, 0.46, 0.45, 0.94],
+    },
+  },
+}
+
+const TechBadge = ({ tech }: { tech: TechItem }) => {
+  const Icon = tech.icon
+  return (
+    <div
+      className="flex items-center gap-1.5 rounded-full border border-slate-200/80 bg-white/90 px-2.5 py-1 text-xs font-medium shadow-sm backdrop-blur-sm dark:border-slate-600/60 dark:bg-slate-800/90"
+      title={tech.name}
+    >
+      <Icon size={12} style={{ color: tech.color }} />
+      <span className="text-slate-600 dark:text-slate-300">{tech.name}</span>
+    </div>
+  )
+}
+
+const ProjectCard = ({
+  project,
+  index,
+}: {
+  project: Project
+  index: number
+}) => {
+  const CategoryIcon = project.categoryIcon
+  const [isHovered, setIsHovered] = useState(false)
+
+  const cardColors = [
+    {
+      gradient: 'from-blue-500/20 via-cyan-500/10 to-blue-500/5',
+      border: 'hover:border-blue-300/60',
+      glow: 'group-hover:shadow-blue-500/10',
+    },
+    {
+      gradient: 'from-emerald-500/20 via-teal-500/10 to-emerald-500/5',
+      border: 'hover:border-emerald-300/60',
+      glow: 'group-hover:shadow-emerald-500/10',
+    },
+    {
+      gradient: 'from-orange-500/20 via-amber-500/10 to-orange-500/5',
+      border: 'hover:border-orange-300/60',
+      glow: 'group-hover:shadow-orange-500/10',
+    },
+    {
+      gradient: 'from-purple-500/20 via-violet-500/10 to-purple-500/5',
+      border: 'hover:border-purple-300/60',
+      glow: 'group-hover:shadow-purple-500/10',
+    },
+  ]
+
+  const colors = cardColors[index]
+
+  return (
+    <motion.div
+      variants={itemVariants}
+      className="group relative"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      {/* Glow Effect */}
+      <motion.div
+        className={cn(
+          'absolute -inset-1 rounded-2xl bg-gradient-to-br opacity-0 blur-xl transition-opacity duration-500 group-hover:opacity-100',
+          colors.gradient,
+        )}
+        animate={isHovered ? { scale: [1, 1.02, 1] } : { scale: 1 }}
+        transition={{ duration: 2, repeat: isHovered ? Infinity : 0 }}
+      />
+
+      <div
+        className={cn(
+          'relative h-full overflow-hidden rounded-xl border border-slate-200/60 bg-white/95 shadow-lg backdrop-blur-sm transition-all duration-300 dark:border-slate-700/60 dark:bg-slate-800/90',
+          colors.border,
+          colors.glow,
+          'group-hover:shadow-xl',
+        )}
+      >
+        {/* Image Container */}
+        <div className="relative h-36 overflow-hidden sm:h-40">
+          <motion.img
+            src={project.image}
+            alt={project.title}
+            className="h-full w-full object-cover object-top"
+            animate={isHovered ? { scale: 1.08 } : { scale: 1 }}
+            transition={{ duration: 0.6, ease: 'easeOut' }}
+          />
+
+          {/* Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+
+          {/* Category Badge */}
+          <motion.div
+            className="absolute left-3 top-3"
+            initial={{ opacity: 0, x: -10 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: index * 0.1 + 0.2 }}
+          >
+            <div
+              className={cn(
+                'flex items-center gap-1.5 rounded-lg bg-white/95 px-2.5 py-1.5 text-xs font-bold shadow-md backdrop-blur-sm dark:bg-slate-900/95',
+                project.categoryColor,
+              )}
+            >
+              <CategoryIcon className="size-3.5" />
+              <span>{project.category}</span>
+            </div>
+          </motion.div>
+
+          {/* Link Button */}
+          <motion.a
+            href={project.liveUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="absolute right-3 top-3 flex size-7 items-center justify-center rounded-lg bg-white/95 shadow-md backdrop-blur-sm transition-colors hover:bg-white dark:bg-slate-900/95"
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <ArrowUpRight className="size-3.5 text-slate-700 dark:text-slate-300" />
+          </motion.a>
+
+          {/* Project Number */}
+          <motion.div
+            className="absolute bottom-3 right-3 flex size-7 items-center justify-center rounded-lg bg-black/50 text-xs font-bold text-white backdrop-blur-sm"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: index * 0.1 + 0.3 }}
+          >
+            0{project.id}
+          </motion.div>
+        </div>
+
+        {/* Content */}
+        <div className="flex flex-col gap-3 p-4">
+          {/* Title */}
+          <div className="flex items-start justify-between gap-2">
+            <h3 className="text-base font-bold text-slate-900 transition-colors group-hover:text-emerald-600 dark:text-white dark:group-hover:text-emerald-400 sm:text-lg">
+              {project.title}
+            </h3>
+            <motion.div
+              animate={
+                isHovered
+                  ? { rotate: 360, scale: 1.2 }
+                  : { rotate: 0, scale: 1 }
+              }
+              transition={{ duration: 0.6 }}
+            >
+              <Star className="size-4 fill-amber-400 text-amber-400" />
+            </motion.div>
+          </div>
+
+          {/* Description */}
+          <p className="line-clamp-2 text-xs leading-relaxed text-slate-600 dark:text-slate-400 sm:text-sm">
+            {project.description}
+          </p>
+
+          {/* Tech Stack */}
+          <div className="flex flex-wrap gap-1">
+            {project.techStack.slice(0, 3).map((tech) => (
+              <TechBadge key={tech.name} tech={tech} />
+            ))}
+            {project.techStack.length > 3 && (
+              <span className="flex items-center rounded-full bg-slate-100 px-2 py-1 text-[11px] font-medium text-slate-500 dark:bg-slate-700 dark:text-slate-400">
+                +{project.techStack.length - 3}
+              </span>
+            )}
+          </div>
+
+          {/* Highlights - Show on hover */}
+          <motion.div
+            className="space-y-1.5 rounded-lg border border-slate-100 bg-slate-50/80 p-2.5 dark:border-slate-700/50 dark:bg-slate-800/50"
+            animate={isHovered ? { opacity: 1, y: 0 } : { opacity: 0.7, y: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <div className="flex items-center gap-1.5">
+              <Sparkles className="size-3.5 text-amber-500" />
+              <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                Features
+              </span>
+            </div>
+            <ul className="space-y-1.5">
+              {project.highlights.slice(0, 2).map((highlight, i) => (
+                <li
+                  key={i}
+                  className="flex items-center gap-2 text-xs text-slate-600 dark:text-slate-400"
+                >
+                  <span
+                    className={cn(
+                      'flex size-4 shrink-0 items-center justify-center rounded text-[9px] font-bold text-white',
+                      index === 0 &&
+                        'bg-gradient-to-br from-blue-500 to-cyan-500',
+                      index === 1 &&
+                        'bg-gradient-to-br from-emerald-500 to-teal-500',
+                      index === 2 &&
+                        'bg-gradient-to-br from-orange-500 to-amber-500',
+                      index === 3 &&
+                        'bg-gradient-to-br from-purple-500 to-violet-500',
+                    )}
+                  >
+                    {i + 1}
+                  </span>
+                  <span className="line-clamp-1">{highlight}</span>
+                </li>
+              ))}
+            </ul>
+          </motion.div>
+
+          {/* CTA Button */}
+          <motion.a
+            href={project.liveUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={cn(
+              'group/btn relative flex items-center justify-center gap-2 overflow-hidden rounded-lg px-4 py-2.5 text-xs font-bold text-white shadow-md transition-shadow hover:shadow-lg',
+              index === 0 && 'bg-gradient-to-r from-blue-600 to-cyan-600',
+              index === 1 && 'bg-gradient-to-r from-emerald-600 to-teal-600',
+              index === 2 && 'bg-gradient-to-r from-orange-600 to-amber-600',
+              index === 3 && 'bg-gradient-to-r from-purple-600 to-violet-600',
+            )}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+          >
+            <Globe className="size-3.5" />
+            <span>View Live</span>
+            <ExternalLink className="size-3.5" />
+          </motion.a>
+        </div>
+
+        {/* Border Beam */}
+        <BorderBeam
+          size={200}
+          duration={15}
+          delay={index * 2}
+          colorFrom={
+            index === 0
+              ? '#3b82f6'
+              : index === 1
+                ? '#10b981'
+                : index === 2
+                  ? '#f97316'
+                  : '#8b5cf6'
+          }
+          colorTo={
+            index === 0
+              ? '#06b6d4'
+              : index === 1
+                ? '#14b8a6'
+                : index === 2
+                  ? '#eab308'
+                  : '#6366f1'
+          }
+        />
+      </div>
+    </motion.div>
+  )
+}
+
+const Projects = () => {
+  return (
+    <section
+      id="projects"
+      className="relative w-full overflow-hidden bg-gradient-to-br from-slate-50 via-white to-slate-100 py-20 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 sm:py-24 lg:py-28"
+    >
+      {/* Background Pattern */}
+      <DotPattern
+        className="absolute inset-0 z-0 text-slate-300/40 dark:text-foreground/10 [mask-image:radial-gradient(1200px_circle_at_center,white,transparent)]"
+        width={20}
+        height={20}
+        cx={1}
+        cy={1}
+        cr={1.2}
+      />
+
+      {/* Animated Gradient Orbs */}
+      <motion.div
+        className="pointer-events-none absolute -left-40 top-1/3 size-[400px] rounded-full bg-gradient-to-br from-emerald-500/15 via-cyan-500/10 to-transparent blur-3xl"
+        animate={{ x: [0, 30, 0], opacity: [0.3, 0.5, 0.3] }}
+        transition={{ duration: 10, repeat: Infinity }}
+      />
+      <motion.div
+        className="pointer-events-none absolute -right-40 bottom-1/3 size-[400px] rounded-full bg-gradient-to-br from-violet-500/15 via-purple-500/10 to-transparent blur-3xl"
+        animate={{ x: [0, -30, 0], opacity: [0.3, 0.5, 0.3] }}
+        transition={{ duration: 10, repeat: Infinity, delay: 5 }}
+      />
+
+      <div className="container relative z-10 mx-auto max-w-7xl px-4 sm:px-6">
+        <motion.div
+          className="space-y-12"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-50px' }}
+        >
+          {/* Header */}
+          <motion.div variants={itemVariants} className="space-y-4 text-center">
+            <motion.div
+              className="mx-auto flex w-fit items-center gap-2 rounded-full border border-emerald-500/30 bg-gradient-to-r from-emerald-500/10 via-cyan-500/10 to-emerald-500/10 px-4 py-2 shadow-lg backdrop-blur-sm"
+              whileHover={{ scale: 1.03 }}
+            >
+              <motion.div
+                animate={{ rotate: 360 }}
+                transition={{ duration: 8, repeat: Infinity, ease: 'linear' }}
+              >
+                <Rocket className="size-4 text-emerald-500" />
+              </motion.div>
+              <span className="bg-gradient-to-r from-emerald-600 to-cyan-600 bg-clip-text text-xs font-bold text-transparent dark:from-emerald-400 dark:to-cyan-400">
+                Featured Work
+              </span>
+            </motion.div>
+
+            <h2 className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-4xl md:text-5xl">
+              <span className="block">Projects I've</span>
+              <span className="mt-1 block bg-gradient-to-r from-emerald-600 via-cyan-600 to-blue-600 bg-clip-text text-transparent dark:from-emerald-400 dark:via-cyan-400 dark:to-blue-400">
+                Built & Shipped
+              </span>
+            </h2>
+            <p className="mx-auto max-w-2xl text-sm text-slate-600 dark:text-slate-400 sm:text-base">
+              Production-ready applications with modern tech stacks and
+              real-world impact.
+            </p>
+          </motion.div>
+
+          {/* Projects Grid - 4 Columns */}
+          <motion.div
+            className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4"
+            variants={containerVariants}
+          >
+            {projects.map((project, index) => (
+              <ProjectCard key={project.id} project={project} index={index} />
+            ))}
+          </motion.div>
+
+          {/* Stats */}
+          <motion.div
+            variants={itemVariants}
+            className="relative overflow-hidden rounded-2xl border border-slate-200/60 bg-gradient-to-br from-white/80 to-slate-50/80 p-6 shadow-xl backdrop-blur-sm dark:border-slate-700/60 dark:from-slate-800/80 dark:to-slate-900/80"
+          >
+            <div className="absolute -right-16 -top-16 size-32 rounded-full bg-gradient-to-br from-emerald-500/20 to-cyan-500/20 blur-3xl" />
+            <div className="absolute -bottom-16 -left-16 size-32 rounded-full bg-gradient-to-br from-violet-500/20 to-purple-500/20 blur-3xl" />
+
+            <div className="relative grid grid-cols-2 gap-4 sm:grid-cols-4">
+              {[
+                {
+                  label: 'Projects',
+                  value: '4+',
+                  icon: Layers,
+                  color: 'from-blue-500 to-cyan-500',
+                },
+                {
+                  label: 'Technologies',
+                  value: '10+',
+                  icon: Code2,
+                  color: 'from-emerald-500 to-teal-500',
+                },
+                {
+                  label: 'Live Apps',
+                  value: '4',
+                  icon: Globe,
+                  color: 'from-orange-500 to-amber-500',
+                },
+                {
+                  label: 'Success Rate',
+                  value: '100%',
+                  icon: TrendingUp,
+                  color: 'from-purple-500 to-violet-500',
+                },
+              ].map((stat, index) => (
+                <motion.div
+                  key={index}
+                  className="text-center"
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                >
+                  <motion.div
+                    className={cn(
+                      'mx-auto mb-2 flex size-10 items-center justify-center rounded-xl bg-gradient-to-br shadow-md sm:size-12',
+                      stat.color,
+                    )}
+                    whileHover={{ scale: 1.1, rotate: 5 }}
+                  >
+                    <stat.icon className="size-5 text-white sm:size-6" />
+                  </motion.div>
+                  <div className="text-xl font-black text-slate-900 dark:text-white sm:text-2xl">
+                    {stat.value}
+                  </div>
+                  <div className="text-[10px] font-medium text-slate-500 dark:text-slate-400 sm:text-xs">
+                    {stat.label}
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+
+            <BorderBeam
+              size={300}
+              duration={20}
+              colorFrom="#10b981"
+              colorTo="#8b5cf6"
+            />
+          </motion.div>
+
+          {/* CTA */}
+          <motion.div variants={itemVariants} className="text-center">
+            <motion.div
+              className="inline-flex items-center gap-3 rounded-xl border border-slate-200/60 bg-white/80 px-5 py-3 shadow-lg backdrop-blur-sm dark:border-slate-700/60 dark:bg-slate-800/80"
+              whileHover={{ scale: 1.02, y: -2 }}
+            >
+              <span className="text-sm text-slate-600 dark:text-slate-400">
+                Want to work together?
+              </span>
+              <a
+                href="#contact"
+                className="inline-flex items-center gap-1.5 rounded-lg bg-gradient-to-r from-emerald-600 to-cyan-600 px-3 py-1.5 text-xs font-bold text-white shadow-md transition-shadow hover:shadow-lg"
+              >
+                Let's Connect
+                <Rocket className="size-3" />
+              </a>
+            </motion.div>
+          </motion.div>
+        </motion.div>
+      </div>
+    </section>
+  )
+}
 
 export default Projects

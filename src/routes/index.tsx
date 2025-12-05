@@ -1,7 +1,9 @@
 import AboutMe from '@/components/home/about-me'
+import ContactMe from '@/components/home/contact-me'
 import HeroSection from '@/components/home/hero-section'
 import Projects from '@/components/home/projects'
 import Skills from '@/components/home/skills'
+
 import { createFileRoute } from '@tanstack/react-router'
 
 const App = () => {
@@ -12,6 +14,7 @@ const App = () => {
         <AboutMe />
         <Skills />
         <Projects />
+        <ContactMe />
       </div>
     </div>
   )
