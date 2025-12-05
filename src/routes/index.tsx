@@ -1,4 +1,5 @@
 import AboutMe from '@/components/home/about-me'
+import BlogsSection from '@/components/home/blogs-section'
 import ContactMe from '@/components/home/contact-me'
 import HeroSection from '@/components/home/hero-section'
 import Projects from '@/components/home/projects'
@@ -14,6 +15,7 @@ const App = () => {
         <AboutMe />
         <Skills />
         <Projects />
+        <BlogsSection />
         <ContactMe />
       </div>
     </div>
