@@ -22,6 +22,7 @@ import {
   Eye,
   EyeOff,
 } from 'lucide-react'
+import ExperienceTimeline from './experience-timeline'
 
 type PersonalInfo = {
   name: string
@@ -262,6 +263,8 @@ const AboutMe = () => {
               )
             })}
           </motion.div>
+          {/* Experience Timeline Section */}
+          <ExperienceTimeline />
 
           {/* Info Cards Grid */}
           <div className="grid gap-6 lg:grid-cols-2">

@@ -68,19 +68,9 @@ const HeroSection = () => {
 
       <div className="container relative z-10 mx-auto flex max-w-6xl flex-col items-center justify-between gap-12 px-4 md:flex-row md:gap-16 md:px-6">
         {/* Left Content */}
-        <motion.div
-          className="flex-1 space-y-8 text-center md:text-left"
-          initial={{ opacity: 0, x: -50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.08, ease: 'easeOut' }}
-        >
+        <motion.div className="flex-1 space-y-8 text-center md:text-left">
           {/* Badge */}
-          <motion.div
-            className="inline-flex items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-4 py-1.5"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.02, duration: 0.05 }}
-          >
+          <motion.div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-4 py-1.5">
             <span className="relative flex size-2">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
               <span className="relative inline-flex size-2 rounded-full bg-emerald-500" />
@@ -91,12 +81,7 @@ const HeroSection = () => {
           </motion.div>
 
           {/* Main Title */}
-          <motion.div
-            className="space-y-4"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.03, duration: 0.06 }}
-          >
+          <motion.div className="space-y-4">
             <p className="text-sm font-bold uppercase tracking-[0.3em] text-emerald-600 dark:text-emerald-400">
               Frontend Engineer
             </p>
@@ -106,23 +91,13 @@ const HeroSection = () => {
                 <span className="bg-gradient-to-r from-emerald-600 via-cyan-600 to-blue-600 bg-clip-text text-transparent dark:from-emerald-400 dark:via-cyan-400 dark:to-blue-400">
                   Tamjid Ahmed
                 </span>
-                <motion.span
-                  className="absolute -bottom-2 left-0 h-1 w-full rounded-full bg-gradient-to-r from-emerald-500 via-cyan-500 to-blue-500"
-                  initial={{ scaleX: 0 }}
-                  animate={{ scaleX: 1 }}
-                  transition={{ delay: 0.08, duration: 0.06, ease: 'easeOut' }}
-                />
+                <motion.span className="absolute -bottom-2 left-0 h-1 w-full rounded-full bg-gradient-to-r from-emerald-500 via-cyan-500 to-blue-500" />
               </span>
             </h1>
           </motion.div>
 
           {/* Description */}
-          <motion.p
-            className="max-w-lg text-base leading-relaxed text-slate-600 dark:text-slate-400 md:text-lg"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.05, duration: 0.06 }}
-          >
+          <motion.p className="max-w-lg text-base leading-relaxed text-slate-600 dark:text-slate-400 md:text-lg">
             I craft{' '}
             <span className="font-semibold text-slate-900 dark:text-white">
               delightful web experiences
@@ -136,12 +111,7 @@ const HeroSection = () => {
           </motion.p>
 
           {/* CTA Buttons */}
-          <motion.div
-            className="flex flex-wrap justify-center gap-4 md:justify-start"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.07, duration: 0.06 }}
-          >
+          <motion.div className="flex flex-wrap justify-center gap-4 md:justify-start">
             <Button
               asChild
               size="lg"
@@ -166,12 +136,7 @@ const HeroSection = () => {
           </motion.div>
 
           {/* Stats or Social Proof */}
-          <motion.div
-            className="flex flex-wrap items-center justify-center gap-6 pt-4 md:justify-start"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.09, duration: 0.06 }}
-          >
+          <motion.div className="flex flex-wrap items-center justify-center gap-6 pt-4 md:justify-start">
             <a
               href="https://github.com/tamjid-ahammad"
               target="_blank"
@@ -194,12 +159,7 @@ const HeroSection = () => {
         </motion.div>
 
         {/* Right Content - Image */}
-        <motion.div
-          className="relative order-first flex-1 md:order-last"
-          initial={{ opacity: 0, x: 50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.08, ease: 'easeOut' }}
-        >
+        <motion.div className="relative order-first flex-1 md:order-last">
           {/* Floating Icons */}
           {floatingIcons.map((item, index) => {
             const Icon = item.icon
@@ -211,17 +171,11 @@ const HeroSection = () => {
                   left: `calc(50% + ${item.x}%)`,
                   top: `calc(50% + ${item.y}%)`,
                 }}
-                initial={{ opacity: 0, scale: 0 }}
                 animate={{
-                  opacity: 1,
-                  scale: 1,
                   y: [0, -8, 0],
                 }}
                 transition={{
-                  opacity: { delay: (1 + item.delay) / 10, duration: 0.04 },
-                  scale: { delay: (1 + item.delay) / 10, duration: 0.04 },
                   y: {
-                    delay: (1.5 + item.delay) / 10,
                     duration: 3,
                     repeat: Infinity,
                     ease: 'easeInOut',
@@ -293,12 +247,7 @@ const HeroSection = () => {
             </div>
 
             {/* Experience Badge */}
-            <motion.div
-              className="absolute -bottom-2 -right-2 z-20 flex items-center gap-2 rounded-xl border border-slate-200/60 bg-white/95 px-4 py-2 shadow-lg backdrop-blur-sm dark:border-slate-700/60 dark:bg-slate-800/95"
-              initial={{ opacity: 0, scale: 0, rotate: -10 }}
-              animate={{ opacity: 1, scale: 1, rotate: 0 }}
-              transition={{ delay: 0.12, duration: 0.05, type: 'spring' }}
-            >
+            <motion.div className="absolute -bottom-2 -right-2 z-20 flex items-center gap-2 rounded-xl border border-slate-200/60 bg-white/95 px-4 py-2 shadow-lg backdrop-blur-sm dark:border-slate-700/60 dark:bg-slate-800/95">
               <div className="flex size-8 items-center justify-center rounded-lg bg-gradient-to-br from-emerald-500 to-cyan-500">
                 <Zap className="size-4 text-white" />
               </div>
@@ -314,12 +263,7 @@ const HeroSection = () => {
           </div>
 
           {/* Scroll Indicator */}
-          <motion.div
-            className="absolute -bottom-8 left-1/2 hidden -translate-x-1/2 md:flex"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.15, duration: 0.05 }}
-          >
+          <motion.div className="absolute -bottom-8 left-1/2 hidden -translate-x-1/2 md:flex">
             <motion.div
               className="flex flex-col items-center gap-2"
               animate={{ y: [0, 8, 0] }}
