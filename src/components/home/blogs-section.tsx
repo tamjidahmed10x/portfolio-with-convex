@@ -92,7 +92,7 @@ const containerVariants: Variants = {
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.1,
+      staggerChildren: 0.01,
     },
   },
 }
@@ -104,7 +104,7 @@ const itemVariants: Variants = {
     y: 0,
     scale: 1,
     transition: {
-      duration: 0.5,
+      duration: 0.05,
       ease: [0.25, 0.46, 0.45, 0.94],
     },
   },
@@ -186,7 +186,7 @@ const BlogCard = ({ post, index }: { post: BlogPost; index: number }) => {
             className="absolute left-3 top-3"
             initial={{ opacity: 0, x: -10 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: index * 0.1 + 0.2 }}
+            transition={{ delay: index * 0.01 + 0.02 }}
           >
             <div
               className={cn(
@@ -204,7 +204,7 @@ const BlogCard = ({ post, index }: { post: BlogPost; index: number }) => {
             className="absolute bottom-3 right-3 flex items-center gap-1.5 rounded-lg bg-black/50 px-2 py-1 text-xs font-medium text-white backdrop-blur-sm"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: index * 0.1 + 0.3 }}
+            transition={{ delay: index * 0.01 + 0.03 }}
           >
             <Clock className="size-3" />
             {post.readTime}

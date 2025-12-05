@@ -11,6 +11,7 @@ import {
   Zap,
   MousePointer2,
 } from 'lucide-react'
+import { Link } from '@tanstack/react-router'
 
 const HERO_IMAGE = '/tamjid-ahmed.webp'
 
@@ -71,14 +72,14 @@ const HeroSection = () => {
           className="flex-1 space-y-8 text-center md:text-left"
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8, ease: 'easeOut' }}
+          transition={{ duration: 0.08, ease: 'easeOut' }}
         >
           {/* Badge */}
           <motion.div
             className="inline-flex items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-4 py-1.5"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, duration: 0.5 }}
+            transition={{ delay: 0.02, duration: 0.05 }}
           >
             <span className="relative flex size-2">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
@@ -94,7 +95,7 @@ const HeroSection = () => {
             className="space-y-4"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3, duration: 0.6 }}
+            transition={{ delay: 0.03, duration: 0.06 }}
           >
             <p className="text-sm font-bold uppercase tracking-[0.3em] text-emerald-600 dark:text-emerald-400">
               Frontend Engineer
@@ -109,7 +110,7 @@ const HeroSection = () => {
                   className="absolute -bottom-2 left-0 h-1 w-full rounded-full bg-gradient-to-r from-emerald-500 via-cyan-500 to-blue-500"
                   initial={{ scaleX: 0 }}
                   animate={{ scaleX: 1 }}
-                  transition={{ delay: 0.8, duration: 0.6, ease: 'easeOut' }}
+                  transition={{ delay: 0.08, duration: 0.06, ease: 'easeOut' }}
                 />
               </span>
             </h1>
@@ -120,7 +121,7 @@ const HeroSection = () => {
             className="max-w-lg text-base leading-relaxed text-slate-600 dark:text-slate-400 md:text-lg"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5, duration: 0.6 }}
+            transition={{ delay: 0.05, duration: 0.06 }}
           >
             I craft{' '}
             <span className="font-semibold text-slate-900 dark:text-white">
@@ -139,17 +140,17 @@ const HeroSection = () => {
             className="flex flex-wrap justify-center gap-4 md:justify-start"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.7, duration: 0.6 }}
+            transition={{ delay: 0.07, duration: 0.06 }}
           >
             <Button
               asChild
               size="lg"
               className="group bg-gradient-to-r from-emerald-600 to-cyan-600 px-6 text-white shadow-lg shadow-emerald-500/25 transition-all hover:shadow-xl hover:shadow-emerald-500/30"
             >
-              <a href="#projects">
+              <Link to="/" hash="projects">
                 View My Work
                 <ArrowRight className="ml-2 size-4 transition-transform group-hover:translate-x-1" />
-              </a>
+              </Link>
             </Button>
             <Button
               asChild
@@ -157,10 +158,10 @@ const HeroSection = () => {
               size="lg"
               className="group border-slate-300 bg-white/80 px-6 backdrop-blur-sm transition-all hover:border-emerald-500 hover:bg-emerald-50 dark:border-slate-700 dark:bg-slate-800/80 dark:hover:border-emerald-500 dark:hover:bg-emerald-500/10"
             >
-              <a href="#contact">
+              <Link to="/" hash="contact">
                 Let's Talk
                 <Sparkles className="ml-2 size-4 text-emerald-500" />
-              </a>
+              </Link>
             </Button>
           </motion.div>
 
@@ -169,7 +170,7 @@ const HeroSection = () => {
             className="flex flex-wrap items-center justify-center gap-6 pt-4 md:justify-start"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.9, duration: 0.6 }}
+            transition={{ delay: 0.09, duration: 0.06 }}
           >
             <a
               href="https://github.com/tamjid-ahammad"
@@ -197,7 +198,7 @@ const HeroSection = () => {
           className="relative order-first flex-1 md:order-last"
           initial={{ opacity: 0, x: 50 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8, ease: 'easeOut' }}
+          transition={{ duration: 0.08, ease: 'easeOut' }}
         >
           {/* Floating Icons */}
           {floatingIcons.map((item, index) => {
@@ -217,10 +218,10 @@ const HeroSection = () => {
                   y: [0, -8, 0],
                 }}
                 transition={{
-                  opacity: { delay: 1 + item.delay, duration: 0.4 },
-                  scale: { delay: 1 + item.delay, duration: 0.4 },
+                  opacity: { delay: (1 + item.delay) / 10, duration: 0.04 },
+                  scale: { delay: (1 + item.delay) / 10, duration: 0.04 },
                   y: {
-                    delay: 1.5 + item.delay,
+                    delay: (1.5 + item.delay) / 10,
                     duration: 3,
                     repeat: Infinity,
                     ease: 'easeInOut',
@@ -296,7 +297,7 @@ const HeroSection = () => {
               className="absolute -bottom-2 -right-2 z-20 flex items-center gap-2 rounded-xl border border-slate-200/60 bg-white/95 px-4 py-2 shadow-lg backdrop-blur-sm dark:border-slate-700/60 dark:bg-slate-800/95"
               initial={{ opacity: 0, scale: 0, rotate: -10 }}
               animate={{ opacity: 1, scale: 1, rotate: 0 }}
-              transition={{ delay: 1.2, duration: 0.5, type: 'spring' }}
+              transition={{ delay: 0.12, duration: 0.05, type: 'spring' }}
             >
               <div className="flex size-8 items-center justify-center rounded-lg bg-gradient-to-br from-emerald-500 to-cyan-500">
                 <Zap className="size-4 text-white" />
@@ -306,7 +307,7 @@ const HeroSection = () => {
                   Experience
                 </p>
                 <p className="text-sm font-bold text-slate-900 dark:text-white">
-                  3+ Years
+                  4+ Years
                 </p>
               </div>
             </motion.div>
@@ -317,7 +318,7 @@ const HeroSection = () => {
             className="absolute -bottom-8 left-1/2 hidden -translate-x-1/2 md:flex"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 1.5, duration: 0.5 }}
+            transition={{ delay: 0.15, duration: 0.05 }}
           >
             <motion.div
               className="flex flex-col items-center gap-2"

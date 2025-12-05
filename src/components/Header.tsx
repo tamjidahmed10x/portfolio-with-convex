@@ -1,5 +1,4 @@
 import { useCallback, useState, useEffect } from 'react'
-import { motion } from 'motion/react'
 import { Button } from '@/components/ui/button'
 import {
   Sheet,
@@ -19,14 +18,20 @@ import {
   Sparkles,
   Code2,
 } from 'lucide-react'
+import { Link, useLocation } from '@tanstack/react-router'
 
 const NAV_LINKS = [
-  { id: '/#home', label: 'Home', icon: Home },
-  { id: '/#skills', label: 'Skills', icon: Wrench },
-  { id: '/#projects', label: 'Projects', icon: FolderKanban },
-  { id: '/#aboutMe', label: 'About', icon: User },
-  { id: '/#blogs', label: 'Blogs', icon: BookOpen },
-  { id: '/#contact', label: 'Contact', icon: Mail },
+  { id: '/#home', label: 'Home', icon: Home, isExternal: false },
+  { id: '/#skills', label: 'Skills', icon: Wrench, isExternal: false },
+  {
+    id: '/#projects',
+    label: 'Projects',
+    icon: FolderKanban,
+    isExternal: false,
+  },
+  { id: '/#aboutMe', label: 'About', icon: User, isExternal: false },
+  { id: '/blogs', label: 'Blogs', icon: BookOpen, isExternal: true },
+  { id: '/#contact', label: 'Contact', icon: Mail, isExternal: false },
 ] as const
 
 const HEADER_OFFSET = 80
@@ -35,11 +40,21 @@ const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false)
   const [activeSection, setActiveSection] = useState('home')
   const [isOpen, setIsOpen] = useState(false)
+  const location = useLocation()
+
+  // Check if we're on the blogs page
+  const isOnBlogsPage = location.pathname === '/blogs'
 
   // Handle scroll effect
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20)
+
+      // Don't update active section based on scroll if on blogs page
+      if (isOnBlogsPage) {
+        setActiveSection('blogs')
+        return
+      }
 
       // Update active section based on scroll position
       // Order should match page layout: home -> skills -> projects -> aboutMe -> blogs -> contact
@@ -66,13 +81,49 @@ const Header = () => {
     }
 
     window.addEventListener('scroll', handleScroll)
+    // Initial check
+    handleScroll()
     return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+  }, [isOnBlogsPage])
+
+  // Scroll to hash targets after route changes (e.g., /blogs -> /#skills)
+  useEffect(() => {
+    if (!location.hash) return
+
+    const targetId = location.hash.replace('#', '')
+    let attempts = 0
+
+    const tryScroll = () => {
+      const element = document.getElementById(targetId)
+      if (element) {
+        const targetPosition =
+          element.getBoundingClientRect().top + window.scrollY - HEADER_OFFSET
+
+        window.scrollTo({
+          top: Math.max(targetPosition, 0),
+          behavior: 'smooth',
+        })
+        return
+      }
+
+      // Retry briefly after navigation to wait for the section to render
+      if (attempts < 12) {
+        attempts += 1
+        window.requestAnimationFrame(tryScroll)
+      }
+    }
+
+    window.requestAnimationFrame(tryScroll)
+  }, [location.hash, location.pathname])
 
   const handleAnchorClick = useCallback(
-    (event: React.MouseEvent<HTMLAnchorElement>) => {
+    (event: React.MouseEvent<HTMLAnchorElement>, isExternal: boolean) => {
       const href = event.currentTarget.getAttribute('href')
-      if (!href || !href.includes('#')) {
+      if (!href) return
+
+      // If it's an external link (like /blogs), let it navigate normally
+      if (isExternal || !href.includes('#')) {
+        setIsOpen(false)
         return
       }
 
@@ -91,15 +142,25 @@ const Header = () => {
         top: Math.max(targetPosition - HEADER_OFFSET, 0),
         behavior: 'smooth',
       })
+
+      // Keep the URL hash in sync for same-page navigation
+      window.history.replaceState(null, '', href)
     },
     [],
   )
 
+  // Helper function to check if a nav link is active
+  const isLinkActive = (link: (typeof NAV_LINKS)[number]) => {
+    if (link.isExternal) {
+      // For external links like /blogs, check if we're on that page
+      return location.pathname === link.id
+    }
+    // For anchor links, check if the section is active
+    return link.id.includes(activeSection)
+  }
+
   return (
-    <motion.header
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.5, ease: 'easeOut' }}
+    <header
       className={cn(
         'fixed inset-x-0 top-0 z-50 transition-all duration-300',
         isScrolled
@@ -109,26 +170,10 @@ const Header = () => {
     >
       <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Logo */}
-        <motion.a
-          href="/#home"
-          className="group flex items-center gap-2.5"
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-        >
+        <Link to="/" hash="home" className="group flex items-center gap-2.5">
           <div className="relative flex size-9 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-500 to-cyan-500 shadow-lg shadow-emerald-500/25 transition-shadow group-hover:shadow-xl group-hover:shadow-emerald-500/30">
             <Code2 className="size-5 text-white" />
-            <motion.div
-              className="absolute -right-1 -top-1 size-3 rounded-full bg-emerald-400"
-              animate={{
-                scale: [1, 1.2, 1],
-                opacity: [0.7, 1, 0.7],
-              }}
-              transition={{
-                duration: 2,
-                repeat: Infinity,
-                ease: 'easeInOut',
-              }}
-            />
+            <div className="absolute -right-1 -top-1 size-3 rounded-full bg-emerald-400" />
           </div>
           <div className="flex flex-col">
             <span className="text-sm font-bold text-slate-900 dark:text-white">
@@ -138,57 +183,49 @@ const Header = () => {
               Frontend Engineer
             </span>
           </div>
-        </motion.a>
+        </Link>
 
         {/* Desktop Navigation */}
         <nav className="hidden items-center gap-1 lg:flex">
           {NAV_LINKS.map((link) => {
             const Icon = link.icon
-            const isActive = link.id.includes(activeSection)
+            const isActive = isLinkActive(link)
 
             return (
-              <motion.a
+              <Link
                 key={link.id}
-                href={link.id}
-                onClick={handleAnchorClick}
+                to={link.isExternal ? link.id : '/'}
+                hash={link.isExternal ? undefined : link.id.split('#')[1]}
+                onClick={(e) => handleAnchorClick(e, link.isExternal)}
                 className={cn(
                   'relative flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-medium transition-all',
                   isActive
                     ? 'text-emerald-600 dark:text-emerald-400'
                     : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white',
                 )}
-                whileHover={{ y: -2 }}
-                whileTap={{ scale: 0.95 }}
               >
                 <Icon className="size-4" />
                 <span>{link.label}</span>
                 {isActive && (
-                  <motion.div
-                    layoutId="activeTab"
-                    className="absolute inset-0 -z-10 rounded-lg bg-emerald-500/10 dark:bg-emerald-500/20"
-                    transition={{ type: 'spring', bounce: 0.2, duration: 0.6 }}
-                  />
+                  <div className="absolute inset-0 -z-10 rounded-lg bg-emerald-500/10 dark:bg-emerald-500/20" />
                 )}
-              </motion.a>
+              </Link>
             )
           })}
         </nav>
 
         {/* CTA Button - Desktop */}
-        <motion.div
-          className="hidden lg:block"
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-        >
-          <a
-            href="/#contact"
-            onClick={handleAnchorClick}
+        <div className="hidden lg:block">
+          <Link
+            to="/"
+            hash="contact"
+            onClick={(e) => handleAnchorClick(e, false)}
             className="inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-emerald-600 to-cyan-600 px-4 py-2 text-sm font-bold text-white shadow-lg shadow-emerald-500/25 transition-all hover:shadow-xl hover:shadow-emerald-500/30"
           >
             <Sparkles className="size-4" />
             Hire Me
-          </a>
-        </motion.div>
+          </Link>
+        </div>
 
         {/* Mobile Menu */}
         <Sheet open={isOpen} onOpenChange={setIsOpen}>
@@ -228,19 +265,17 @@ const Header = () => {
               <nav className="flex-1 space-y-1 px-4 py-6">
                 {NAV_LINKS.map((link, index) => {
                   const Icon = link.icon
-                  const isActive = link.id.includes(activeSection)
+                  const isActive = isLinkActive(link)
 
                   return (
-                    <motion.div
-                      key={link.id}
-                      initial={{ opacity: 0, x: 20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: index * 0.1 }}
-                    >
+                    <div key={link.id}>
                       <SheetClose asChild>
-                        <a
-                          href={link.id}
-                          onClick={handleAnchorClick}
+                        <Link
+                          to={link.isExternal ? link.id : '/'}
+                          hash={
+                            link.isExternal ? undefined : link.id.split('#')[1]
+                          }
+                          onClick={(e) => handleAnchorClick(e, link.isExternal)}
                           className={cn(
                             'flex items-center gap-3 rounded-xl px-4 py-3 text-base font-medium transition-all',
                             isActive
@@ -266,9 +301,9 @@ const Header = () => {
                             />
                           </div>
                           {link.label}
-                        </a>
+                        </Link>
                       </SheetClose>
-                    </motion.div>
+                    </div>
                   )
                 })}
               </nav>
@@ -276,21 +311,22 @@ const Header = () => {
               {/* Mobile CTA */}
               <div className="border-t border-slate-200/60 p-4 dark:border-slate-700/60">
                 <SheetClose asChild>
-                  <a
-                    href="/#contact"
-                    onClick={handleAnchorClick}
+                  <Link
+                    to="/"
+                    hash="contact"
+                    onClick={(e) => handleAnchorClick(e, false)}
                     className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-emerald-600 to-cyan-600 px-6 py-3 text-sm font-bold text-white shadow-lg shadow-emerald-500/25"
                   >
                     <Sparkles className="size-4" />
                     Let's Work Together
-                  </a>
+                  </Link>
                 </SheetClose>
               </div>
             </div>
           </SheetContent>
         </Sheet>
       </div>
-    </motion.header>
+    </header>
   )
 }
 
