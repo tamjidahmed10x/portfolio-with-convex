@@ -10,31 +10,10 @@ import {
   MessageCircle,
   Bookmark,
   Share2,
-  type LucideIcon,
 } from 'lucide-react'
 import { useState } from 'react'
-
-export type BlogPost = {
-  id: number
-  title: string
-  excerpt: string
-  coverImage: string
-  category: string
-  categoryIcon: LucideIcon
-  categoryColor: string
-  readTime: string
-  publishedAt: string
-  slug: string
-  author: {
-    name: string
-    avatar: string
-  }
-  views: number
-  likes: number
-  comments: number
-  tags: string[]
-  featured?: boolean
-}
+import { Link } from '@tanstack/react-router'
+import type { BlogPost } from './blog-data'
 
 type BlogCardProps = {
   post: BlogPost
@@ -219,14 +198,16 @@ export const BlogCard = ({
               </div>
 
               {/* Actions */}
-              <motion.button
-                className="group/btn flex items-center gap-2 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 px-5 py-3 text-sm font-bold text-white shadow-lg transition-shadow hover:shadow-emerald-500/25"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                Read Article
-                <ArrowRight className="size-4 transition-transform group-hover/btn:translate-x-1" />
-              </motion.button>
+              <Link to="/blogs/$slug" params={{ slug: post.slug }}>
+                <motion.button
+                  className="group/btn flex items-center gap-2 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 px-5 py-3 text-sm font-bold text-white shadow-lg transition-shadow hover:shadow-emerald-500/25"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  Read Article
+                  <ArrowRight className="size-4 transition-transform group-hover/btn:translate-x-1" />
+                </motion.button>
+              </Link>
             </div>
           </div>
 
@@ -243,38 +224,40 @@ export const BlogCard = ({
 
   if (variant === 'compact') {
     return (
-      <motion.article
-        initial={{ opacity: 0, x: -20 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.3, delay: index * 0.05 }}
-        className="group flex gap-4 rounded-xl border border-slate-200/60 bg-white/80 p-4 shadow-sm backdrop-blur-sm transition-all hover:border-emerald-300/60 hover:shadow-md dark:border-slate-700/60 dark:bg-slate-800/80"
-      >
-        <div className="relative size-20 shrink-0 overflow-hidden rounded-lg">
-          <img
-            src={post.coverImage}
-            alt={post.title}
-            className="h-full w-full object-cover"
-          />
-        </div>
-        <div className="flex flex-1 flex-col justify-center gap-1">
-          <div
-            className={cn(
-              'flex w-fit items-center gap-1 text-xs font-semibold',
-              post.categoryColor,
-            )}
-          >
-            <CategoryIcon className="size-3" />
-            {post.category}
+      <Link to="/blogs/$slug" params={{ slug: post.slug }}>
+        <motion.article
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.3, delay: index * 0.05 }}
+          className="group flex gap-4 rounded-xl border border-slate-200/60 bg-white/80 p-4 shadow-sm backdrop-blur-sm transition-all hover:border-emerald-300/60 hover:shadow-md dark:border-slate-700/60 dark:bg-slate-800/80"
+        >
+          <div className="relative size-20 shrink-0 overflow-hidden rounded-lg">
+            <img
+              src={post.coverImage}
+              alt={post.title}
+              className="h-full w-full object-cover"
+            />
           </div>
-          <h3 className="line-clamp-2 text-sm font-bold text-slate-900 transition-colors group-hover:text-emerald-600 dark:text-white">
-            {post.title}
-          </h3>
-          <div className="flex items-center gap-2 text-xs text-slate-500">
-            <Clock className="size-3" />
-            {post.readTime}
+          <div className="flex flex-1 flex-col justify-center gap-1">
+            <div
+              className={cn(
+                'flex w-fit items-center gap-1 text-xs font-semibold',
+                post.categoryColor,
+              )}
+            >
+              <CategoryIcon className="size-3" />
+              {post.category}
+            </div>
+            <h3 className="line-clamp-2 text-sm font-bold text-slate-900 transition-colors group-hover:text-emerald-600 dark:text-white">
+              {post.title}
+            </h3>
+            <div className="flex items-center gap-2 text-xs text-slate-500">
+              <Clock className="size-3" />
+              {post.readTime}
+            </div>
           </div>
-        </div>
-      </motion.article>
+        </motion.article>
+      </Link>
     )
   }
 
@@ -448,17 +431,19 @@ export const BlogCard = ({
             </div>
 
             {/* Read More */}
-            <motion.button
-              className={cn(
-                'group/btn flex items-center gap-1.5 rounded-lg bg-gradient-to-r px-3 py-2 text-xs font-bold text-white shadow-md transition-shadow hover:shadow-lg',
-                colors.button,
-              )}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              Read
-              <ArrowRight className="size-3.5 transition-transform group-hover/btn:translate-x-0.5" />
-            </motion.button>
+            <Link to="/blogs/$slug" params={{ slug: post.slug }}>
+              <motion.button
+                className={cn(
+                  'group/btn flex items-center gap-1.5 rounded-lg bg-gradient-to-r px-3 py-2 text-xs font-bold text-white shadow-md transition-shadow hover:shadow-lg',
+                  colors.button,
+                )}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                Read
+                <ArrowRight className="size-3.5 transition-transform group-hover/btn:translate-x-0.5" />
+              </motion.button>
+            </Link>
           </div>
         </div>
 
