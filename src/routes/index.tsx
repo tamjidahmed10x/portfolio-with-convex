@@ -9,7 +9,7 @@ import { createFileRoute } from '@tanstack/react-router'
 
 const App = () => {
   return (
-    <div className="mt-16">
+    <div>
       <div>
         <HeroSection />
         <Skills />

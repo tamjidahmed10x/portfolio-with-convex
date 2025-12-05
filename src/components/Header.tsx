@@ -162,10 +162,8 @@ const Header = () => {
   return (
     <header
       className={cn(
-        'fixed inset-x-0 top-0 z-50 transition-all duration-300',
-        isScrolled
-          ? 'border-b border-slate-200/60 bg-white/80 shadow-lg shadow-slate-900/5 backdrop-blur-xl dark:border-slate-700/60 dark:bg-slate-900/80 dark:shadow-black/20'
-          : 'bg-transparent',
+        'fixed inset-x-0 top-0 z-50 border-b border-slate-200/60 bg-white/95 backdrop-blur-xl transition-all duration-300 dark:border-slate-700/60 dark:bg-slate-900/95',
+        isScrolled && 'shadow-lg shadow-slate-900/5 dark:shadow-black/20',
       )}
     >
       <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8">

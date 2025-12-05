@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { motion } from 'motion/react'
-import { DotPattern } from '@/components/magicui/dot-pattern'
+import { LightRays } from '@/components/ui/light-rays'
 import {
   ArrowLeft,
   Calendar,
@@ -63,24 +63,13 @@ function BlogDetailPage() {
 
   return (
     <div className="relative min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
-      <DotPattern
-        className="fixed inset-0 z-0 text-slate-300/40 dark:text-foreground/10 [mask-image:radial-gradient(1500px_circle_at_center,white,transparent)]"
-        width={20}
-        height={20}
-        cx={1}
-        cy={1}
-        cr={1.2}
-      />
-
-      <motion.div
-        className="pointer-events-none fixed -left-60 top-1/4 size-[500px] rounded-full bg-gradient-to-br from-emerald-500/20 via-teal-500/15 to-transparent blur-3xl"
-        animate={{ x: [0, 40, 0], opacity: [0.3, 0.5, 0.3] }}
-        transition={{ duration: 15, repeat: Infinity }}
-      />
-      <motion.div
-        className="pointer-events-none fixed -right-60 bottom-1/4 size-[500px] rounded-full bg-gradient-to-br from-cyan-500/20 via-blue-500/15 to-transparent blur-3xl"
-        animate={{ x: [0, -40, 0], opacity: [0.3, 0.5, 0.3] }}
-        transition={{ duration: 15, repeat: Infinity, delay: 7 }}
+      <LightRays
+        className="fixed inset-0 z-0"
+        count={5}
+        color="rgba(16, 185, 129, 0.15)"
+        blur={40}
+        speed={12}
+        length="80vh"
       />
 
       <main className="relative z-10">
@@ -201,8 +190,38 @@ function BlogDetailPage() {
                 ))}
               </div>
 
-              <div className="prose prose-lg prose-slate max-w-none dark:prose-invert prose-headings:font-bold prose-headings:tracking-tight prose-h2:mt-12 prose-h2:text-2xl prose-h3:mt-8 prose-h3:text-xl prose-p:leading-relaxed prose-p:text-slate-600 dark:prose-p:text-slate-400 prose-a:text-emerald-600 dark:prose-a:text-emerald-400 prose-a:no-underline hover:prose-a:underline prose-strong:text-slate-900 dark:prose-strong:text-white prose-code:rounded prose-code:bg-slate-100 dark:prose-code:bg-slate-800 prose-code:px-1.5 prose-code:py-0.5 prose-code:text-emerald-600 dark:prose-code:text-emerald-400 prose-pre:bg-slate-900 prose-pre:text-slate-100 prose-img:rounded-xl prose-img:shadow-lg">
-                <p className="text-xl leading-relaxed text-slate-700 dark:text-slate-300">
+              <div
+                className={cn(
+                  // Base prose styles
+                  'prose prose-lg max-w-none',
+                  // Dark mode
+                  'dark:prose-invert',
+                  // Headings
+                  'prose-headings:font-bold prose-headings:tracking-tight prose-headings:text-slate-900 dark:prose-headings:text-white',
+                  'prose-h2:mt-14 prose-h2:mb-6 prose-h2:text-2xl prose-h2:border-l-4 prose-h2:border-emerald-500 prose-h2:pl-4',
+                  'prose-h3:mt-10 prose-h3:mb-4 prose-h3:text-xl',
+                  // Paragraphs
+                  'prose-p:leading-relaxed prose-p:text-slate-600 dark:prose-p:text-slate-400',
+                  // Links
+                  'prose-a:text-emerald-600 dark:prose-a:text-emerald-400 prose-a:font-medium prose-a:no-underline prose-a:border-b prose-a:border-emerald-500/30 hover:prose-a:border-emerald-500 prose-a:transition-colors',
+                  // Strong/Bold
+                  'prose-strong:text-slate-900 dark:prose-strong:text-white prose-strong:font-semibold',
+                  // Inline code
+                  'prose-code:rounded-md prose-code:bg-slate-100 dark:prose-code:bg-slate-800 prose-code:px-2 prose-code:py-1 prose-code:text-sm prose-code:text-emerald-600 dark:prose-code:text-emerald-400 prose-code:before:content-none prose-code:after:content-none prose-code:font-medium',
+                  // Code blocks
+                  'prose-pre:bg-slate-950 prose-pre:text-slate-100 prose-pre:rounded-xl prose-pre:shadow-xl prose-pre:border prose-pre:border-slate-800',
+                  // Images
+                  'prose-img:rounded-xl prose-img:shadow-lg',
+                  // Blockquotes
+                  'prose-blockquote:border-l-4 prose-blockquote:border-emerald-500 prose-blockquote:bg-emerald-50/50 dark:prose-blockquote:bg-emerald-950/20 prose-blockquote:rounded-r-xl prose-blockquote:py-2 prose-blockquote:px-6 prose-blockquote:not-italic prose-blockquote:text-slate-700 dark:prose-blockquote:text-slate-300',
+                  // Lists
+                  'prose-ul:my-6 prose-ol:my-6 prose-li:my-2 prose-li:marker:text-emerald-500',
+                  // Horizontal rule
+                  'prose-hr:border-slate-200 dark:prose-hr:border-slate-800',
+                )}
+              >
+                {/* Lead paragraph / Excerpt */}
+                <p className="lead text-xl font-medium leading-relaxed text-slate-700 dark:text-slate-300 !mt-0 first-letter:text-5xl first-letter:font-bold first-letter:text-emerald-600 dark:first-letter:text-emerald-400 first-letter:mr-1 first-letter:float-left first-letter:leading-none">
                   {post.excerpt}
                 </p>
 

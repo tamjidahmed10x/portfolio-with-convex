@@ -54,7 +54,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       <body>
         <ConvexProvider>
           <Header />
-          {children}
+          <main className="">{children}</main>
           <TanStackDevtools
             config={{
               position: 'bottom-right',

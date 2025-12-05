@@ -12,7 +12,7 @@ const BlogsLayout = () => {
 
   // Otherwise render the blog landing page
   return (
-    <div className="mt-16 min-h-screen">
+    <div className="min-h-screen">
       <BlogLandingPage />
     </div>
   )
