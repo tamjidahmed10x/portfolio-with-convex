@@ -12,9 +12,9 @@ const App = () => {
     <div className="mt-16">
       <div>
         <HeroSection />
-        <AboutMe />
         <Skills />
         <Projects />
+        <AboutMe />
         <BlogsSection />
         <ContactMe />
       </div>
