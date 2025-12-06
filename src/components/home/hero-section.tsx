@@ -11,7 +11,7 @@ import {
   Zap,
   MousePointer2,
 } from 'lucide-react'
-import { Link } from '@tanstack/react-router'
+import { ThemeLink } from '@/components/theme-link'
 
 const HERO_IMAGE = '/tamjid-ahmed.webp'
 
@@ -113,10 +113,10 @@ const HeroSection = () => {
               size="lg"
               className="group bg-gradient-theme px-6 text-white shadow-theme transition-all hover:shadow-theme-hover"
             >
-              <Link to="/" hash="projects">
+              <ThemeLink to="/" hash="projects">
                 View My Work
                 <ArrowRight className="ml-2 size-4 transition-transform group-hover:translate-x-1" />
-              </Link>
+              </ThemeLink>
             </Button>
             <Button
               asChild
@@ -124,10 +124,10 @@ const HeroSection = () => {
               size="lg"
               className="group border-slate-300 bg-white/80 px-6 backdrop-blur-sm transition-all hover:border-theme-primary hover:bg-theme-primary/10 dark:border-slate-700 dark:bg-slate-800/80 dark:hover:border-theme-primary dark:hover:bg-theme-primary/10"
             >
-              <Link to="/" hash="contact">
+              <ThemeLink to="/" hash="contact">
                 Let's Talk
                 <Sparkles className="ml-2 size-4 text-theme-primary" />
-              </Link>
+              </ThemeLink>
             </Button>
           </motion.div>
 

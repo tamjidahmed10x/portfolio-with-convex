@@ -1,4 +1,5 @@
-import { createFileRoute, Link } from '@tanstack/react-router'
+import { createFileRoute } from '@tanstack/react-router'
+import { ThemeLink } from '@/components/theme-link'
 import { motion } from 'motion/react'
 import { LightRays } from '@/components/ui/light-rays'
 import {
@@ -39,13 +40,13 @@ function BlogDetailPage() {
           <p className="mb-8 text-slate-600 dark:text-slate-400">
             The article you're looking for doesn't exist or has been removed.
           </p>
-          <Link
+          <ThemeLink
             to="/blogs"
             className="inline-flex items-center gap-2 rounded-xl bg-gradient-theme px-6 py-3 font-bold text-white"
           >
             <ArrowLeft className="size-4" />
             Back to Blogs
-          </Link>
+          </ThemeLink>
         </div>
       </div>
     )
@@ -90,13 +91,13 @@ function BlogDetailPage() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.2 }}
           >
-            <Link
+            <ThemeLink
               to="/blogs"
               className="flex items-center gap-2 rounded-xl bg-white/10 px-4 py-2 text-sm font-medium text-white backdrop-blur-md transition-colors hover:bg-white/20"
             >
               <ArrowLeft className="size-4" />
               Back to Blogs
-            </Link>
+            </ThemeLink>
           </motion.div>
 
           <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-8 lg:p-12">
@@ -107,9 +108,9 @@ function BlogDetailPage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3 }}
               >
-                <Link to="/blogs" className="hover:text-white">
+                <ThemeLink to="/blogs" className="hover:text-white">
                   Blogs
-                </Link>
+                </ThemeLink>
                 <ChevronRight className="size-4" />
                 <span className="text-white">{post.category}</span>
               </motion.div>
@@ -457,7 +458,7 @@ const fetchData = async (endpoint: string) => {
                 {relatedPosts.map((relatedPost) => {
                   const RelatedIcon = relatedPost.categoryIcon
                   return (
-                    <Link
+                    <ThemeLink
                       key={relatedPost.id}
                       to="/blogs/$slug"
                       params={{ slug: relatedPost.slug }}
@@ -495,7 +496,7 @@ const fetchData = async (endpoint: string) => {
                           </span>
                         </div>
                       </div>
-                    </Link>
+                    </ThemeLink>
                   )
                 })}
               </div>

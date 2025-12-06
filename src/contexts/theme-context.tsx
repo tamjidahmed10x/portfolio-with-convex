@@ -7,8 +7,9 @@ import {
   useRef,
   type ReactNode,
 } from 'react'
+import { useNavigate, useSearch } from '@tanstack/react-router'
 
-export type ThemeMode = 'light' | 'dark' | 'system'
+export type ThemeMode = 'light' | 'dark'
 
 export type ThemePalette =
   | 'default'
@@ -152,10 +153,52 @@ export const themePalettes: ThemePaletteInfo[] = [
   },
 ]
 
+// Default theme values - used when URL has no theme params
+export const DEFAULT_MODE: ThemeMode = 'light'
+export const DEFAULT_PALETTE: ThemePalette = 'mahogany'
+
+// Valid values for validation
+const VALID_MODES: ThemeMode[] = ['light', 'dark']
+const VALID_PALETTES: ThemePalette[] = [
+  'default',
+  'mahogany',
+  'olive',
+  'fire',
+  'crimson',
+  'forest',
+  'wine',
+  'midnight',
+  'rose',
+  'ocean',
+  'earth',
+]
+
+// Helper to validate mode
+export const isValidMode = (mode: unknown): mode is ThemeMode => {
+  return typeof mode === 'string' && VALID_MODES.includes(mode as ThemeMode)
+}
+
+// Helper to validate palette
+export const isValidPalette = (palette: unknown): palette is ThemePalette => {
+  return (
+    typeof palette === 'string' &&
+    VALID_PALETTES.includes(palette as ThemePalette)
+  )
+}
+
+// Parse theme from search params (works on server and client)
+export const parseThemeFromSearch = (
+  search: Record<string, unknown>,
+): ThemeConfig => {
+  const mode = isValidMode(search.mode) ? search.mode : DEFAULT_MODE
+  const palette = isValidPalette(search.palette)
+    ? search.palette
+    : DEFAULT_PALETTE
+  return { mode, palette }
+}
+
 interface ThemeContextType {
   theme: ThemeConfig
-  actualMode: 'light' | 'dark'
-  isTransitioning: boolean
   setMode: (mode: ThemeMode) => void
   setPalette: (palette: ThemePalette) => void
   toggleMode: () => void
@@ -163,80 +206,54 @@ interface ThemeContextType {
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined)
 
-const THEME_STORAGE_KEY = 'portfolio-theme-config'
-const TRANSITION_DURATION = 400 // ms
+const TRANSITION_DURATION = 300 // ms
 
-const getStoredTheme = (): ThemeConfig => {
-  if (typeof window === 'undefined') {
-    return { mode: 'system', palette: 'mahogany' }
-  }
-  try {
-    const stored = localStorage.getItem(THEME_STORAGE_KEY)
-    if (stored) {
-      const parsed = JSON.parse(stored)
-      return {
-        mode: parsed.mode || 'system',
-        palette: parsed.palette || 'mahogany',
-      }
-    }
-  } catch {
-    // Ignore parse errors
-  }
-  return { mode: 'system', palette: 'mahogany' }
+interface ThemeProviderProps {
+  children: ReactNode
+  initialTheme: ThemeConfig
 }
 
-const getSystemMode = (): 'light' | 'dark' => {
-  if (typeof window === 'undefined') return 'light'
-  return window.matchMedia('(prefers-color-scheme: dark)').matches
-    ? 'dark'
-    : 'light'
-}
+export const ThemeProvider = ({
+  children,
+  initialTheme,
+}: ThemeProviderProps) => {
+  const navigate = useNavigate()
+  const search = useSearch({ strict: false }) as Record<string, unknown>
 
-// Get initial mode from document (set by inline script) to prevent flash
-const getInitialMode = (): 'light' | 'dark' => {
-  if (typeof window === 'undefined') return 'light'
-  return document.documentElement.classList.contains('dark') ? 'dark' : 'light'
-}
-
-export const ThemeProvider = ({ children }: { children: ReactNode }) => {
-  // Initialize from stored theme - the inline script already applied it to DOM
-  const [theme, setTheme] = useState<ThemeConfig>(getStoredTheme)
-  const [systemMode, setSystemMode] = useState<'light' | 'dark'>(getSystemMode)
+  const [theme, setTheme] = useState<ThemeConfig>(initialTheme)
   const [isTransitioning, setIsTransitioning] = useState(false)
-  // Initialize prevModeRef with current DOM state to prevent initial flash
-  const prevModeRef = useRef<'light' | 'dark' | null>(
-    typeof window !== 'undefined' ? getInitialMode() : null,
-  )
+  const prevModeRef = useRef<ThemeMode>(initialTheme.mode)
+  const isFirstRender = useRef(true)
 
-  const actualMode = theme.mode === 'system' ? systemMode : theme.mode
-
-  // Listen for system preference changes
+  // Sync theme from URL search params
   useEffect(() => {
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
-    const handleChange = (e: MediaQueryListEvent) => {
-      setSystemMode(e.matches ? 'dark' : 'light')
+    const urlTheme = parseThemeFromSearch(search)
+
+    // Only update if different from current theme
+    if (urlTheme.mode !== theme.mode || urlTheme.palette !== theme.palette) {
+      setTheme(urlTheme)
     }
-    mediaQuery.addEventListener('change', handleChange)
-    return () => mediaQuery.removeEventListener('change', handleChange)
-  }, [])
+  }, [search])
 
-  // Apply theme to document with transition overlay
+  // Apply theme to DOM
   useEffect(() => {
+    if (typeof window === 'undefined') return
+
     const root = document.documentElement
 
-    // Check if mode is actually changing (not just initial load)
+    // Check if mode is actually changing (not just initial load or palette change)
     const isModeChanging =
-      prevModeRef.current !== null && prevModeRef.current !== actualMode
+      !isFirstRender.current && prevModeRef.current !== theme.mode
 
     if (isModeChanging) {
-      // Start transition - disable all CSS transitions temporarily
+      // Start transition
       setIsTransitioning(true)
       root.classList.add('theme-switching')
 
       // Change theme immediately while overlay is visible
       requestAnimationFrame(() => {
         root.classList.remove('light', 'dark')
-        root.classList.add(actualMode)
+        root.classList.add(theme.mode)
 
         // Re-enable transitions after theme is applied
         setTimeout(() => {
@@ -251,42 +268,76 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
     } else {
       // Initial load or palette change - no transition needed
       root.classList.remove('light', 'dark')
-      root.classList.add(actualMode)
+      root.classList.add(theme.mode)
     }
 
-    // Always update palette and store
+    // Always update palette
     root.setAttribute('data-theme-palette', theme.palette)
-    localStorage.setItem(THEME_STORAGE_KEY, JSON.stringify(theme))
 
-    // Update ref
-    prevModeRef.current = actualMode
-  }, [actualMode, theme.palette])
+    // Update refs
+    prevModeRef.current = theme.mode
+    isFirstRender.current = false
+  }, [theme.mode, theme.palette])
 
-  const setMode = useCallback((mode: ThemeMode) => {
-    setTheme((prev) => ({ ...prev, mode }))
-  }, [])
+  // Navigate to update URL with new theme
+  const updateThemeInUrl = useCallback(
+    (newMode: ThemeMode, newPalette: ThemePalette) => {
+      navigate({
+        to: '.',
+        search: (prev) => {
+          const newSearch: Record<string, unknown> = { ...prev }
 
-  const setPalette = useCallback((palette: ThemePalette) => {
-    setTheme((prev) => ({ ...prev, palette }))
-  }, [])
+          // Only add mode to URL if it's not default
+          if (newMode !== DEFAULT_MODE) {
+            newSearch.mode = newMode
+          } else {
+            delete newSearch.mode
+          }
+
+          // Only add palette to URL if it's not default
+          if (newPalette !== DEFAULT_PALETTE) {
+            newSearch.palette = newPalette
+          } else {
+            delete newSearch.palette
+          }
+
+          return newSearch
+        },
+        replace: true,
+      })
+    },
+    [navigate],
+  )
+
+  const setMode = useCallback(
+    (mode: ThemeMode) => {
+      if (mode !== theme.mode) {
+        setTheme((prev) => ({ ...prev, mode }))
+        updateThemeInUrl(mode, theme.palette)
+      }
+    },
+    [theme.mode, theme.palette, updateThemeInUrl],
+  )
+
+  const setPalette = useCallback(
+    (palette: ThemePalette) => {
+      if (palette !== theme.palette) {
+        setTheme((prev) => ({ ...prev, palette }))
+        updateThemeInUrl(theme.mode, palette)
+      }
+    },
+    [theme.mode, theme.palette, updateThemeInUrl],
+  )
 
   const toggleMode = useCallback(() => {
-    setTheme((prev) => ({
-      ...prev,
-      mode:
-        prev.mode === 'dark' ||
-        (prev.mode === 'system' && getSystemMode() === 'dark')
-          ? 'light'
-          : 'dark',
-    }))
-  }, [])
+    const newMode = theme.mode === 'dark' ? 'light' : 'dark'
+    setMode(newMode)
+  }, [theme.mode, setMode])
 
   return (
     <ThemeContext.Provider
       value={{
         theme,
-        actualMode,
-        isTransitioning,
         setMode,
         setPalette,
         toggleMode,
@@ -294,7 +345,7 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
     >
       {children}
       {/* Theme Transition Overlay */}
-      <ThemeTransitionOverlay isActive={isTransitioning} mode={actualMode} />
+      <ThemeTransitionOverlay isActive={isTransitioning} mode={theme.mode} />
     </ThemeContext.Provider>
   )
 }
@@ -305,7 +356,7 @@ const ThemeTransitionOverlay = ({
   mode,
 }: {
   isActive: boolean
-  mode: 'light' | 'dark'
+  mode: ThemeMode
 }) => {
   if (typeof window === 'undefined') return null
 

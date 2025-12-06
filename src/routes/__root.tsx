@@ -2,6 +2,7 @@ import {
   HeadContent,
   Scripts,
   createRootRouteWithContext,
+  retainSearchParams,
 } from '@tanstack/react-router'
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 import { TanStackDevtools } from '@tanstack/react-devtools'
@@ -12,7 +13,14 @@ import ConvexProvider from '../integrations/convex/provider'
 
 import TanStackQueryDevtools from '../integrations/tanstack-query/devtools'
 
-import { ThemeProvider } from '../contexts/theme-context'
+import {
+  ThemeProvider,
+  parseThemeFromSearch,
+  isValidMode,
+  isValidPalette,
+  type ThemeMode,
+  type ThemePalette,
+} from '../contexts/theme-context'
 
 import appCss from '../styles.css?url'
 
@@ -22,76 +30,79 @@ interface MyRouterContext {
   queryClient: QueryClient
 }
 
-// Inline script to prevent theme flash on page load
-// This runs before React hydration to set the correct theme immediately
-const themeInitScript = `
-(function() {
-  // Add loading class to disable transitions during initial load
-  document.documentElement.classList.add('theme-loading');
-  
-  try {
-    var stored = localStorage.getItem('portfolio-theme-config');
-    var theme = stored ? JSON.parse(stored) : { mode: 'system', palette: 'mahogany' };
-    var mode = theme.mode;
-    var palette = theme.palette || 'mahogany';
-    
-    if (mode === 'system') {
-      mode = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    }
-    
-    document.documentElement.classList.add(mode);
-    document.documentElement.setAttribute('data-theme-palette', palette);
-  } catch (e) {
-    var systemMode = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    document.documentElement.classList.add(systemMode);
-    document.documentElement.setAttribute('data-theme-palette', 'mahogany');
-  }
-  
-  // Remove loading class after a short delay to enable transitions
-  // This happens before React hydration completes
-  requestAnimationFrame(function() {
-    requestAnimationFrame(function() {
-      document.documentElement.classList.remove('theme-loading');
-    });
-  });
-})();
-`
+// Search params schema for theme
+interface ThemeSearchParams {
+  mode?: ThemeMode
+  palette?: ThemePalette
+}
 
 export const Route = createRootRouteWithContext<MyRouterContext>()({
-  head: () => ({
-    meta: [
-      {
-        charSet: 'utf-8',
-      },
-      {
-        name: 'viewport',
-        content: 'width=device-width, initial-scale=1',
-      },
-      {
-        title: 'TanStack Start Starter',
-      },
-    ],
-    links: [
-      {
-        rel: 'stylesheet',
-        href: appCss,
-      },
-    ],
-  }),
+  // Validate and parse search params for theme
+  validateSearch: (search: Record<string, unknown>): ThemeSearchParams => {
+    return {
+      mode: isValidMode(search.mode) ? search.mode : undefined,
+      palette: isValidPalette(search.palette) ? search.palette : undefined,
+    }
+  },
+
+  // Retain theme search params across all navigations
+  search: {
+    middlewares: [retainSearchParams(['mode', 'palette'])],
+  },
+
+  head: () => {
+    return {
+      meta: [
+        {
+          charSet: 'utf-8',
+        },
+        {
+          name: 'viewport',
+          content: 'width=device-width, initial-scale=1',
+        },
+        {
+          title: 'TanStack Start Starter',
+        },
+      ],
+      links: [
+        {
+          rel: 'stylesheet',
+          href: appCss,
+        },
+      ],
+    }
+  },
 
   shellComponent: RootDocument,
 })
 
 function RootDocument({ children }: { children: React.ReactNode }) {
+  // Get search params from the route
+  const search = Route.useSearch()
+
+  // Parse theme from search params
+  const initialTheme = parseThemeFromSearch(search as Record<string, unknown>)
+
   return (
-    <html lang="en">
+    <html lang="en" className={initialTheme.mode}>
       <head>
-        {/* Inline script to set theme before paint - prevents flash */}
-        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
         <HeadContent />
+        {/* Inline script to apply theme class immediately - prevents flash */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                var root = document.documentElement;
+                // Theme is already set via className on html tag from SSR
+                // Just ensure palette attribute is set
+                root.setAttribute('data-theme-palette', '${initialTheme.palette}');
+              })();
+            `,
+          }}
+        />
       </head>
       <body>
-        <ThemeProvider>
+        <ThemeProvider initialTheme={initialTheme}>
           <ConvexProvider>
             <Header />
             <main className="">{children}</main>

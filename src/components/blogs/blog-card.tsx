@@ -12,7 +12,7 @@ import {
   Share2,
 } from 'lucide-react'
 import { useState } from 'react'
-import { Link } from '@tanstack/react-router'
+import { ThemeLink } from '@/components/theme-link'
 import type { BlogPost } from './blog-data'
 
 type BlogCardProps = {
@@ -200,7 +200,7 @@ export const BlogCard = ({
               </div>
 
               {/* Actions */}
-              <Link to="/blogs/$slug" params={{ slug: post.slug }}>
+              <ThemeLink to="/blogs/$slug" params={{ slug: post.slug }}>
                 <motion.button
                   className="group/btn flex items-center gap-2 rounded-xl bg-gradient-theme px-5 py-3 text-sm font-bold text-white shadow-theme transition-shadow hover:shadow-theme-hover"
                   whileHover={{ scale: 1.02 }}
@@ -209,7 +209,7 @@ export const BlogCard = ({
                   Read Article
                   <ArrowRight className="size-4 transition-transform group-hover/btn:translate-x-1" />
                 </motion.button>
-              </Link>
+              </ThemeLink>
             </div>
           </div>
 
@@ -226,7 +226,7 @@ export const BlogCard = ({
 
   if (variant === 'compact') {
     return (
-      <Link to="/blogs/$slug" params={{ slug: post.slug }}>
+      <ThemeLink to="/blogs/$slug" params={{ slug: post.slug }}>
         <motion.article
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
@@ -259,7 +259,7 @@ export const BlogCard = ({
             </div>
           </div>
         </motion.article>
-      </Link>
+      </ThemeLink>
     )
   }
 
@@ -433,7 +433,7 @@ export const BlogCard = ({
             </div>
 
             {/* Read More */}
-            <Link to="/blogs/$slug" params={{ slug: post.slug }}>
+            <ThemeLink to="/blogs/$slug" params={{ slug: post.slug }}>
               <motion.button
                 className={cn(
                   'group/btn flex items-center gap-1.5 rounded-lg px-3 py-2 text-xs font-bold text-white shadow-md transition-shadow hover:shadow-lg',
@@ -445,7 +445,7 @@ export const BlogCard = ({
                 Read
                 <ArrowRight className="size-3.5 transition-transform group-hover/btn:translate-x-0.5" />
               </motion.button>
-            </Link>
+            </ThemeLink>
           </div>
         </div>
 

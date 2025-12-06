@@ -1,6 +1,7 @@
-import { createRouter, Link } from '@tanstack/react-router'
+import { createRouter } from '@tanstack/react-router'
 import { setupRouterSsrQueryIntegration } from '@tanstack/react-router-ssr-query'
 import * as TanstackQuery from './integrations/tanstack-query/root-provider'
+import { ThemeLink } from './components/theme-link'
 
 // Import the generated route tree
 import { routeTree } from './routeTree.gen'
@@ -26,12 +27,12 @@ const NotFoundComponent = () => {
       <p className="text-gray-500 dark:text-gray-500 mb-8">
         The page you're looking for doesn't exist or has been moved.
       </p>
-      <Link
+      <ThemeLink
         to="/"
         className="px-6 py-3 bg-primary text-primary-foreground rounded-lg hover:opacity-90 transition-opacity"
       >
         Go back home
-      </Link>
+      </ThemeLink>
     </div>
   )
 }

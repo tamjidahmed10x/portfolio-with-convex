@@ -19,7 +19,8 @@ import {
   Code2,
   X,
 } from 'lucide-react'
-import { Link, useLocation } from '@tanstack/react-router'
+import { useLocation } from '@tanstack/react-router'
+import { ThemeLink } from './theme-link'
 import { ThemeSwitcher, ThemeSwitcherCompact } from './theme-switcher'
 
 const NAV_LINKS = [
@@ -186,7 +187,11 @@ const Header = () => {
     >
       <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Logo */}
-        <Link to="/" hash="home" className="group flex items-center gap-2.5">
+        <ThemeLink
+          to="/"
+          hash="home"
+          className="group flex items-center gap-2.5"
+        >
           <div className="relative flex size-9 items-center justify-center rounded-xl bg-gradient-theme shadow-theme transition-shadow group-hover:shadow-theme-hover">
             <Code2 className="size-5 text-white" />
             <div className="absolute -right-1 -top-1 size-3 rounded-full bg-theme-secondary" />
@@ -199,7 +204,7 @@ const Header = () => {
               Frontend Engineer
             </span>
           </div>
-        </Link>
+        </ThemeLink>
 
         {/* Desktop Navigation */}
         <nav className="hidden items-center gap-1 lg:flex">
@@ -208,11 +213,13 @@ const Header = () => {
             const isActive = isLinkActive(link)
 
             return (
-              <Link
+              <ThemeLink
                 key={link.id}
                 to={link.isExternal ? link.id : '/'}
                 hash={link.isExternal ? undefined : link.id.split('#')[1]}
-                onClick={(e) => handleAnchorClick(e, link.isExternal)}
+                onClick={(e: React.MouseEvent<HTMLAnchorElement>) =>
+                  handleAnchorClick(e, link.isExternal)
+                }
                 className={cn(
                   'relative flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-medium',
                   isActive
@@ -225,7 +232,7 @@ const Header = () => {
                 {isActive && (
                   <div className="absolute inset-0 -z-10 rounded-lg bg-theme-primary/10" />
                 )}
-              </Link>
+              </ThemeLink>
             )
           })}
         </nav>
@@ -233,15 +240,17 @@ const Header = () => {
         {/* Theme Switcher & CTA Button - Desktop */}
         <div className="hidden items-center gap-3 lg:flex">
           <ThemeSwitcher />
-          <Link
+          <ThemeLink
             to="/"
             hash="contact"
-            onClick={(e) => handleAnchorClick(e, false)}
+            onClick={(e: React.MouseEvent<HTMLAnchorElement>) =>
+              handleAnchorClick(e, false)
+            }
             className="inline-flex items-center gap-2 rounded-lg bg-gradient-theme px-4 py-2 text-sm font-bold text-white shadow-theme transition-shadow hover:shadow-theme-hover"
           >
             <Sparkles className="size-4" />
             Hire Me
-          </Link>
+          </ThemeLink>
         </div>
 
         {/* Mobile Menu */}
@@ -302,12 +311,14 @@ const Header = () => {
                   return (
                     <div key={link.id}>
                       <SheetClose asChild>
-                        <Link
+                        <ThemeLink
                           to={link.isExternal ? link.id : '/'}
                           hash={
                             link.isExternal ? undefined : link.id.split('#')[1]
                           }
-                          onClick={(e) => handleAnchorClick(e, link.isExternal)}
+                          onClick={(e: React.MouseEvent<HTMLAnchorElement>) =>
+                            handleAnchorClick(e, link.isExternal)
+                          }
                           className={cn(
                             'flex items-center gap-3 rounded-xl px-4 py-3 text-base font-medium',
                             isActive
@@ -333,7 +344,7 @@ const Header = () => {
                             />
                           </div>
                           {link.label}
-                        </Link>
+                        </ThemeLink>
                       </SheetClose>
                     </div>
                   )
@@ -343,15 +354,17 @@ const Header = () => {
               {/* Mobile CTA */}
               <div className="border-t border-slate-200/60 p-4 dark:border-slate-700/60">
                 <SheetClose asChild>
-                  <Link
+                  <ThemeLink
                     to="/"
                     hash="contact"
-                    onClick={(e) => handleAnchorClick(e, false)}
+                    onClick={(e: React.MouseEvent<HTMLAnchorElement>) =>
+                      handleAnchorClick(e, false)
+                    }
                     className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-theme px-6 py-3 text-sm font-bold text-white! shadow-theme"
                   >
                     <Sparkles className="size-4" />
                     Let's Work Together
-                  </Link>
+                  </ThemeLink>
                 </SheetClose>
               </div>
             </div>

@@ -1,14 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
-import {
-  Palette,
-  Sun,
-  Moon,
-  Monitor,
-  Check,
-  ChevronDown,
-  Sparkles,
-} from 'lucide-react'
+import { Palette, Sun, Moon, Check, ChevronDown, Sparkles } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import {
   useTheme,
@@ -19,11 +11,10 @@ import {
 const modeOptions: { id: ThemeMode; label: string; icon: typeof Sun }[] = [
   { id: 'light', label: 'Light', icon: Sun },
   { id: 'dark', label: 'Dark', icon: Moon },
-  { id: 'system', label: 'System', icon: Monitor },
 ]
 
 export const ThemeSwitcher = () => {
-  const { theme, actualMode, setMode, setPalette, toggleMode } = useTheme()
+  const { theme, setMode, setPalette, toggleMode } = useTheme()
   const [isOpen, setIsOpen] = useState(false)
   const [activeTab, setActiveTab] = useState<'mode' | 'palette'>('palette')
   const containerRef = useRef<HTMLDivElement>(null)
@@ -87,13 +78,13 @@ export const ThemeSwitcher = () => {
 
         {/* Mode Icon */}
         <motion.div
-          key={actualMode}
+          key={theme.mode}
           initial={{ rotate: -90, opacity: 0 }}
           animate={{ rotate: 0, opacity: 1 }}
           exit={{ rotate: 90, opacity: 0 }}
           transition={{ duration: 0.2 }}
         >
-          {actualMode === 'dark' ? (
+          {theme.mode === 'dark' ? (
             <Moon className="size-4 text-slate-600 dark:text-slate-400" />
           ) : (
             <Sun className="size-4 text-slate-600 dark:text-slate-400" />
@@ -151,7 +142,7 @@ export const ThemeSwitcher = () => {
                     : 'text-slate-500 hover:text-slate-700 dark:hover:text-slate-300',
                 )}
               >
-                {actualMode === 'dark' ? (
+                {theme.mode === 'dark' ? (
                   <Moon className="size-4" />
                 ) : (
                   <Sun className="size-4" />
@@ -233,9 +224,7 @@ export const ThemeSwitcher = () => {
                               {mode.label}
                             </p>
                             <p className="text-xs text-slate-500 dark:text-slate-400">
-                              {mode.id === 'system'
-                                ? 'Follow system settings'
-                                : `Always use ${mode.label.toLowerCase()} mode`}
+                              {`Always use ${mode.label.toLowerCase()} mode`}
                             </p>
                           </div>
                           {isActive && (
@@ -255,7 +244,7 @@ export const ThemeSwitcher = () => {
                 onClick={toggleMode}
                 className="flex w-full items-center justify-center gap-2 rounded-lg bg-slate-100 py-2 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700"
               >
-                {actualMode === 'dark' ? (
+                {theme.mode === 'dark' ? (
                   <>
                     <Sun className="size-4" />
                     Switch to Light
@@ -341,7 +330,7 @@ const PaletteButton = ({ palette, isActive, onClick }: PaletteButtonProps) => {
 
 // Compact version for mobile
 export const ThemeSwitcherCompact = () => {
-  const { theme, actualMode, toggleMode, setPalette } = useTheme()
+  const { theme, toggleMode, setPalette } = useTheme()
 
   const currentPalette = themePalettes.find((p) => p.id === theme.palette)
   const currentPaletteIndex = themePalettes.findIndex(
@@ -363,12 +352,12 @@ export const ThemeSwitcherCompact = () => {
         whileTap={{ scale: 0.95 }}
       >
         <motion.div
-          key={actualMode}
+          key={theme.mode}
           initial={{ rotate: -90, opacity: 0 }}
           animate={{ rotate: 0, opacity: 1 }}
           transition={{ duration: 0.2 }}
         >
-          {actualMode === 'dark' ? (
+          {theme.mode === 'dark' ? (
             <Moon className="size-5 text-slate-600 dark:text-slate-400" />
           ) : (
             <Sun className="size-5 text-slate-600 dark:text-slate-400" />
