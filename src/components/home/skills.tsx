@@ -253,7 +253,7 @@ const Skills = () => {
   return (
     <section
       id="skills"
-      className="relative w-full overflow-hidden bg-gradient-to-br from-slate-50 via-white to-slate-100 py-16 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 sm:py-20 lg:py-24"
+      className="relative w-full overflow-hidden bg-gradient-to-br from-slate-50 via-white to-slate-100 py-8 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 sm:py-10"
     >
       {/* Background Pattern */}
       <DotPattern
