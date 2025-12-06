@@ -8,6 +8,7 @@ import {
 import { motion } from 'motion/react'
 
 import { cn } from '@/lib/utils'
+import { useReducedMotion } from '@/hooks/use-reduced-motion'
 
 export interface AnimatedGridPatternProps extends ComponentPropsWithoutRef<'svg'> {
   width?: number
@@ -35,8 +36,16 @@ export function AnimatedGridPattern({
 }: AnimatedGridPatternProps) {
   const id = useId()
   const containerRef = useRef(null)
+  const prefersReducedMotion = useReducedMotion()
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 })
-  const [squares, setSquares] = useState(() => generateSquares(numSquares))
+
+  // Reduce number of squares on mobile for better performance
+  const actualNumSquares = prefersReducedMotion
+    ? Math.min(numSquares, 10)
+    : numSquares
+  const [squares, setSquares] = useState(() =>
+    generateSquares(actualNumSquares),
+  )
 
   function getPos() {
     return [
@@ -70,9 +79,9 @@ export function AnimatedGridPattern({
   // Update squares to animate in
   useEffect(() => {
     if (dimensions.width && dimensions.height) {
-      setSquares(generateSquares(numSquares))
+      setSquares(generateSquares(actualNumSquares))
     }
-  }, [dimensions, numSquares, generateSquares])
+  }, [dimensions, actualNumSquares])
 
   // Resize observer to update container dimensions
   useEffect(() => {
@@ -129,12 +138,17 @@ export function AnimatedGridPattern({
             initial={{ opacity: 0 }}
             animate={{ opacity: maxOpacity }}
             transition={{
-              duration,
-              repeat: 1,
-              delay: index * 0.1,
+              duration: prefersReducedMotion ? 0.3 : duration,
+              repeat: prefersReducedMotion ? 0 : 1,
+              delay: prefersReducedMotion ? 0 : index * 0.1,
               repeatType: 'reverse',
             }}
-            onAnimationComplete={() => updateSquarePosition(id)}
+            onAnimationComplete={() => {
+              // Skip repositioning on mobile/reduced motion for performance
+              if (!prefersReducedMotion) {
+                updateSquarePosition(id)
+              }
+            }}
             key={`${x}-${y}-${index}`}
             width={width - 1}
             height={height - 1}

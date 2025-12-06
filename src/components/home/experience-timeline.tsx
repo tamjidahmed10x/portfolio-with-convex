@@ -2,6 +2,7 @@ import { cn } from '@/lib/utils'
 import { motion, type Variants } from 'motion/react'
 import { Briefcase, MapPin, Building2, Calendar } from 'lucide-react'
 import { BorderBeam } from '@/components/magicui/border-beam'
+import { useReducedMotion } from '@/hooks/use-reduced-motion'
 
 type Experience = {
   id: number
@@ -110,6 +111,8 @@ const getLocationTypeStyles = (type: string) => {
 }
 
 const ExperienceTimeline = () => {
+  const prefersReducedMotion = useReducedMotion()
+
   return (
     <motion.div
       className="mt-14"
@@ -169,7 +172,7 @@ const ExperienceTimeline = () => {
                   >
                     <Building2 className="size-7 text-white" />
                   </motion.div>
-                  {isPresent && (
+                  {isPresent && !prefersReducedMotion && (
                     <motion.div
                       className={cn(
                         'absolute inset-0 rounded-2xl opacity-60',
@@ -211,17 +214,25 @@ const ExperienceTimeline = () => {
                   {isPresent && (
                     <motion.div
                       className="absolute right-4 top-4 z-10 flex items-center gap-1.5 rounded-full bg-gradient-theme px-3 py-1 text-xs font-bold text-white shadow-md"
-                      animate={{
-                        boxShadow: [
-                          '0 0 0 0 rgba(139, 92, 246, 0.4)',
-                          '0 0 0 8px rgba(139, 92, 246, 0)',
-                        ],
-                      }}
-                      transition={{
-                        duration: 1.5,
-                        repeat: Infinity,
-                        ease: 'easeOut',
-                      }}
+                      animate={
+                        prefersReducedMotion
+                          ? {}
+                          : {
+                              boxShadow: [
+                                '0 0 0 0 rgba(139, 92, 246, 0.4)',
+                                '0 0 0 8px rgba(139, 92, 246, 0)',
+                              ],
+                            }
+                      }
+                      transition={
+                        prefersReducedMotion
+                          ? { duration: 0 }
+                          : {
+                              duration: 1.5,
+                              repeat: Infinity,
+                              ease: 'easeOut',
+                            }
+                      }
                     >
                       <span className="relative flex size-2">
                         <span className="absolute inline-flex size-full animate-ping rounded-full bg-white opacity-75" />

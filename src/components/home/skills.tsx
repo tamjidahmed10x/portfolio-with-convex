@@ -33,6 +33,7 @@ import {
   TestTube2,
   type LucideIcon,
 } from 'lucide-react'
+import { useReducedMotion } from '@/hooks/use-reduced-motion'
 
 type Skill = {
   name: string
@@ -235,21 +236,24 @@ const Skills = () => {
     (acc, cat) => acc + cat.skills.length,
     0,
   )
+  const prefersReducedMotion = useReducedMotion()
 
   return (
     <section
       id="skills"
       className="relative w-full overflow-hidden bg-gradient-to-br from-slate-50 via-white to-slate-100 py-8 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 sm:py-10"
     >
-      {/* Background Pattern */}
-      <DotPattern
-        className="absolute inset-0 z-0 text-slate-300/40 dark:text-foreground/10 [mask-image:radial-gradient(900px_circle_at_center,white,transparent)]"
-        width={24}
-        height={24}
-        cx={1}
-        cy={1}
-        cr={1.5}
-      />
+      {/* Background Pattern - Only on desktop */}
+      {!prefersReducedMotion && (
+        <DotPattern
+          className="absolute inset-0 z-0 text-slate-300/40 dark:text-foreground/10 [mask-image:radial-gradient(900px_circle_at_center,white,transparent)]"
+          width={24}
+          height={24}
+          cx={1}
+          cy={1}
+          cr={1.5}
+        />
+      )}
 
       <div className="container relative z-10 mx-auto max-w-6xl px-4 sm:px-6">
         <motion.div

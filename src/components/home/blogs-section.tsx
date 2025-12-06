@@ -14,6 +14,7 @@ import {
   type LucideIcon,
 } from 'lucide-react'
 import { useState } from 'react'
+import { useReducedMotion } from '@/hooks/use-reduced-motion'
 
 type BlogPost = {
   id: number
@@ -278,31 +279,51 @@ const BlogCard = ({ post, index }: { post: BlogPost; index: number }) => {
 }
 
 const BlogsSection = () => {
+  const prefersReducedMotion = useReducedMotion()
+
   return (
     <section
       id="blogs"
       className="relative w-full overflow-hidden bg-gradient-to-br from-slate-50 via-white to-slate-100 py-8 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 sm:py-10"
     >
-      {/* Background Pattern */}
-      <DotPattern
-        className="absolute inset-0 z-0 text-slate-300/40 dark:text-foreground/10 [mask-image:radial-gradient(1200px_circle_at_center,white,transparent)]"
-        width={20}
-        height={20}
-        cx={1}
-        cy={1}
-        cr={1.2}
-      />
+      {/* Background Pattern - Only on desktop */}
+      {!prefersReducedMotion && (
+        <DotPattern
+          className="absolute inset-0 z-0 text-slate-300/40 dark:text-foreground/10 [mask-image:radial-gradient(1200px_circle_at_center,white,transparent)]"
+          width={20}
+          height={20}
+          cx={1}
+          cy={1}
+          cr={1.2}
+        />
+      )}
 
-      {/* Animated Gradient Orbs */}
+      {/* Animated Gradient Orbs - Static on mobile */}
       <motion.div
         className="pointer-events-none absolute -left-40 top-1/3 size-[400px] rounded-full bg-gradient-to-br from-theme-primary/15 via-theme-secondary/10 to-transparent blur-3xl"
-        animate={{ x: [0, 30, 0], opacity: [0.3, 0.5, 0.3] }}
-        transition={{ duration: 10, repeat: Infinity }}
+        animate={
+          prefersReducedMotion
+            ? { x: 0, opacity: 0.4 }
+            : { x: [0, 30, 0], opacity: [0.3, 0.5, 0.3] }
+        }
+        transition={
+          prefersReducedMotion
+            ? { duration: 0 }
+            : { duration: 10, repeat: Infinity }
+        }
       />
       <motion.div
         className="pointer-events-none absolute -right-40 bottom-1/3 size-[400px] rounded-full bg-gradient-to-br from-theme-secondary/15 via-theme-accent/10 to-transparent blur-3xl"
-        animate={{ x: [0, -30, 0], opacity: [0.3, 0.5, 0.3] }}
-        transition={{ duration: 10, repeat: Infinity, delay: 5 }}
+        animate={
+          prefersReducedMotion
+            ? { x: 0, opacity: 0.4 }
+            : { x: [0, -30, 0], opacity: [0.3, 0.5, 0.3] }
+        }
+        transition={
+          prefersReducedMotion
+            ? { duration: 0 }
+            : { duration: 10, repeat: Infinity, delay: 5 }
+        }
       />
 
       <div className="container relative z-10 mx-auto max-w-7xl px-4 sm:px-6">

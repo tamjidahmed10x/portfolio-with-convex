@@ -12,6 +12,7 @@ import {
   MousePointer2,
 } from 'lucide-react'
 import { ThemeLink } from '@/components/theme-link'
+import { useReducedMotion } from '@/hooks/use-reduced-motion'
 
 const HERO_IMAGE = '/tamjid-ahmed.webp'
 
@@ -22,48 +23,68 @@ const floatingIcons = [
 ]
 
 const HeroSection = () => {
+  const prefersReducedMotion = useReducedMotion()
+
   return (
     <section
       id="home"
       className="relative mt-4 w-full overflow-hidden bg-gradient-to-b from-slate-50 via-white to-slate-100/50 py-16 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 md:mt-16 lg:py-28"
     >
       {/* Background Pattern */}
-      <AnimatedGridPattern
-        width={40}
-        height={40}
-        numSquares={50}
-        maxOpacity={0.08}
-        duration={3}
-        className={cn(
-          '[mask-image:radial-gradient(700px_circle_at_center,white,transparent)]',
-          'absolute inset-0 h-full w-full text-slate-400 dark:text-foreground/20',
-        )}
-      />
+      {!prefersReducedMotion && (
+        <AnimatedGridPattern
+          width={40}
+          height={40}
+          numSquares={50}
+          maxOpacity={0.08}
+          duration={3}
+          className={cn(
+            '[mask-image:radial-gradient(700px_circle_at_center,white,transparent)]',
+            'absolute inset-0 h-full w-full text-slate-400 dark:text-foreground/20',
+          )}
+        />
+      )}
 
-      {/* Gradient Orbs */}
+      {/* Gradient Orbs - Only animate on desktop */}
       <motion.div
         className="pointer-events-none absolute -left-32 top-1/4 size-[400px] rounded-full bg-gradient-to-br from-theme-primary/20 via-theme-secondary/15 to-transparent blur-3xl"
-        animate={{
-          scale: [1, 1.1, 1],
-          opacity: [0.4, 0.6, 0.4],
-        }}
-        transition={{
-          duration: 8,
-          repeat: Infinity,
-          ease: 'easeInOut',
-        }}
+        animate={
+          prefersReducedMotion
+            ? { scale: 1, opacity: 0.5 }
+            : {
+                scale: [1, 1.1, 1],
+                opacity: [0.4, 0.6, 0.4],
+              }
+        }
+        transition={
+          prefersReducedMotion
+            ? { duration: 0 }
+            : {
+                duration: 8,
+                repeat: Infinity,
+                ease: 'easeInOut',
+              }
+        }
       />
       <motion.div
         className="pointer-events-none absolute -right-32 bottom-1/4 size-[350px] rounded-full bg-gradient-to-br from-theme-accent/20 via-theme-secondary/15 to-transparent blur-3xl"
-        animate={{
-          scale: [1.1, 1, 1.1],
-          opacity: [0.4, 0.6, 0.4],
-        }}
-        transition={{
-          duration: 10,
-          repeat: Infinity,
-          ease: 'easeInOut',
-        }}
+        animate={
+          prefersReducedMotion
+            ? { scale: 1, opacity: 0.5 }
+            : {
+                scale: [1.1, 1, 1.1],
+                opacity: [0.4, 0.6, 0.4],
+              }
+        }
+        transition={
+          prefersReducedMotion
+            ? { duration: 0 }
+            : {
+                duration: 10,
+                repeat: Infinity,
+                ease: 'easeInOut',
+              }
+        }
       />
 
       <div className="container relative z-10 mx-auto flex max-w-6xl flex-col items-center justify-between gap-12 px-4 md:flex-row md:gap-16 md:px-6">
@@ -156,58 +177,71 @@ const HeroSection = () => {
 
         {/* Right Content - Image */}
         <motion.div className="relative order-first flex-1 md:order-last">
-          {/* Floating Icons */}
-          {floatingIcons.map((item, index) => {
-            const Icon = item.icon
-            return (
-              <motion.div
-                key={index}
-                className="absolute z-20 flex size-10 items-center justify-center rounded-xl border border-slate-200/60 bg-white/90 shadow-lg backdrop-blur-sm dark:border-slate-700/60 dark:bg-slate-800/90"
-                style={{
-                  left: `calc(50% + ${item.x}%)`,
-                  top: `calc(50% + ${item.y}%)`,
-                }}
-                animate={{
-                  y: [0, -8, 0],
-                }}
-                transition={{
-                  y: {
-                    duration: 3,
-                    repeat: Infinity,
-                    ease: 'easeInOut',
-                  },
-                }}
-              >
-                <Icon className="size-5 text-theme-primary" />
-              </motion.div>
-            )
-          })}
+          {/* Floating Icons - Only on desktop */}
+          {!prefersReducedMotion &&
+            floatingIcons.map((item, index) => {
+              const Icon = item.icon
+              return (
+                <motion.div
+                  key={index}
+                  className="absolute z-20 flex size-10 items-center justify-center rounded-xl border border-slate-200/60 bg-white/90 shadow-lg backdrop-blur-sm dark:border-slate-700/60 dark:bg-slate-800/90"
+                  style={{
+                    left: `calc(50% + ${item.x}%)`,
+                    top: `calc(50% + ${item.y}%)`,
+                  }}
+                  animate={{
+                    y: [0, -8, 0],
+                  }}
+                  transition={{
+                    y: {
+                      duration: 3,
+                      repeat: Infinity,
+                      ease: 'easeInOut',
+                    },
+                  }}
+                >
+                  <Icon className="size-5 text-theme-primary" />
+                </motion.div>
+              )
+            })}
 
           {/* Main Image Container */}
           <div className="relative mx-auto aspect-square max-w-[280px] md:max-w-[380px]">
-            {/* Gradient Ring */}
+            {/* Gradient Ring - Static on mobile */}
             <motion.div
               className="absolute -inset-3 rounded-full bg-gradient-theme-diagonal opacity-20 blur-2xl"
-              animate={{
-                scale: [1, 1.05, 1],
-                opacity: [0.2, 0.3, 0.2],
-              }}
-              transition={{
-                duration: 4,
-                repeat: Infinity,
-                ease: 'easeInOut',
-              }}
+              animate={
+                prefersReducedMotion
+                  ? { scale: 1, opacity: 0.25 }
+                  : {
+                      scale: [1, 1.05, 1],
+                      opacity: [0.2, 0.3, 0.2],
+                    }
+              }
+              transition={
+                prefersReducedMotion
+                  ? { duration: 0 }
+                  : {
+                      duration: 4,
+                      repeat: Infinity,
+                      ease: 'easeInOut',
+                    }
+              }
             />
 
-            {/* Rotating Border */}
+            {/* Rotating Border - Static on mobile */}
             <motion.div
               className="absolute -inset-1 rounded-full bg-gradient-theme-diagonal"
-              animate={{ rotate: 360 }}
-              transition={{
-                duration: 20,
-                repeat: Infinity,
-                ease: 'linear',
-              }}
+              animate={prefersReducedMotion ? { rotate: 0 } : { rotate: 360 }}
+              transition={
+                prefersReducedMotion
+                  ? { duration: 0 }
+                  : {
+                      duration: 20,
+                      repeat: Infinity,
+                      ease: 'linear',
+                    }
+              }
               style={{
                 maskImage:
                   'radial-gradient(transparent 65%, black 66%, black 100%)',
@@ -228,18 +262,20 @@ const HeroSection = () => {
                 className="h-full w-full object-cover object-center"
               />
 
-              {/* Overlay Shine Effect */}
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/20 to-transparent"
-                initial={{ x: '-100%', y: '100%' }}
-                animate={{ x: '100%', y: '-100%' }}
-                transition={{
-                  duration: 2,
-                  repeat: Infinity,
-                  repeatDelay: 5,
-                  ease: 'easeInOut',
-                }}
-              />
+              {/* Overlay Shine Effect - Only on desktop */}
+              {!prefersReducedMotion && (
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/20 to-transparent"
+                  initial={{ x: '-100%', y: '100%' }}
+                  animate={{ x: '100%', y: '-100%' }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    repeatDelay: 5,
+                    ease: 'easeInOut',
+                  }}
+                />
+              )}
             </div>
 
             {/* Experience Badge */}

@@ -3,6 +3,7 @@
 import { cn } from '@/lib/utils'
 import { motion } from 'motion/react'
 import React, { useEffect, useId, useRef, useState } from 'react'
+import { useReducedMotion } from '@/hooks/use-reduced-motion'
 
 /**
  *  DotPattern Component Props
@@ -74,6 +75,7 @@ export function DotPattern({
 }: DotPatternProps) {
   const id = useId()
   const containerRef = useRef<SVGSVGElement>(null)
+  const prefersReducedMotion = useReducedMotion()
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 })
 
   useEffect(() => {
@@ -89,23 +91,25 @@ export function DotPattern({
     return () => window.removeEventListener('resize', updateDimensions)
   }, [])
 
-  const dots = Array.from(
-    {
-      length:
-        Math.ceil(dimensions.width / width) *
-        Math.ceil(dimensions.height / height),
-    },
-    (_, i) => {
-      const col = i % Math.ceil(dimensions.width / width)
-      const row = Math.floor(i / Math.ceil(dimensions.width / width))
-      return {
-        x: col * width + cx,
-        y: row * height + cy,
-        delay: Math.random() * 5,
-        duration: Math.random() * 3 + 2,
-      }
-    },
-  )
+  // Limit dots on mobile for performance - only render what's visible
+  const maxDots = prefersReducedMotion ? 100 : Infinity
+  const totalDots =
+    Math.ceil(dimensions.width / width) * Math.ceil(dimensions.height / height)
+  const dotsToRender = Math.min(totalDots, maxDots)
+
+  const dots = Array.from({ length: dotsToRender }, (_, i) => {
+    const col = i % Math.ceil(dimensions.width / width)
+    const row = Math.floor(i / Math.ceil(dimensions.width / width))
+    return {
+      x: col * width + cx,
+      y: row * height + cy,
+      delay: Math.random() * 5,
+      duration: Math.random() * 3 + 2,
+    }
+  })
+
+  // On mobile, disable glow animation for performance
+  const shouldAnimate = glow && !prefersReducedMotion
 
   return (
     <svg
@@ -131,17 +135,19 @@ export function DotPattern({
           r={cr}
           fill={glow ? `url(#${id}-gradient)` : 'currentColor'}
           className="text-neutral-400/80"
-          initial={glow ? { opacity: 0.4, scale: 1 } : {}}
+          initial={
+            shouldAnimate ? { opacity: 0.4, scale: 1 } : { opacity: 0.6 }
+          }
           animate={
-            glow
+            shouldAnimate
               ? {
                   opacity: [0.4, 1, 0.4],
                   scale: [1, 1.5, 1],
                 }
-              : {}
+              : { opacity: 0.6 }
           }
           transition={
-            glow
+            shouldAnimate
               ? {
                   duration: dot.duration,
                   repeat: Infinity,
@@ -149,7 +155,7 @@ export function DotPattern({
                   delay: dot.delay,
                   ease: 'easeInOut',
                 }
-              : {}
+              : { duration: 0 }
           }
         />
       ))}

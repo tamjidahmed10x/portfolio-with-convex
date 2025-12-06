@@ -23,6 +23,7 @@ import {
   EyeOff,
 } from 'lucide-react'
 import ExperienceTimeline from './experience-timeline'
+import { useReducedMotion } from '@/hooks/use-reduced-motion'
 
 type PersonalInfo = {
   name: string
@@ -130,46 +131,65 @@ const calculateExperience = (startDate: Date) => {
 const AboutMe = () => {
   const experience = calculateExperience(personalInfo.startDate)
   const [showPhone, setShowPhone] = useState(false)
+  const prefersReducedMotion = useReducedMotion()
 
   return (
     <section
       id="aboutMe"
       className="relative w-full overflow-hidden bg-gradient-to-br from-slate-50 via-white to-slate-100 py-8 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 sm:py-10"
     >
-      {/* Background Pattern */}
-      <DotPattern
-        className="absolute inset-0 z-0 text-slate-300/40 dark:text-foreground/10 [mask-image:radial-gradient(900px_circle_at_center,white,transparent)]"
-        width={24}
-        height={24}
-        cx={1}
-        cy={1}
-        cr={1.5}
-      />
+      {/* Background Pattern - Only on desktop */}
+      {!prefersReducedMotion && (
+        <DotPattern
+          className="absolute inset-0 z-0 text-slate-300/40 dark:text-foreground/10 [mask-image:radial-gradient(900px_circle_at_center,white,transparent)]"
+          width={24}
+          height={24}
+          cx={1}
+          cy={1}
+          cr={1.5}
+        />
+      )}
 
-      {/* Animated Gradient Orbs */}
+      {/* Animated Gradient Orbs - Static on mobile */}
       <motion.div
         className="pointer-events-none absolute -left-40 top-1/4 size-[450px] rounded-full bg-gradient-to-br from-theme-primary/15 via-theme-secondary/10 to-transparent blur-3xl"
-        animate={{
-          scale: [1, 1.1, 1],
-          opacity: [0.3, 0.5, 0.3],
-        }}
-        transition={{
-          duration: 8,
-          repeat: Infinity,
-          ease: 'easeInOut',
-        }}
+        animate={
+          prefersReducedMotion
+            ? { scale: 1, opacity: 0.4 }
+            : {
+                scale: [1, 1.1, 1],
+                opacity: [0.3, 0.5, 0.3],
+              }
+        }
+        transition={
+          prefersReducedMotion
+            ? { duration: 0 }
+            : {
+                duration: 8,
+                repeat: Infinity,
+                ease: 'easeInOut',
+              }
+        }
       />
       <motion.div
         className="pointer-events-none absolute -right-40 bottom-1/4 size-[400px] rounded-full bg-gradient-to-br from-theme-accent/15 via-theme-secondary/10 to-transparent blur-3xl"
-        animate={{
-          scale: [1.1, 1, 1.1],
-          opacity: [0.3, 0.5, 0.3],
-        }}
-        transition={{
-          duration: 10,
-          repeat: Infinity,
-          ease: 'easeInOut',
-        }}
+        animate={
+          prefersReducedMotion
+            ? { scale: 1, opacity: 0.4 }
+            : {
+                scale: [1.1, 1, 1.1],
+                opacity: [0.3, 0.5, 0.3],
+              }
+        }
+        transition={
+          prefersReducedMotion
+            ? { duration: 0 }
+            : {
+                duration: 10,
+                repeat: Infinity,
+                ease: 'easeInOut',
+              }
+        }
       />
 
       <div className="container relative z-10 mx-auto max-w-6xl px-4 sm:px-6">
