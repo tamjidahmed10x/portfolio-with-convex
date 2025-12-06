@@ -83,25 +83,25 @@ const highlights = [
     icon: Code2,
     label: 'Lines of Code',
     value: '100K+',
-    color: 'from-blue-500 to-cyan-500',
+    color: 'bg-gradient-theme',
   },
   {
     icon: Coffee,
     label: 'Cups of Coffee',
     value: '∞',
-    color: 'from-amber-500 to-orange-500',
+    color: 'bg-gradient-theme-accent',
   },
   {
     icon: Rocket,
     label: 'Projects Shipped',
     value: '25+',
-    color: 'from-emerald-500 to-teal-500',
+    color: 'bg-gradient-theme',
   },
   {
     icon: Heart,
     label: 'Happy Clients',
     value: '15+',
-    color: 'from-pink-500 to-rose-500',
+    color: 'bg-gradient-theme-accent',
   },
 ]
 
@@ -148,7 +148,7 @@ const AboutMe = () => {
 
       {/* Animated Gradient Orbs */}
       <motion.div
-        className="pointer-events-none absolute -left-40 top-1/4 size-[450px] rounded-full bg-gradient-to-br from-emerald-500/15 via-cyan-500/10 to-transparent blur-3xl"
+        className="pointer-events-none absolute -left-40 top-1/4 size-[450px] rounded-full bg-gradient-to-br from-theme-primary/15 via-theme-secondary/10 to-transparent blur-3xl"
         animate={{
           scale: [1, 1.1, 1],
           opacity: [0.3, 0.5, 0.3],
@@ -160,7 +160,7 @@ const AboutMe = () => {
         }}
       />
       <motion.div
-        className="pointer-events-none absolute -right-40 bottom-1/4 size-[400px] rounded-full bg-gradient-to-br from-violet-500/15 via-purple-500/10 to-transparent blur-3xl"
+        className="pointer-events-none absolute -right-40 bottom-1/4 size-[400px] rounded-full bg-gradient-to-br from-theme-accent/15 via-theme-secondary/10 to-transparent blur-3xl"
         animate={{
           scale: [1.1, 1, 1.1],
           opacity: [0.3, 0.5, 0.3],
@@ -182,17 +182,15 @@ const AboutMe = () => {
         >
           {/* Section Header */}
           <motion.div variants={itemVariants} className="space-y-4 text-center">
-            <div className="mx-auto mb-4 flex w-fit items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-4 py-1.5">
-              <User className="size-4 text-emerald-500" />
-              <span className="text-sm font-medium text-emerald-600 dark:text-emerald-400">
+            <div className="mx-auto mb-4 flex w-fit items-center gap-2 rounded-full border border-theme-primary/20 bg-theme-primary/10 px-4 py-1.5">
+              <User className="size-4 text-theme-primary" />
+              <span className="text-sm font-medium text-theme-primary">
                 Get to Know Me
               </span>
             </div>
             <h2 className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-4xl md:text-5xl">
               <span className="block">About</span>
-              <span className="mt-1 block bg-gradient-to-r from-emerald-600 via-cyan-600 to-blue-600 bg-clip-text text-transparent dark:from-emerald-400 dark:via-cyan-400 dark:to-blue-400">
-                Me
-              </span>
+              <span className="mt-1 block text-gradient-theme-accent">Me</span>
             </h2>
           </motion.div>
 
@@ -203,13 +201,13 @@ const AboutMe = () => {
           >
             <div className="relative rounded-2xl border border-slate-200/60 bg-white/80 p-6 shadow-xl backdrop-blur-sm dark:border-slate-700/60 dark:bg-slate-800/60 sm:p-8">
               <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-                <div className="flex size-8 items-center justify-center rounded-full bg-gradient-to-br from-emerald-500 to-cyan-500 shadow-lg">
+                <div className="flex size-8 items-center justify-center rounded-full bg-gradient-theme shadow-lg">
                   <Sparkles className="size-4 text-white" />
                 </div>
               </div>
               <p className="text-base leading-relaxed text-slate-600 dark:text-slate-400 sm:text-lg">
                 For the past{' '}
-                <span className="font-semibold text-emerald-600 dark:text-emerald-400">
+                <span className="font-semibold text-theme-primary">
                   {experience}
                 </span>
                 , I have been crafting{' '}
@@ -225,8 +223,8 @@ const AboutMe = () => {
                 size={200}
                 duration={12}
                 delay={0}
-                colorFrom="#10b981"
-                colorTo="#3b82f6"
+                colorFrom="var(--theme-primary)"
+                colorTo="var(--theme-accent)"
               />
             </div>
           </motion.div>
@@ -247,7 +245,7 @@ const AboutMe = () => {
                 >
                   <div
                     className={cn(
-                      'mx-auto mb-3 flex size-12 items-center justify-center rounded-xl bg-gradient-to-br shadow-md',
+                      'mx-auto mb-3 flex size-12 items-center justify-center rounded-xl shadow-md',
                       item.color,
                     )}
                   >
@@ -274,7 +272,7 @@ const AboutMe = () => {
               className="group relative overflow-hidden rounded-2xl border border-slate-200/60 bg-white/80 p-6 shadow-xl backdrop-blur-sm transition-all duration-300 hover:shadow-2xl dark:border-slate-700/60 dark:bg-slate-800/60"
             >
               <div className="mb-5 flex items-center gap-3">
-                <div className="flex size-10 items-center justify-center rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 shadow-md">
+                <div className="flex size-10 items-center justify-center rounded-xl bg-gradient-theme shadow-md">
                   <User className="size-5 text-white" />
                 </div>
                 <h3 className="text-lg font-bold text-slate-900 dark:text-white">
@@ -327,7 +325,7 @@ const AboutMe = () => {
                         className={cn(
                           'text-sm font-semibold',
                           item.highlight
-                            ? 'text-emerald-600 dark:text-emerald-400'
+                            ? 'text-theme-primary'
                             : 'text-slate-900 dark:text-white',
                         )}
                       >
@@ -342,8 +340,8 @@ const AboutMe = () => {
                 size={250}
                 duration={12}
                 delay={3}
-                colorFrom="#3b82f6"
-                colorTo="#06b6d4"
+                colorFrom="var(--theme-primary)"
+                colorTo="var(--theme-secondary)"
               />
             </motion.div>
 
@@ -353,7 +351,7 @@ const AboutMe = () => {
               className="group relative overflow-hidden rounded-2xl border border-slate-200/60 bg-white/80 p-6 shadow-xl backdrop-blur-sm transition-all duration-300 hover:shadow-2xl dark:border-slate-700/60 dark:bg-slate-800/60"
             >
               <div className="mb-5 flex items-center gap-3">
-                <div className="flex size-10 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-500 to-teal-500 shadow-md">
+                <div className="flex size-10 items-center justify-center rounded-xl bg-gradient-theme shadow-md">
                   <Mail className="size-5 text-white" />
                 </div>
                 <h3 className="text-lg font-bold text-slate-900 dark:text-white">
@@ -378,7 +376,7 @@ const AboutMe = () => {
                   </div>
                   <a
                     href={`mailto:${contactInfo.email}`}
-                    className="text-sm font-semibold text-slate-900 transition-colors hover:text-emerald-600 dark:text-white dark:hover:text-emerald-400"
+                    className="text-sm font-semibold text-slate-900 transition-colors hover:text-theme-primary dark:text-white dark:hover:text-theme-primary-light"
                   >
                     {contactInfo.email}
                   </a>
@@ -401,14 +399,14 @@ const AboutMe = () => {
                   {showPhone ? (
                     <a
                       href={`tel:${contactInfo.phone}`}
-                      className="text-sm font-semibold text-slate-900 transition-colors hover:text-emerald-600 dark:text-white dark:hover:text-emerald-400"
+                      className="text-sm font-semibold text-slate-900 transition-colors hover:text-theme-primary dark:text-white dark:hover:text-theme-primary-light"
                     >
                       {contactInfo.phone}
                     </a>
                   ) : (
                     <button
                       onClick={() => setShowPhone(true)}
-                      className="flex items-center gap-1.5 text-sm font-medium text-emerald-600 transition-colors hover:text-emerald-700 dark:text-emerald-400 dark:hover:text-emerald-300"
+                      className="flex items-center gap-1.5 text-sm font-medium text-theme-primary transition-colors hover:text-theme-primary-dark"
                     >
                       <Eye className="size-3.5" />
                       Click to reveal
@@ -434,7 +432,7 @@ const AboutMe = () => {
                     href={contactInfo.linkedin}
                     target="_blank"
                     rel="noreferrer"
-                    className="flex items-center gap-1.5 text-sm font-semibold text-emerald-600 transition-colors hover:text-emerald-700 dark:text-emerald-400 dark:hover:text-emerald-300"
+                    className="flex items-center gap-1.5 text-sm font-semibold text-theme-primary transition-colors hover:text-theme-primary-dark"
                   >
                     View Profile
                     <ExternalLink className="size-3.5" />
@@ -484,8 +482,8 @@ const AboutMe = () => {
                 size={250}
                 duration={12}
                 delay={6}
-                colorFrom="#10b981"
-                colorTo="#14b8a6"
+                colorFrom="var(--theme-primary)"
+                colorTo="var(--theme-secondary)"
               />
             </motion.div>
           </div>
@@ -494,7 +492,7 @@ const AboutMe = () => {
           <motion.div variants={itemVariants} className="pt-4 text-center">
             <motion.a
               href="#contact"
-              className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-emerald-600 to-cyan-600 px-6 py-3 text-sm font-bold text-white shadow-lg shadow-emerald-500/25 transition-all hover:shadow-xl hover:shadow-emerald-500/30"
+              className="inline-flex items-center gap-2 rounded-xl bg-gradient-theme px-6 py-3 text-sm font-bold text-white shadow-theme transition-all hover:shadow-theme-hover"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.98 }}
             >

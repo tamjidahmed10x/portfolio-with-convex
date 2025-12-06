@@ -86,7 +86,7 @@ const socialLinks: SocialLink[] = [
     icon: Linkedin,
     label: 'LinkedIn',
     href: 'https://linkedin.com/in/tamjid-ahammad',
-    color: 'hover:text-blue-600',
+    color: 'hover:text-theme-primary',
   },
   {
     icon: SiX,
@@ -138,7 +138,7 @@ const ContactMe = () => {
 
       {/* Animated Gradient Orbs */}
       <motion.div
-        className="pointer-events-none absolute -right-40 top-1/4 size-[500px] rounded-full bg-gradient-to-br from-emerald-500/15 via-cyan-500/10 to-transparent blur-3xl"
+        className="pointer-events-none absolute -right-40 top-1/4 size-[500px] rounded-full bg-gradient-to-br from-theme-primary/15 via-theme-secondary/10 to-transparent blur-3xl"
         animate={{
           scale: [1, 1.1, 1],
           opacity: [0.3, 0.5, 0.3],
@@ -150,7 +150,7 @@ const ContactMe = () => {
         }}
       />
       <motion.div
-        className="pointer-events-none absolute -left-40 bottom-1/4 size-[400px] rounded-full bg-gradient-to-br from-blue-500/15 via-purple-500/10 to-transparent blur-3xl"
+        className="pointer-events-none absolute -left-40 bottom-1/4 size-[400px] rounded-full bg-gradient-to-br from-theme-secondary/15 via-theme-accent/10 to-transparent blur-3xl"
         animate={{
           scale: [1.1, 1, 1.1],
           opacity: [0.3, 0.5, 0.3],
@@ -172,15 +172,15 @@ const ContactMe = () => {
         >
           {/* Section Header */}
           <motion.div variants={itemVariants} className="space-y-4 text-center">
-            <div className="mx-auto mb-4 flex w-fit items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-4 py-1.5">
-              <MessageSquare className="size-4 text-emerald-500" />
-              <span className="text-sm font-medium text-emerald-600 dark:text-emerald-400">
+            <div className="mx-auto mb-4 flex w-fit items-center gap-2 rounded-full border border-theme-primary/20 bg-theme-primary/10 px-4 py-1.5">
+              <MessageSquare className="size-4 text-theme-primary" />
+              <span className="text-sm font-medium text-theme-primary">
                 Get in Touch
               </span>
             </div>
             <h2 className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-4xl md:text-5xl">
               <span className="block">Let's Work</span>
-              <span className="mt-1 block bg-gradient-to-r from-emerald-600 via-cyan-600 to-blue-600 bg-clip-text text-transparent dark:from-emerald-400 dark:via-cyan-400 dark:to-blue-400">
+              <span className="text-gradient-theme-accent mt-1 block">
                 Together
               </span>
             </h2>
@@ -200,7 +200,7 @@ const ContactMe = () => {
               {/* Contact Details */}
               <div className="group relative overflow-hidden rounded-2xl border border-slate-200/60 bg-white/80 p-6 shadow-xl shadow-slate-900/5 backdrop-blur-sm transition-all duration-300 hover:shadow-2xl dark:border-slate-700/60 dark:bg-slate-800/60 dark:shadow-black/20">
                 <h3 className="mb-5 flex items-center gap-2 text-lg font-bold text-slate-900 dark:text-white">
-                  <Sparkles className="size-5 text-emerald-500" />
+                  <Sparkles className="size-5 text-theme-primary" />
                   Contact Information
                 </h3>
 
@@ -214,8 +214,8 @@ const ContactMe = () => {
                         whileHover={{ x: 4 }}
                         transition={{ duration: 0.2 }}
                       >
-                        <div className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-500/10 to-cyan-500/10 transition-all group-hover/item:from-emerald-500/20 group-hover/item:to-cyan-500/20">
-                          <Icon className="size-5 text-emerald-600 dark:text-emerald-400" />
+                        <div className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-theme-primary/10 to-theme-secondary/10 transition-all group-hover/item:from-theme-primary/20 group-hover/item:to-theme-secondary/20">
+                          <Icon className="size-5 text-theme-primary" />
                         </div>
                         <div>
                           <p className="text-xs font-medium uppercase tracking-wider text-slate-500 dark:text-slate-400">
@@ -224,7 +224,7 @@ const ContactMe = () => {
                           {item.href ? (
                             <a
                               href={item.href}
-                              className="text-sm font-semibold text-slate-900 transition-colors hover:text-emerald-600 dark:text-white dark:hover:text-emerald-400"
+                              className="text-sm font-semibold text-slate-900 transition-colors hover:text-theme-primary dark:text-white dark:hover:text-theme-primary-light"
                             >
                               {item.value}
                             </a>
@@ -243,8 +243,8 @@ const ContactMe = () => {
                   size={200}
                   duration={12}
                   delay={0}
-                  colorFrom="#10b981"
-                  colorTo="#3b82f6"
+                  colorFrom="var(--theme-primary)"
+                  colorTo="var(--theme-accent)"
                 />
               </div>
 
@@ -281,21 +281,21 @@ const ContactMe = () => {
                   size={150}
                   duration={10}
                   delay={3}
-                  colorFrom="#8b5cf6"
-                  colorTo="#ec4899"
+                  colorFrom="var(--theme-secondary)"
+                  colorTo="var(--theme-accent)"
                 />
               </div>
 
               {/* Availability Status */}
               <motion.div
-                className="flex items-center gap-3 rounded-xl border border-emerald-200/60 bg-emerald-50/80 p-4 dark:border-emerald-800/40 dark:bg-emerald-900/20"
+                className="flex items-center gap-3 rounded-xl border border-theme-primary/40 bg-theme-primary/10 p-4 dark:border-theme-primary/30 dark:bg-theme-primary/10"
                 whileHover={{ scale: 1.02 }}
               >
                 <span className="relative flex size-3">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-                  <span className="relative inline-flex size-3 rounded-full bg-emerald-500" />
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-theme-primary opacity-75" />
+                  <span className="relative inline-flex size-3 rounded-full bg-theme-primary" />
                 </span>
-                <p className="text-sm font-medium text-emerald-700 dark:text-emerald-300">
+                <p className="text-sm font-medium text-theme-primary">
                   Available for freelance projects
                 </p>
               </motion.div>
@@ -326,7 +326,7 @@ const ContactMe = () => {
                         onChange={(e) =>
                           setFormState({ ...formState, name: e.target.value })
                         }
-                        className="w-full rounded-xl border border-slate-200/60 bg-slate-50/50 px-4 py-3 text-sm text-slate-900 placeholder-slate-400 outline-none transition-all focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 dark:border-slate-700/60 dark:bg-slate-800/50 dark:text-white dark:focus:border-emerald-400"
+                        className="w-full rounded-xl border border-slate-200/60 bg-slate-50/50 px-4 py-3 text-sm text-slate-900 placeholder-slate-400 outline-none transition-all focus:border-theme-primary focus:ring-2 focus:ring-theme-primary/20 dark:border-slate-700/60 dark:bg-slate-800/50 dark:text-white dark:focus:border-theme-primary-light"
                         placeholder="John Doe"
                         required
                       />
@@ -348,7 +348,7 @@ const ContactMe = () => {
                         onChange={(e) =>
                           setFormState({ ...formState, email: e.target.value })
                         }
-                        className="w-full rounded-xl border border-slate-200/60 bg-slate-50/50 px-4 py-3 text-sm text-slate-900 placeholder-slate-400 outline-none transition-all focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 dark:border-slate-700/60 dark:bg-slate-800/50 dark:text-white dark:focus:border-emerald-400"
+                        className="w-full rounded-xl border border-slate-200/60 bg-slate-50/50 px-4 py-3 text-sm text-slate-900 placeholder-slate-400 outline-none transition-all focus:border-theme-primary focus:ring-2 focus:ring-theme-primary/20 dark:border-slate-700/60 dark:bg-slate-800/50 dark:text-white dark:focus:border-theme-primary-light"
                         placeholder="john@example.com"
                         required
                       />
@@ -371,7 +371,7 @@ const ContactMe = () => {
                       onChange={(e) =>
                         setFormState({ ...formState, subject: e.target.value })
                       }
-                      className="w-full rounded-xl border border-slate-200/60 bg-slate-50/50 px-4 py-3 text-sm text-slate-900 placeholder-slate-400 outline-none transition-all focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 dark:border-slate-700/60 dark:bg-slate-800/50 dark:text-white dark:focus:border-emerald-400"
+                      className="w-full rounded-xl border border-slate-200/60 bg-slate-50/50 px-4 py-3 text-sm text-slate-900 placeholder-slate-400 outline-none transition-all focus:border-theme-primary focus:ring-2 focus:ring-theme-primary/20 dark:border-slate-700/60 dark:bg-slate-800/50 dark:text-white dark:focus:border-theme-primary-light"
                       placeholder="Project Collaboration"
                       required
                     />
@@ -393,7 +393,7 @@ const ContactMe = () => {
                       onChange={(e) =>
                         setFormState({ ...formState, message: e.target.value })
                       }
-                      className="w-full resize-none rounded-xl border border-slate-200/60 bg-slate-50/50 px-4 py-3 text-sm text-slate-900 placeholder-slate-400 outline-none transition-all focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 dark:border-slate-700/60 dark:bg-slate-800/50 dark:text-white dark:focus:border-emerald-400"
+                      className="w-full resize-none rounded-xl border border-slate-200/60 bg-slate-50/50 px-4 py-3 text-sm text-slate-900 placeholder-slate-400 outline-none transition-all focus:border-theme-primary focus:ring-2 focus:ring-theme-primary/20 dark:border-slate-700/60 dark:bg-slate-800/50 dark:text-white dark:focus:border-theme-primary-light"
                       placeholder="Tell me about your project, ideas, or just say hello..."
                       required
                     />
@@ -404,10 +404,10 @@ const ContactMe = () => {
                     type="submit"
                     disabled={isSubmitting || isSubmitted}
                     className={cn(
-                      'group/btn flex w-full items-center justify-center gap-2 rounded-xl px-6 py-3.5 text-sm font-bold text-white shadow-lg transition-all disabled:cursor-not-allowed',
+                      'group/btn flex w-full items-center justify-center gap-2 rounded-xl px-6 py-3.5 text-sm font-bold text-white shadow-theme transition-all disabled:cursor-not-allowed',
                       isSubmitted
-                        ? 'bg-emerald-500'
-                        : 'bg-gradient-to-r from-emerald-600 via-cyan-600 to-blue-600 hover:shadow-xl hover:shadow-emerald-500/25',
+                        ? 'bg-theme-primary'
+                        : 'bg-gradient-theme hover:shadow-theme-hover',
                     )}
                     whileHover={
                       !isSubmitting && !isSubmitted ? { scale: 1.02 } : {}
@@ -439,8 +439,8 @@ const ContactMe = () => {
                   size={300}
                   duration={15}
                   delay={5}
-                  colorFrom="#10b981"
-                  colorTo="#06b6d4"
+                  colorFrom="var(--theme-primary)"
+                  colorTo="var(--theme-secondary)"
                 />
               </div>
             </motion.div>
@@ -450,9 +450,7 @@ const ContactMe = () => {
           <motion.div variants={itemVariants} className="pt-4 text-center">
             <p className="text-sm text-slate-500 dark:text-slate-400">
               I typically respond within{' '}
-              <span className="font-semibold text-emerald-600 dark:text-emerald-400">
-                24 hours
-              </span>
+              <span className="font-semibold text-theme-primary">24 hours</span>
               . Looking forward to connecting with you!
             </p>
           </motion.div>

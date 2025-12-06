@@ -51,7 +51,7 @@ const skillCategories: SkillCategory[] = [
   {
     title: 'Frontend',
     icon: Layout,
-    iconColor: 'text-blue-500',
+    iconColor: 'text-theme-primary',
     skills: [
       { name: 'React.js', icon: SiReact, color: '#61DAFB' },
       { name: 'Next.js', icon: SiNextdotjs, color: '#000000' },
@@ -64,7 +64,7 @@ const skillCategories: SkillCategory[] = [
   {
     title: 'Backend',
     icon: Server,
-    iconColor: 'text-green-500',
+    iconColor: 'text-theme-secondary',
     skills: [
       { name: 'Node.js', icon: SiNodedotjs, color: '#339933' },
       { name: 'Express.js', icon: SiExpress, color: '#000000' },
@@ -76,7 +76,7 @@ const skillCategories: SkillCategory[] = [
   {
     title: 'Databases',
     icon: Database,
-    iconColor: 'text-amber-500',
+    iconColor: 'text-theme-accent',
     skills: [
       { name: 'MongoDB', icon: SiMongodb, color: '#47A248' },
       { name: 'PostgreSQL', icon: SiPostgresql, color: '#4169E1' },
@@ -88,7 +88,7 @@ const skillCategories: SkillCategory[] = [
   {
     title: 'DevOps & Tools',
     icon: Wrench,
-    iconColor: 'text-purple-500',
+    iconColor: 'text-theme-primary',
     skills: [
       { name: 'Docker', icon: SiDocker, color: '#2496ED' },
       { name: 'Git', icon: SiGit, color: '#F05032' },
@@ -101,7 +101,7 @@ const skillCategories: SkillCategory[] = [
   {
     title: 'Systems & Low-Level',
     icon: Cpu,
-    iconColor: 'text-rose-500',
+    iconColor: 'text-theme-secondary',
     skills: [
       { name: 'Go', icon: SiGo, color: '#00ADD8' },
       { name: 'ESP32 / Teensy', icon: Cpu, color: '#E7352C' },
@@ -198,21 +198,7 @@ const CategoryCard = ({
     >
       {/* Category Header */}
       <div className="mb-5 flex items-center gap-3">
-        <div
-          className={cn(
-            'flex size-10 items-center justify-center rounded-xl bg-gradient-to-br shadow-lg',
-            category.iconColor === 'text-blue-500' &&
-              'from-blue-500/20 to-blue-600/20 shadow-blue-500/20',
-            category.iconColor === 'text-green-500' &&
-              'from-green-500/20 to-green-600/20 shadow-green-500/20',
-            category.iconColor === 'text-amber-500' &&
-              'from-amber-500/20 to-amber-600/20 shadow-amber-500/20',
-            category.iconColor === 'text-purple-500' &&
-              'from-purple-500/20 to-purple-600/20 shadow-purple-500/20',
-            category.iconColor === 'text-rose-500' &&
-              'from-rose-500/20 to-rose-600/20 shadow-rose-500/20',
-          )}
-        >
+        <div className="flex size-10 items-center justify-center rounded-xl bg-gradient-to-br from-theme-primary/20 to-theme-secondary/20 shadow-theme">
           <CategoryIcon className={cn('size-5', category.iconColor)} />
         </div>
         <h3 className="text-lg font-bold text-slate-900 dark:text-white">
@@ -237,8 +223,8 @@ const CategoryCard = ({
         size={250}
         duration={12}
         delay={index * 2}
-        colorFrom="#10b981"
-        colorTo="#3b82f6"
+        colorFrom="var(--theme-primary)"
+        colorTo="var(--theme-accent)"
       />
     </motion.div>
   )
@@ -275,9 +261,9 @@ const Skills = () => {
         >
           {/* Section Header */}
           <motion.div variants={itemVariants} className="space-y-4 text-center">
-            <div className="mx-auto mb-4 flex w-fit items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-4 py-1.5">
-              <Zap className="size-4 text-emerald-500" />
-              <span className="text-sm font-medium text-emerald-600 dark:text-emerald-400">
+            <div className="mx-auto mb-4 flex w-fit items-center gap-2 rounded-full border border-theme-primary/20 bg-theme-primary/10 px-4 py-1.5">
+              <Zap className="size-4 text-theme-primary" />
+              <span className="text-sm font-medium text-theme-primary">
                 {totalSkills}+ Technologies
               </span>
             </div>

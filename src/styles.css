@@ -18,7 +18,31 @@ code {
     source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
+/* ============================================
+   THEME PALETTE SYSTEM - Beautiful Color Schemes
+   ============================================ */
+
+/* Theme-specific CSS custom properties */
 :root {
+  /* Default theme colors (Emerald) - These get overridden by palette */
+  --theme-primary: oklch(0.696 0.17 162.48);
+  --theme-primary-light: oklch(0.765 0.177 163.223);
+  --theme-primary-dark: oklch(0.596 0.145 163.225);
+  --theme-secondary: oklch(0.715 0.143 215.221);
+  --theme-secondary-light: oklch(0.789 0.154 211.53);
+  --theme-accent: oklch(0.623 0.214 259.815);
+  --theme-accent-light: oklch(0.707 0.165 254.624);
+
+  /* Gradient colors for various effects */
+  --theme-gradient-from: var(--theme-primary);
+  --theme-gradient-via: var(--theme-secondary);
+  --theme-gradient-to: var(--theme-accent);
+
+  /* Shadow colors with theme awareness */
+  --theme-shadow: oklch(0.696 0.17 162.48 / 0.25);
+  --theme-shadow-hover: oklch(0.696 0.17 162.48 / 0.35);
+
+  /* Base semantic colors */
   --background: oklch(1 0 0);
   --foreground: oklch(0.141 0.005 285.823);
   --card: oklch(1 0 0);
@@ -89,6 +113,75 @@ code {
   --sidebar-ring: oklch(0.442 0.017 285.786);
 }
 
+/* ============================================
+   THEME PALETTES - Beautiful Color Variations
+   ============================================ */
+
+/* 🌿 DEFAULT (Emerald) - Fresh green with cyan accents */
+[data-theme-palette='default'] {
+  --theme-primary: oklch(0.696 0.17 162.48);
+  --theme-primary-light: oklch(0.765 0.177 163.223);
+  --theme-primary-dark: oklch(0.596 0.145 163.225);
+  --theme-secondary: oklch(0.715 0.143 215.221);
+  --theme-secondary-light: oklch(0.789 0.154 211.53);
+  --theme-accent: oklch(0.623 0.214 259.815);
+  --theme-accent-light: oklch(0.707 0.165 254.624);
+  --theme-shadow: oklch(0.696 0.17 162.48 / 0.25);
+  --theme-shadow-hover: oklch(0.696 0.17 162.48 / 0.35);
+}
+
+/* � MAHOGANY - Rich wine red with deep cherry tones */
+[data-theme-palette='mahogany'] {
+  --theme-primary: oklch(0.485 0.175 22);
+  --theme-primary-light: oklch(0.58 0.18 22);
+  --theme-primary-dark: oklch(0.38 0.15 22);
+  --theme-secondary: oklch(0.42 0.16 18);
+  --theme-secondary-light: oklch(0.52 0.17 18);
+  --theme-accent: oklch(0.55 0.2 15);
+  --theme-accent-light: oklch(0.65 0.18 15);
+  --theme-shadow: oklch(0.485 0.175 22 / 0.25);
+  --theme-shadow-hover: oklch(0.485 0.175 22 / 0.35);
+}
+
+/* 🌿 OLIVE - Natural earth tones with copper warmth */
+[data-theme-palette='olive'] {
+  --theme-primary: oklch(0.52 0.1 120);
+  --theme-primary-light: oklch(0.62 0.12 120);
+  --theme-primary-dark: oklch(0.42 0.08 120);
+  --theme-secondary: oklch(0.58 0.13 55);
+  --theme-secondary-light: oklch(0.68 0.14 55);
+  --theme-accent: oklch(0.72 0.14 65);
+  --theme-accent-light: oklch(0.82 0.12 65);
+  --theme-shadow: oklch(0.52 0.1 120 / 0.25);
+  --theme-shadow-hover: oklch(0.52 0.1 120 / 0.35);
+}
+
+/* 🔥 FIRE - Blazing orange to golden amber flames */
+[data-theme-palette='fire'] {
+  --theme-primary: oklch(0.68 0.2 45);
+  --theme-primary-light: oklch(0.75 0.18 48);
+  --theme-primary-dark: oklch(0.58 0.22 42);
+  --theme-secondary: oklch(0.78 0.17 70);
+  --theme-secondary-light: oklch(0.85 0.15 75);
+  --theme-accent: oklch(0.85 0.16 85);
+  --theme-accent-light: oklch(0.9 0.14 90);
+  --theme-shadow: oklch(0.68 0.2 45 / 0.25);
+  --theme-shadow-hover: oklch(0.68 0.2 45 / 0.35);
+}
+
+/* ❤️ CRIMSON - Bold crimson with deep ocean contrast */
+[data-theme-palette='crimson'] {
+  --theme-primary: oklch(0.52 0.2 25);
+  --theme-primary-light: oklch(0.62 0.18 25);
+  --theme-primary-dark: oklch(0.42 0.22 25);
+  --theme-secondary: oklch(0.35 0.1 240);
+  --theme-secondary-light: oklch(0.45 0.12 240);
+  --theme-accent: oklch(0.62 0.1 220);
+  --theme-accent-light: oklch(0.72 0.08 220);
+  --theme-shadow: oklch(0.52 0.2 25 / 0.25);
+  --theme-shadow-hover: oklch(0.52 0.2 25 / 0.35);
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -126,6 +219,24 @@ code {
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+
+  /* Theme palette colors for utilities */
+  --color-theme-primary: var(--theme-primary);
+  --color-theme-primary-light: var(--theme-primary-light);
+  --color-theme-primary-dark: var(--theme-primary-dark);
+  --color-theme-secondary: var(--theme-secondary);
+  --color-theme-secondary-light: var(--theme-secondary-light);
+  --color-theme-accent: var(--theme-accent);
+  --color-theme-accent-light: var(--theme-accent-light);
+
+  /* Shadow with theme colors */
+  --shadow-theme:
+    0 10px 25px -5px var(--theme-shadow), 0 8px 10px -6px var(--theme-shadow);
+  --shadow-theme-lg:
+    0 20px 40px -10px var(--theme-shadow), 0 16px 20px -12px var(--theme-shadow);
+  --shadow-theme-hover:
+    0 20px 40px -10px var(--theme-shadow-hover),
+    0 16px 20px -12px var(--theme-shadow-hover);
 }
 
 @layer base {
@@ -135,4 +246,209 @@ code {
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* ============================================
+   UTILITY CLASSES FOR THEME COLORS
+   ============================================ */
+
+/* Background utilities */
+.bg-theme-primary {
+  background-color: var(--theme-primary);
+}
+.bg-theme-primary-light {
+  background-color: var(--theme-primary-light);
+}
+.bg-theme-primary-dark {
+  background-color: var(--theme-primary-dark);
+}
+.bg-theme-secondary {
+  background-color: var(--theme-secondary);
+}
+.bg-theme-accent {
+  background-color: var(--theme-accent);
+}
+
+/* Text utilities */
+.text-theme-primary {
+  color: var(--theme-primary);
+}
+.text-theme-primary-light {
+  color: var(--theme-primary-light);
+}
+.text-theme-primary-dark {
+  color: var(--theme-primary-dark);
+}
+.text-theme-secondary {
+  color: var(--theme-secondary);
+}
+.text-theme-accent {
+  color: var(--theme-accent);
+}
+
+/* Border utilities */
+.border-theme-primary {
+  border-color: var(--theme-primary);
+}
+.border-theme-primary\/20 {
+  border-color: oklch(from var(--theme-primary) l c h / 0.2);
+}
+.border-theme-secondary {
+  border-color: var(--theme-secondary);
+}
+
+/* Gradient utilities */
+.bg-gradient-theme {
+  background-image: linear-gradient(
+    to right,
+    var(--theme-primary),
+    var(--theme-secondary)
+  );
+}
+.bg-gradient-theme-accent {
+  background-image: linear-gradient(
+    to right,
+    var(--theme-primary),
+    var(--theme-accent)
+  );
+}
+.bg-gradient-theme-vertical {
+  background-image: linear-gradient(
+    to bottom,
+    var(--theme-primary),
+    var(--theme-secondary)
+  );
+}
+.bg-gradient-theme-diagonal {
+  background-image: linear-gradient(
+    135deg,
+    var(--theme-primary),
+    var(--theme-secondary),
+    var(--theme-accent)
+  );
+}
+
+/* Text gradient */
+.text-gradient-theme {
+  background-image: linear-gradient(
+    to right,
+    var(--theme-primary),
+    var(--theme-secondary)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.text-gradient-theme-accent {
+  background-image: linear-gradient(
+    to right,
+    var(--theme-primary),
+    var(--theme-secondary),
+    var(--theme-accent)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Shadow utilities */
+.shadow-theme {
+  box-shadow: var(--shadow-theme);
+}
+.shadow-theme-lg {
+  box-shadow: var(--shadow-theme-lg);
+}
+.hover\:shadow-theme-hover:hover {
+  box-shadow: var(--shadow-theme-hover);
+}
+
+/* Ring utilities */
+.ring-theme-primary {
+  --tw-ring-color: var(--theme-primary);
+}
+.ring-theme-primary\/20 {
+  --tw-ring-color: oklch(from var(--theme-primary) l c h / 0.2);
+}
+
+/* Opacity variations */
+.bg-theme-primary\/10 {
+  background-color: oklch(from var(--theme-primary) l c h / 0.1);
+}
+.bg-theme-primary\/15 {
+  background-color: oklch(from var(--theme-primary) l c h / 0.15);
+}
+.bg-theme-primary\/20 {
+  background-color: oklch(from var(--theme-primary) l c h / 0.2);
+}
+.bg-theme-primary\/30 {
+  background-color: oklch(from var(--theme-primary) l c h / 0.3);
+}
+.bg-theme-secondary\/10 {
+  background-color: oklch(from var(--theme-secondary) l c h / 0.1);
+}
+.bg-theme-secondary\/15 {
+  background-color: oklch(from var(--theme-secondary) l c h / 0.15);
+}
+.bg-theme-secondary\/20 {
+  background-color: oklch(from var(--theme-secondary) l c h / 0.2);
+}
+.bg-theme-accent\/10 {
+  background-color: oklch(from var(--theme-accent) l c h / 0.1);
+}
+.bg-theme-accent\/20 {
+  background-color: oklch(from var(--theme-accent) l c h / 0.2);
+}
+
+/* From/Via/To theme colors for gradients */
+.from-theme-primary\/20 {
+  --tw-gradient-from: oklch(from var(--theme-primary) l c h / 0.2);
+}
+.from-theme-secondary\/15 {
+  --tw-gradient-from: oklch(from var(--theme-secondary) l c h / 0.15);
+}
+.from-theme-accent\/20 {
+  --tw-gradient-from: oklch(from var(--theme-accent) l c h / 0.2);
+}
+.via-theme-secondary\/15 {
+  --tw-gradient-via: oklch(from var(--theme-secondary) l c h / 0.15);
+}
+
+/* Dark mode overrides for theme backgrounds */
+.dark .bg-theme-primary\/10 {
+  background-color: oklch(from var(--theme-primary) l c h / 0.15);
+}
+.dark .bg-theme-primary\/20 {
+  background-color: oklch(from var(--theme-primary) l c h / 0.25);
+}
+.dark .bg-theme-primary\/30 {
+  background-color: oklch(from var(--theme-primary) l c h / 0.35);
+}
+
+/* 
+  Theme Transition Strategy:
+  - We use an overlay for mode switching (light/dark) to prevent staggered transitions
+  - Only interactive elements (buttons, links, cards) get hover/focus transitions
+  - No global color transitions to avoid the odd staggered effect
+*/
+
+/* Interactive element transitions only */
+a,
+button,
+[role='button'],
+input,
+select,
+textarea,
+.transition-colors,
+.transition-all {
+  transition-property:
+    background-color, border-color, color, fill, stroke, box-shadow, opacity,
+    transform;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+/* Disable all transitions during theme mode change for instant swap */
+html.theme-switching,
+html.theme-switching * {
+  transition: none !important;
 }

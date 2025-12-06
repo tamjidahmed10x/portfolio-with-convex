@@ -12,7 +12,6 @@ Expandable cards না animate করে modal এ open হতো।
 
 ```tsx
 import { LayoutGroup } from 'motion/react'
-
 ;<LayoutGroup>{/* সব content এখানে */}</LayoutGroup>
 ```
 

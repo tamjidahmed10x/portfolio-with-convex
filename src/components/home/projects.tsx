@@ -55,7 +55,7 @@ const projects: Project[] = [
     liveUrl: 'https://waltondigitech.com/',
     category: 'E-Commerce',
     categoryIcon: Layers,
-    categoryColor: 'text-blue-500',
+    categoryColor: 'text-theme-primary',
     techStack: [
       { name: 'React', icon: SiReact, color: '#61DAFB' },
       { name: 'Next.js', icon: SiNextdotjs, color: '#000000' },
@@ -79,7 +79,7 @@ const projects: Project[] = [
     liveUrl: 'https://expotechglobal.com/',
     category: 'Corporate',
     categoryIcon: Globe,
-    categoryColor: 'text-emerald-500',
+    categoryColor: 'text-theme-secondary',
     techStack: [
       { name: 'React', icon: SiReact, color: '#61DAFB' },
       { name: 'Next.js', icon: SiNextdotjs, color: '#000000' },
@@ -102,7 +102,7 @@ const projects: Project[] = [
     liveUrl: 'https://foodexpobd.com/',
     category: 'Events',
     categoryIcon: Palette,
-    categoryColor: 'text-orange-500',
+    categoryColor: 'text-theme-accent',
     techStack: [
       { name: 'React', icon: SiReact, color: '#61DAFB' },
       { name: 'Next.js', icon: SiNextdotjs, color: '#000000' },
@@ -125,7 +125,7 @@ const projects: Project[] = [
     liveUrl: 'https://justgo.com/features/class-management/',
     category: 'SaaS Product',
     categoryIcon: Server,
-    categoryColor: 'text-purple-500',
+    categoryColor: 'text-theme-primary',
     techStack: [
       { name: 'React', icon: SiReact, color: '#61DAFB' },
       { name: 'TypeScript', icon: SiTypescript, color: '#3178C6' },
@@ -188,24 +188,27 @@ const ProjectCard = ({
 
   const cardColors = [
     {
-      gradient: 'from-blue-500/20 via-cyan-500/10 to-blue-500/5',
-      border: 'hover:border-blue-300/60',
-      glow: 'group-hover:shadow-blue-500/10',
+      gradient:
+        'from-theme-primary/20 via-theme-secondary/10 to-theme-primary/5',
+      border: 'hover:border-theme-primary/60',
+      glow: 'group-hover:shadow-theme',
     },
     {
-      gradient: 'from-emerald-500/20 via-teal-500/10 to-emerald-500/5',
-      border: 'hover:border-emerald-300/60',
-      glow: 'group-hover:shadow-emerald-500/10',
+      gradient:
+        'from-theme-secondary/20 via-theme-accent/10 to-theme-secondary/5',
+      border: 'hover:border-theme-secondary/60',
+      glow: 'group-hover:shadow-theme',
     },
     {
-      gradient: 'from-orange-500/20 via-amber-500/10 to-orange-500/5',
-      border: 'hover:border-orange-300/60',
-      glow: 'group-hover:shadow-orange-500/10',
+      gradient: 'from-theme-accent/20 via-theme-primary/10 to-theme-accent/5',
+      border: 'hover:border-theme-accent/60',
+      glow: 'group-hover:shadow-theme',
     },
     {
-      gradient: 'from-purple-500/20 via-violet-500/10 to-purple-500/5',
-      border: 'hover:border-purple-300/60',
-      glow: 'group-hover:shadow-purple-500/10',
+      gradient:
+        'from-theme-primary/20 via-theme-secondary/10 to-theme-primary/5',
+      border: 'hover:border-theme-primary/60',
+      glow: 'group-hover:shadow-theme',
     },
   ]
 
@@ -294,7 +297,7 @@ const ProjectCard = ({
         <div className="flex flex-col gap-3 p-4">
           {/* Title */}
           <div className="flex items-start justify-between gap-2">
-            <h3 className="text-base font-bold text-slate-900 transition-colors group-hover:text-emerald-600 dark:text-white dark:group-hover:text-emerald-400 sm:text-lg">
+            <h3 className="line-clamp-2 text-base font-bold text-slate-900 transition-colors group-hover:text-theme-primary dark:text-white dark:group-hover:text-theme-primary-light sm:text-lg">
               {project.title}
             </h3>
             <motion.div
@@ -333,7 +336,7 @@ const ProjectCard = ({
             transition={{ duration: 0.3 }}
           >
             <div className="flex items-center gap-1.5">
-              <Sparkles className="size-3.5 text-amber-500" />
+              <Sparkles className="size-3.5 text-theme-accent" />
               <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                 Features
               </span>
@@ -346,15 +349,7 @@ const ProjectCard = ({
                 >
                   <span
                     className={cn(
-                      'flex size-4 shrink-0 items-center justify-center rounded text-[9px] font-bold text-white',
-                      index === 0 &&
-                        'bg-gradient-to-br from-blue-500 to-cyan-500',
-                      index === 1 &&
-                        'bg-gradient-to-br from-emerald-500 to-teal-500',
-                      index === 2 &&
-                        'bg-gradient-to-br from-orange-500 to-amber-500',
-                      index === 3 &&
-                        'bg-gradient-to-br from-purple-500 to-violet-500',
+                      'flex size-4 shrink-0 items-center justify-center rounded text-[9px] font-bold text-white bg-gradient-theme',
                     )}
                   >
                     {i + 1}
@@ -371,11 +366,7 @@ const ProjectCard = ({
             target="_blank"
             rel="noopener noreferrer"
             className={cn(
-              'group/btn relative flex items-center justify-center gap-2 overflow-hidden rounded-lg px-4 py-2.5 text-xs font-bold text-white shadow-md transition-shadow hover:shadow-lg',
-              index === 0 && 'bg-gradient-to-r from-blue-600 to-cyan-600',
-              index === 1 && 'bg-gradient-to-r from-emerald-600 to-teal-600',
-              index === 2 && 'bg-gradient-to-r from-orange-600 to-amber-600',
-              index === 3 && 'bg-gradient-to-r from-purple-600 to-violet-600',
+              'group/btn relative flex items-center justify-center gap-2 overflow-hidden rounded-lg px-4 py-2.5 text-xs font-bold text-white shadow-md transition-shadow hover:shadow-lg bg-gradient-theme',
             )}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
@@ -391,24 +382,8 @@ const ProjectCard = ({
           size={200}
           duration={15}
           delay={index * 2}
-          colorFrom={
-            index === 0
-              ? '#3b82f6'
-              : index === 1
-                ? '#10b981'
-                : index === 2
-                  ? '#f97316'
-                  : '#8b5cf6'
-          }
-          colorTo={
-            index === 0
-              ? '#06b6d4'
-              : index === 1
-                ? '#14b8a6'
-                : index === 2
-                  ? '#eab308'
-                  : '#6366f1'
-          }
+          colorFrom="var(--theme-primary)"
+          colorTo="var(--theme-secondary)"
         />
       </div>
     </motion.div>
@@ -433,12 +408,12 @@ const Projects = () => {
 
       {/* Animated Gradient Orbs */}
       <motion.div
-        className="pointer-events-none absolute -left-40 top-1/3 size-[400px] rounded-full bg-gradient-to-br from-emerald-500/15 via-cyan-500/10 to-transparent blur-3xl"
+        className="pointer-events-none absolute -left-40 top-1/3 size-[400px] rounded-full bg-gradient-to-br from-theme-primary/15 via-theme-secondary/10 to-transparent blur-3xl"
         animate={{ x: [0, 30, 0], opacity: [0.3, 0.5, 0.3] }}
         transition={{ duration: 10, repeat: Infinity }}
       />
       <motion.div
-        className="pointer-events-none absolute -right-40 bottom-1/3 size-[400px] rounded-full bg-gradient-to-br from-violet-500/15 via-purple-500/10 to-transparent blur-3xl"
+        className="pointer-events-none absolute -right-40 bottom-1/3 size-[400px] rounded-full bg-gradient-to-br from-theme-secondary/15 via-theme-accent/10 to-transparent blur-3xl"
         animate={{ x: [0, -30, 0], opacity: [0.3, 0.5, 0.3] }}
         transition={{ duration: 10, repeat: Infinity, delay: 5 }}
       />
@@ -454,23 +429,23 @@ const Projects = () => {
           {/* Header */}
           <motion.div variants={itemVariants} className="space-y-4 text-center">
             <motion.div
-              className="mx-auto flex w-fit items-center gap-2 rounded-full border border-emerald-500/30 bg-gradient-to-r from-emerald-500/10 via-cyan-500/10 to-emerald-500/10 px-4 py-2 shadow-lg backdrop-blur-sm"
+              className="mx-auto flex w-fit items-center gap-2 rounded-full border border-theme-primary/30 bg-gradient-to-r from-theme-primary/10 via-theme-secondary/10 to-theme-primary/10 px-4 py-2 shadow-lg backdrop-blur-sm"
               whileHover={{ scale: 1.03 }}
             >
               <motion.div
                 animate={{ rotate: 360 }}
                 transition={{ duration: 8, repeat: Infinity, ease: 'linear' }}
               >
-                <Rocket className="size-4 text-emerald-500" />
+                <Rocket className="size-4 text-theme-primary" />
               </motion.div>
-              <span className="bg-gradient-to-r from-emerald-600 to-cyan-600 bg-clip-text text-xs font-bold text-transparent dark:from-emerald-400 dark:to-cyan-400">
+              <span className="text-gradient-theme text-xs font-bold">
                 Featured Work
               </span>
             </motion.div>
 
             <h2 className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-4xl md:text-5xl">
               <span className="block">Projects I've</span>
-              <span className="mt-1 block bg-gradient-to-r from-emerald-600 via-cyan-600 to-blue-600 bg-clip-text text-transparent dark:from-emerald-400 dark:via-cyan-400 dark:to-blue-400">
+              <span className="text-gradient-theme-accent mt-1 block">
                 Built & Shipped
               </span>
             </h2>
@@ -495,8 +470,8 @@ const Projects = () => {
             variants={itemVariants}
             className="relative overflow-hidden rounded-2xl border border-slate-200/60 bg-gradient-to-br from-white/80 to-slate-50/80 p-6 shadow-xl backdrop-blur-sm dark:border-slate-700/60 dark:from-slate-800/80 dark:to-slate-900/80"
           >
-            <div className="absolute -right-16 -top-16 size-32 rounded-full bg-gradient-to-br from-emerald-500/20 to-cyan-500/20 blur-3xl" />
-            <div className="absolute -bottom-16 -left-16 size-32 rounded-full bg-gradient-to-br from-violet-500/20 to-purple-500/20 blur-3xl" />
+            <div className="absolute -right-16 -top-16 size-32 rounded-full bg-gradient-to-br from-theme-primary/20 to-theme-secondary/20 blur-3xl" />
+            <div className="absolute -bottom-16 -left-16 size-32 rounded-full bg-gradient-to-br from-theme-secondary/20 to-theme-accent/20 blur-3xl" />
 
             <div className="relative grid grid-cols-2 gap-4 sm:grid-cols-4">
               {[
@@ -504,25 +479,25 @@ const Projects = () => {
                   label: 'Projects',
                   value: '4+',
                   icon: Layers,
-                  color: 'from-blue-500 to-cyan-500',
+                  color: 'bg-gradient-theme',
                 },
                 {
                   label: 'Technologies',
                   value: '10+',
                   icon: Code2,
-                  color: 'from-emerald-500 to-teal-500',
+                  color: 'bg-gradient-theme-accent',
                 },
                 {
                   label: 'Live Apps',
                   value: '4',
                   icon: Globe,
-                  color: 'from-orange-500 to-amber-500',
+                  color: 'bg-gradient-theme',
                 },
                 {
                   label: 'Success Rate',
                   value: '100%',
                   icon: TrendingUp,
-                  color: 'from-purple-500 to-violet-500',
+                  color: 'bg-gradient-theme-accent',
                 },
               ].map((stat, index) => (
                 <motion.div
@@ -535,7 +510,7 @@ const Projects = () => {
                 >
                   <motion.div
                     className={cn(
-                      'mx-auto mb-2 flex size-10 items-center justify-center rounded-xl bg-gradient-to-br shadow-md sm:size-12',
+                      'mx-auto mb-2 flex size-10 items-center justify-center rounded-xl shadow-md sm:size-12',
                       stat.color,
                     )}
                     whileHover={{ scale: 1.1, rotate: 5 }}
@@ -555,8 +530,8 @@ const Projects = () => {
             <BorderBeam
               size={300}
               duration={20}
-              colorFrom="#10b981"
-              colorTo="#8b5cf6"
+              colorFrom="var(--theme-primary)"
+              colorTo="var(--theme-accent)"
             />
           </motion.div>
 
@@ -571,7 +546,7 @@ const Projects = () => {
               </span>
               <a
                 href="#contact"
-                className="inline-flex items-center gap-1.5 rounded-lg bg-gradient-to-r from-emerald-600 to-cyan-600 px-3 py-1.5 text-xs font-bold text-white shadow-md transition-shadow hover:shadow-lg"
+                className="inline-flex items-center gap-1.5 rounded-lg bg-gradient-theme px-3 py-1.5 text-xs font-bold text-white shadow-md transition-shadow hover:shadow-lg"
               >
                 Let's Connect
                 <Rocket className="size-3" />

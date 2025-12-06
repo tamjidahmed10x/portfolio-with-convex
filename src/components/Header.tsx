@@ -19,6 +19,7 @@ import {
   Code2,
 } from 'lucide-react'
 import { Link, useLocation } from '@tanstack/react-router'
+import { ThemeSwitcher, ThemeSwitcherCompact } from './theme-switcher'
 
 const NAV_LINKS = [
   { id: '/#home', label: 'Home', icon: Home, isExternal: false },
@@ -184,15 +185,15 @@ const Header = () => {
       <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Logo */}
         <Link to="/" hash="home" className="group flex items-center gap-2.5">
-          <div className="relative flex size-9 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-500 to-cyan-500 shadow-lg shadow-emerald-500/25 transition-shadow group-hover:shadow-xl group-hover:shadow-emerald-500/30">
+          <div className="relative flex size-9 items-center justify-center rounded-xl bg-gradient-theme shadow-theme transition-shadow group-hover:shadow-theme-hover">
             <Code2 className="size-5 text-white" />
-            <div className="absolute -right-1 -top-1 size-3 rounded-full bg-emerald-400" />
+            <div className="absolute -right-1 -top-1 size-3 rounded-full bg-theme-secondary" />
           </div>
           <div className="flex flex-col">
             <span className="text-sm font-bold text-slate-900 dark:text-white">
               Tamjid Ahmed
             </span>
-            <span className="text-[10px] font-medium text-emerald-600 dark:text-emerald-400">
+            <span className="text-[10px] font-medium text-theme-primary">
               Frontend Engineer
             </span>
           </div>
@@ -213,27 +214,28 @@ const Header = () => {
                 className={cn(
                   'relative flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-medium',
                   isActive
-                    ? 'text-emerald-600 dark:text-emerald-400'
+                    ? 'text-theme-primary'
                     : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white',
                 )}
               >
                 <Icon className="size-4" />
                 <span>{link.label}</span>
                 {isActive && (
-                  <div className="absolute inset-0 -z-10 rounded-lg bg-emerald-500/10 dark:bg-emerald-500/20" />
+                  <div className="absolute inset-0 -z-10 rounded-lg bg-theme-primary/10" />
                 )}
               </Link>
             )
           })}
         </nav>
 
-        {/* CTA Button - Desktop */}
-        <div className="hidden lg:block">
+        {/* Theme Switcher & CTA Button - Desktop */}
+        <div className="hidden items-center gap-3 lg:flex">
+          <ThemeSwitcher />
           <Link
             to="/"
             hash="contact"
             onClick={(e) => handleAnchorClick(e, false)}
-            className="inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-emerald-600 to-cyan-600 px-4 py-2 text-sm font-bold text-white shadow-lg shadow-emerald-500/25 transition-all hover:shadow-xl hover:shadow-emerald-500/30"
+            className="inline-flex items-center gap-2 rounded-lg bg-gradient-theme px-4 py-2 text-sm font-bold text-white shadow-theme transition-all hover:shadow-theme-hover"
           >
             <Sparkles className="size-4" />
             Hire Me
@@ -260,18 +262,19 @@ const Header = () => {
               {/* Mobile Header */}
               <div className="flex items-center justify-between border-b border-slate-200/60 px-6 py-4 dark:border-slate-700/60">
                 <div className="flex items-center gap-2.5">
-                  <div className="flex size-9 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-500 to-cyan-500 shadow-lg">
+                  <div className="flex size-9 items-center justify-center rounded-xl bg-gradient-theme shadow-lg">
                     <Code2 className="size-5 text-white" />
                   </div>
                   <div className="flex flex-col">
                     <span className="text-sm font-bold text-slate-900 dark:text-white">
                       Tamjid Ahmed
                     </span>
-                    <span className="text-[10px] font-medium text-emerald-600 dark:text-emerald-400">
+                    <span className="text-[10px] font-medium text-theme-primary">
                       Frontend Engineer
                     </span>
                   </div>
                 </div>
+                <ThemeSwitcherCompact />
               </div>
 
               {/* Mobile Nav Links */}
@@ -292,7 +295,7 @@ const Header = () => {
                           className={cn(
                             'flex items-center gap-3 rounded-xl px-4 py-3 text-base font-medium',
                             isActive
-                              ? 'bg-emerald-500/10 text-emerald-600 dark:bg-emerald-500/20 dark:text-emerald-400'
+                              ? 'bg-theme-primary/10 text-theme-primary'
                               : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-white',
                           )}
                         >
@@ -300,7 +303,7 @@ const Header = () => {
                             className={cn(
                               'flex size-10 items-center justify-center rounded-lg',
                               isActive
-                                ? 'bg-emerald-500/20 dark:bg-emerald-500/30'
+                                ? 'bg-theme-primary/20'
                                 : 'bg-slate-100 dark:bg-slate-800',
                             )}
                           >
@@ -308,7 +311,7 @@ const Header = () => {
                               className={cn(
                                 'size-5',
                                 isActive
-                                  ? 'text-emerald-600 dark:text-emerald-400'
+                                  ? 'text-theme-primary'
                                   : 'text-slate-500 dark:text-slate-400',
                               )}
                             />
@@ -328,7 +331,7 @@ const Header = () => {
                     to="/"
                     hash="contact"
                     onClick={(e) => handleAnchorClick(e, false)}
-                    className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-emerald-600 to-cyan-600 px-6 py-3 text-sm font-bold text-white shadow-lg shadow-emerald-500/25"
+                    className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-theme px-6 py-3 text-sm font-bold text-white shadow-theme"
                   >
                     <Sparkles className="size-4" />
                     Let's Work Together

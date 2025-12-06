@@ -42,7 +42,7 @@ const HeroSection = () => {
 
       {/* Gradient Orbs */}
       <motion.div
-        className="pointer-events-none absolute -left-32 top-1/4 size-[400px] rounded-full bg-gradient-to-br from-emerald-500/20 via-cyan-500/15 to-transparent blur-3xl"
+        className="pointer-events-none absolute -left-32 top-1/4 size-[400px] rounded-full bg-gradient-to-br from-theme-primary/20 via-theme-secondary/15 to-transparent blur-3xl"
         animate={{
           scale: [1, 1.1, 1],
           opacity: [0.4, 0.6, 0.4],
@@ -54,7 +54,7 @@ const HeroSection = () => {
         }}
       />
       <motion.div
-        className="pointer-events-none absolute -right-32 bottom-1/4 size-[350px] rounded-full bg-gradient-to-br from-violet-500/20 via-purple-500/15 to-transparent blur-3xl"
+        className="pointer-events-none absolute -right-32 bottom-1/4 size-[350px] rounded-full bg-gradient-to-br from-theme-accent/20 via-theme-secondary/15 to-transparent blur-3xl"
         animate={{
           scale: [1.1, 1, 1.1],
           opacity: [0.4, 0.6, 0.4],
@@ -70,28 +70,26 @@ const HeroSection = () => {
         {/* Left Content */}
         <motion.div className="flex-1 space-y-8 text-center md:text-left">
           {/* Badge */}
-          <motion.div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-4 py-1.5">
+          <motion.div className="inline-flex items-center gap-2 rounded-full border border-theme-primary/20 bg-theme-primary/10 px-4 py-1.5">
             <span className="relative flex size-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-              <span className="relative inline-flex size-2 rounded-full bg-emerald-500" />
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-theme-primary-light opacity-75" />
+              <span className="relative inline-flex size-2 rounded-full bg-theme-primary" />
             </span>
-            <span className="text-sm font-medium text-emerald-600 dark:text-emerald-400">
+            <span className="text-sm font-medium text-theme-primary">
               Available for work
             </span>
           </motion.div>
 
           {/* Main Title */}
           <motion.div className="space-y-4">
-            <p className="text-sm font-bold uppercase tracking-[0.3em] text-emerald-600 dark:text-emerald-400">
+            <p className="text-sm font-bold uppercase tracking-[0.3em] text-theme-primary">
               Frontend Engineer
             </p>
             <h1 className="text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-5xl md:text-6xl lg:text-7xl">
               Hi, I'm{' '}
               <span className="relative">
-                <span className="bg-gradient-to-r from-emerald-600 via-cyan-600 to-blue-600 bg-clip-text text-transparent dark:from-emerald-400 dark:via-cyan-400 dark:to-blue-400">
-                  Tamjid Ahmed
-                </span>
-                <motion.span className="absolute -bottom-2 left-0 h-1 w-full rounded-full bg-gradient-to-r from-emerald-500 via-cyan-500 to-blue-500" />
+                <span className="text-gradient-theme-accent">Tamjid Ahmed</span>
+                <motion.span className="absolute -bottom-2 left-0 h-1 w-full rounded-full bg-gradient-theme" />
               </span>
             </h1>
           </motion.div>
@@ -104,9 +102,7 @@ const HeroSection = () => {
             </span>{' '}
             with a focus on performance, accessibility, and polished UI details.
             Let's build something{' '}
-            <span className="font-semibold text-emerald-600 dark:text-emerald-400">
-              ambitious
-            </span>{' '}
+            <span className="font-semibold text-theme-primary">ambitious</span>{' '}
             together.
           </motion.p>
 
@@ -115,7 +111,7 @@ const HeroSection = () => {
             <Button
               asChild
               size="lg"
-              className="group bg-gradient-to-r from-emerald-600 to-cyan-600 px-6 text-white shadow-lg shadow-emerald-500/25 transition-all hover:shadow-xl hover:shadow-emerald-500/30"
+              className="group bg-gradient-theme px-6 text-white shadow-theme transition-all hover:shadow-theme-hover"
             >
               <Link to="/" hash="projects">
                 View My Work
@@ -126,11 +122,11 @@ const HeroSection = () => {
               asChild
               variant="outline"
               size="lg"
-              className="group border-slate-300 bg-white/80 px-6 backdrop-blur-sm transition-all hover:border-emerald-500 hover:bg-emerald-50 dark:border-slate-700 dark:bg-slate-800/80 dark:hover:border-emerald-500 dark:hover:bg-emerald-500/10"
+              className="group border-slate-300 bg-white/80 px-6 backdrop-blur-sm transition-all hover:border-theme-primary hover:bg-theme-primary/10 dark:border-slate-700 dark:bg-slate-800/80 dark:hover:border-theme-primary dark:hover:bg-theme-primary/10"
             >
               <Link to="/" hash="contact">
                 Let's Talk
-                <Sparkles className="ml-2 size-4 text-emerald-500" />
+                <Sparkles className="ml-2 size-4 text-theme-primary" />
               </Link>
             </Button>
           </motion.div>
@@ -150,7 +146,7 @@ const HeroSection = () => {
             <a
               href="/resume.pdf"
               download
-              className="group flex items-center gap-2 text-sm font-medium text-emerald-600 transition-colors hover:text-emerald-700 dark:text-emerald-400 dark:hover:text-emerald-300"
+              className="group flex items-center gap-2 text-sm font-medium text-theme-primary transition-colors hover:text-theme-primary-dark"
             >
               <Download className="size-4 transition-transform group-hover:-translate-y-0.5" />
               Download Resume
@@ -182,7 +178,7 @@ const HeroSection = () => {
                   },
                 }}
               >
-                <Icon className="size-5 text-emerald-500" />
+                <Icon className="size-5 text-theme-primary" />
               </motion.div>
             )
           })}
@@ -191,7 +187,7 @@ const HeroSection = () => {
           <div className="relative mx-auto aspect-square max-w-[280px] md:max-w-[380px]">
             {/* Gradient Ring */}
             <motion.div
-              className="absolute -inset-3 rounded-full bg-gradient-to-r from-emerald-500 via-cyan-500 to-blue-500 opacity-20 blur-2xl"
+              className="absolute -inset-3 rounded-full bg-gradient-theme-diagonal opacity-20 blur-2xl"
               animate={{
                 scale: [1, 1.05, 1],
                 opacity: [0.2, 0.3, 0.2],
@@ -205,7 +201,7 @@ const HeroSection = () => {
 
             {/* Rotating Border */}
             <motion.div
-              className="absolute -inset-1 rounded-full bg-gradient-to-r from-emerald-500 via-cyan-500 to-blue-500"
+              className="absolute -inset-1 rounded-full bg-gradient-theme-diagonal"
               animate={{ rotate: 360 }}
               transition={{
                 duration: 20,
@@ -248,7 +244,7 @@ const HeroSection = () => {
 
             {/* Experience Badge */}
             <motion.div className="absolute -bottom-2 -right-2 z-20 flex items-center gap-2 rounded-xl border border-slate-200/60 bg-white/95 px-4 py-2 shadow-lg backdrop-blur-sm dark:border-slate-700/60 dark:bg-slate-800/95">
-              <div className="flex size-8 items-center justify-center rounded-lg bg-gradient-to-br from-emerald-500 to-cyan-500">
+              <div className="flex size-8 items-center justify-center rounded-lg bg-gradient-theme">
                 <Zap className="size-4 text-white" />
               </div>
               <div>

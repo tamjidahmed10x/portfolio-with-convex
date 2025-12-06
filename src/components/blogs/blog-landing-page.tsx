@@ -216,7 +216,7 @@ export const BlogLandingPage = () => {
                   selectedTags.length === 0 && (
                     <section>
                       <div className="mb-6 flex items-center gap-2">
-                        <Sparkles className="size-5 text-amber-500" />
+                        <Sparkles className="size-5 text-theme-accent" />
                         <h2 className="text-lg font-bold text-slate-900 dark:text-white">
                           Featured Article
                         </h2>
@@ -232,7 +232,7 @@ export const BlogLandingPage = () => {
                 {/* All Posts */}
                 <section>
                   <div className="mb-6 flex items-center gap-2">
-                    <BookOpen className="size-5 text-emerald-500" />
+                    <BookOpen className="size-5 text-theme-primary" />
                     <h2 className="text-lg font-bold text-slate-900 dark:text-white">
                       {searchQuery ||
                       selectedCategory !== 'all' ||
@@ -269,7 +269,7 @@ export const BlogLandingPage = () => {
                   className="flex justify-center pt-8"
                 >
                   <motion.button
-                    className="group flex items-center gap-2 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 px-6 py-3 font-bold text-white shadow-lg shadow-emerald-500/25 transition-shadow hover:shadow-emerald-500/40"
+                    className="group flex items-center gap-2 rounded-xl bg-gradient-theme px-6 py-3 font-bold text-white shadow-theme transition-shadow hover:shadow-theme-hover"
                     whileHover={{ scale: 1.02, y: -2 }}
                     whileTap={{ scale: 0.98 }}
                   >
@@ -296,7 +296,7 @@ export const BlogLandingPage = () => {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.8 }}
             onClick={scrollToTop}
-            className="fixed bottom-6 right-6 z-50 rounded-full bg-gradient-to-r from-emerald-600 to-teal-600 p-3 text-white shadow-xl shadow-emerald-500/25 transition-shadow hover:shadow-emerald-500/40"
+            className="fixed bottom-6 right-6 z-50 rounded-full bg-gradient-theme p-3 text-white shadow-theme transition-shadow hover:shadow-theme-hover"
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
           >

@@ -97,20 +97,20 @@ export const PinPerspective = ({
     dark: {
       badgeClass: 'bg-zinc-950 text-white ring-1 ring-white/10',
       badgeUnderline:
-        'bg-gradient-to-r from-emerald-400/0 via-emerald-400/90 to-emerald-400/0',
-      haloClass: 'bg-sky-500/[0.08]',
-      beamClass: 'bg-gradient-to-b from-transparent to-cyan-500',
-      dotPrimary: 'bg-cyan-600',
-      dotSecondary: 'bg-cyan-300',
+        'bg-gradient-to-r from-theme-primary/0 via-theme-primary/90 to-theme-primary/0',
+      haloClass: 'bg-theme-secondary/[0.08]',
+      beamClass: 'bg-gradient-to-b from-transparent to-theme-secondary',
+      dotPrimary: 'bg-theme-secondary',
+      dotSecondary: 'bg-theme-primary-light',
     },
     light: {
       badgeClass: 'bg-white/90 text-slate-900 ring-1 ring-slate-200',
       badgeUnderline:
-        'bg-gradient-to-r from-emerald-500/0 via-emerald-500/70 to-emerald-500/0',
-      haloClass: 'bg-emerald-400/[0.14]',
-      beamClass: 'bg-gradient-to-b from-transparent to-emerald-400',
-      dotPrimary: 'bg-emerald-500',
-      dotSecondary: 'bg-emerald-300',
+        'bg-gradient-to-r from-theme-primary/0 via-theme-primary/70 to-theme-primary/0',
+      haloClass: 'bg-theme-primary/[0.14]',
+      beamClass: 'bg-gradient-to-b from-transparent to-theme-primary',
+      dotPrimary: 'bg-theme-primary',
+      dotSecondary: 'bg-theme-primary-light',
     },
   }
   const styles = perspectiveVariants[variant]

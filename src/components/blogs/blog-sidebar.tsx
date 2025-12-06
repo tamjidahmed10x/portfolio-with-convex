@@ -55,33 +55,48 @@ const categories: {
   icon: React.ElementType
   color: string
 }[] = [
-  { id: 'all', label: 'All Posts', icon: BookOpen, color: 'text-emerald-500' },
-  { id: 'react', label: 'React', icon: Code2, color: 'text-cyan-500' },
+  {
+    id: 'all',
+    label: 'All Posts',
+    icon: BookOpen,
+    color: 'text-theme-primary',
+  },
+  { id: 'react', label: 'React', icon: Code2, color: 'text-theme-secondary' },
   {
     id: 'typescript',
     label: 'TypeScript',
     icon: Code2,
-    color: 'text-blue-500',
+    color: 'text-theme-primary',
   },
-  { id: 'css', label: 'CSS & Design', icon: Palette, color: 'text-pink-500' },
+  {
+    id: 'css',
+    label: 'CSS & Design',
+    icon: Palette,
+    color: 'text-theme-accent',
+  },
   {
     id: 'nextjs',
     label: 'Next.js',
     icon: TrendingUp,
     color: 'text-slate-700 dark:text-slate-300',
   },
-  { id: 'backend', label: 'Backend', icon: Server, color: 'text-green-500' },
+  {
+    id: 'backend',
+    label: 'Backend',
+    icon: Server,
+    color: 'text-theme-secondary',
+  },
   {
     id: 'mobile',
     label: 'Mobile Dev',
     icon: Smartphone,
-    color: 'text-orange-500',
+    color: 'text-theme-accent',
   },
   {
     id: 'database',
     label: 'Database',
     icon: Database,
-    color: 'text-amber-500',
+    color: 'text-theme-primary',
   },
 ]
 
@@ -137,7 +152,7 @@ export const BlogSidebar = ({
       {/* Expand Button */}
       <motion.button
         onClick={onToggleCollapse}
-        className="flex size-10 items-center justify-center rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 text-white shadow-lg shadow-emerald-500/25 transition-all hover:shadow-emerald-500/40"
+        className="flex size-10 items-center justify-center rounded-xl bg-gradient-theme text-white shadow-theme transition-all hover:shadow-theme-hover"
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         title="Expand Sidebar"
@@ -158,7 +173,7 @@ export const BlogSidebar = ({
             className={cn(
               'flex size-10 items-center justify-center rounded-xl transition-all',
               isSelected
-                ? 'bg-gradient-to-r from-emerald-500 to-teal-500 text-white shadow-md'
+                ? 'bg-gradient-theme text-white shadow-md'
                 : 'text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800',
             )}
             whileHover={{ scale: 1.1 }}
@@ -203,7 +218,7 @@ export const BlogSidebar = ({
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.2 }}
         >
-          <div className="flex size-8 items-center justify-center rounded-lg bg-gradient-to-r from-emerald-500 to-teal-500">
+          <div className="flex size-8 items-center justify-center rounded-lg bg-gradient-theme">
             <Filter className="size-4 text-white" />
           </div>
           <span className="font-bold text-slate-900 dark:text-white">
@@ -229,7 +244,7 @@ export const BlogSidebar = ({
         {onMobileClose && (
           <div className="flex items-center justify-between lg:hidden">
             <h2 className="flex items-center gap-2 text-lg font-bold text-slate-900 dark:text-white">
-              <Filter className="size-5 text-emerald-500" />
+              <Filter className="size-5 text-theme-primary" />
               Filters
             </h2>
             <motion.button
@@ -245,7 +260,7 @@ export const BlogSidebar = ({
         {/* Search */}
         <div className="space-y-2">
           <label className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-slate-300">
-            <Search className="size-4 text-emerald-500" />
+            <Search className="size-4 text-theme-primary" />
             Search Articles
           </label>
           <div className="relative">
@@ -254,7 +269,7 @@ export const BlogSidebar = ({
               value={searchQuery}
               onChange={(e) => onSearchChange(e.target.value)}
               placeholder="Search by title, content..."
-              className="w-full rounded-xl border border-slate-200 bg-white/80 px-4 py-3 pl-4 pr-10 text-sm shadow-sm backdrop-blur-sm transition-all placeholder:text-slate-400 focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-400/20 dark:border-slate-700 dark:bg-slate-800/80 dark:placeholder:text-slate-500"
+              className="w-full rounded-xl border border-slate-200 bg-white/80 px-4 py-3 pl-4 pr-10 text-sm shadow-sm backdrop-blur-sm transition-all placeholder:text-slate-400 focus:border-theme-primary focus:outline-none focus:ring-2 focus:ring-theme-primary/20 dark:border-slate-700 dark:bg-slate-800/80 dark:placeholder:text-slate-500"
             />
             {searchQuery && (
               <motion.button
@@ -273,18 +288,18 @@ export const BlogSidebar = ({
         {/* Sort Dropdown */}
         <div className="space-y-2">
           <label className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-slate-300">
-            <SortDesc className="size-4 text-emerald-500" />
+            <SortDesc className="size-4 text-theme-primary" />
             Sort By
           </label>
           <div className="relative">
             <motion.button
               onClick={() => setIsSortOpen(!isSortOpen)}
-              className="flex w-full items-center justify-between rounded-xl border border-slate-200 bg-white/80 px-4 py-3 text-sm font-medium shadow-sm backdrop-blur-sm transition-all hover:border-emerald-300 dark:border-slate-700 dark:bg-slate-800/80"
+              className="flex w-full items-center justify-between rounded-xl border border-slate-200 bg-white/80 px-4 py-3 text-sm font-medium shadow-sm backdrop-blur-sm transition-all hover:border-theme-primary dark:border-slate-700 dark:bg-slate-800/80"
               whileTap={{ scale: 0.98 }}
             >
               <div className="flex items-center gap-2">
                 {currentSort && (
-                  <currentSort.icon className="size-4 text-emerald-500" />
+                  <currentSort.icon className="size-4 text-theme-primary" />
                 )}
                 <span>{currentSort?.label}</span>
               </div>
@@ -315,7 +330,7 @@ export const BlogSidebar = ({
                       className={cn(
                         'flex w-full items-center gap-3 px-4 py-3 text-sm transition-colors',
                         sortBy === option.id
-                          ? 'bg-emerald-50 text-emerald-600 dark:bg-emerald-500/10 dark:text-emerald-400'
+                          ? 'bg-theme-primary/10 text-theme-primary'
                           : 'text-slate-600 hover:bg-slate-50 dark:text-slate-400 dark:hover:bg-slate-700/50',
                       )}
                       whileHover={{ x: 4 }}
@@ -337,7 +352,7 @@ export const BlogSidebar = ({
             className="flex w-full items-center justify-between rounded-lg px-2 py-2 text-sm font-semibold text-slate-700 transition-colors hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-700/50"
           >
             <div className="flex items-center gap-2">
-              <Layers className="size-4 text-emerald-500" />
+              <Layers className="size-4 text-theme-primary" />
               Categories
             </div>
             <motion.div
@@ -369,7 +384,7 @@ export const BlogSidebar = ({
                         className={cn(
                           'group relative flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all',
                           isSelected
-                            ? 'bg-gradient-to-r from-emerald-500 to-teal-500 text-white shadow-lg shadow-emerald-500/25'
+                            ? 'bg-gradient-theme text-white shadow-theme'
                             : 'text-slate-600 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-700/50',
                         )}
                         whileHover={{ scale: 1.01, x: 2 }}
@@ -410,7 +425,7 @@ export const BlogSidebar = ({
             className="flex w-full items-center justify-between rounded-lg px-2 py-2 text-sm font-semibold text-slate-700 transition-colors hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-700/50"
           >
             <div className="flex items-center gap-2">
-              <Tag className="size-4 text-emerald-500" />
+              <Tag className="size-4 text-theme-primary" />
               Popular Tags
             </div>
             <motion.div
@@ -441,8 +456,8 @@ export const BlogSidebar = ({
                         className={cn(
                           'rounded-full px-3 py-1.5 text-xs font-medium transition-all',
                           isSelected
-                            ? 'bg-gradient-to-r from-emerald-500 to-teal-500 text-white shadow-md'
-                            : 'border border-slate-200 bg-white text-slate-600 hover:border-emerald-300 hover:text-emerald-600 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400 dark:hover:border-emerald-500',
+                            ? 'bg-gradient-theme text-white shadow-md'
+                            : 'border border-slate-200 bg-white text-slate-600 hover:border-theme-primary hover:text-theme-primary dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400 dark:hover:border-theme-primary',
                         )}
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
@@ -480,38 +495,30 @@ export const BlogSidebar = ({
 
         {/* Stats Card */}
         <motion.div
-          className="rounded-2xl border border-emerald-200/50 bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50 p-4 dark:border-emerald-800/30 dark:from-emerald-950/40 dark:via-teal-950/30 dark:to-cyan-950/40"
+          className="rounded-2xl border border-theme-primary/30 bg-gradient-to-br from-theme-primary/10 via-theme-secondary/10 to-theme-accent/10 p-4 dark:border-theme-primary/20"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.3 }}
         >
           <div className="mb-3 flex items-center gap-2">
-            <Sparkles className="size-5 text-emerald-500" />
-            <span className="font-semibold text-emerald-700 dark:text-emerald-300">
-              Blog Stats
-            </span>
+            <Sparkles className="size-5 text-theme-primary" />
+            <span className="font-semibold text-theme-primary">Blog Stats</span>
           </div>
           <div className="grid grid-cols-2 gap-3">
             <div className="rounded-xl bg-white/60 p-3 dark:bg-slate-900/40">
-              <div className="text-2xl font-bold text-emerald-600 dark:text-emerald-400">
-                12
-              </div>
+              <div className="text-2xl font-bold text-theme-primary">12</div>
               <div className="text-xs text-slate-500">Total Posts</div>
             </div>
             <div className="rounded-xl bg-white/60 p-3 dark:bg-slate-900/40">
-              <div className="text-2xl font-bold text-teal-600 dark:text-teal-400">
-                8
-              </div>
+              <div className="text-2xl font-bold text-theme-secondary">8</div>
               <div className="text-xs text-slate-500">Categories</div>
             </div>
             <div className="rounded-xl bg-white/60 p-3 dark:bg-slate-900/40">
-              <div className="text-2xl font-bold text-cyan-600 dark:text-cyan-400">
-                24
-              </div>
+              <div className="text-2xl font-bold text-theme-accent">24</div>
               <div className="text-xs text-slate-500">Tags</div>
             </div>
             <div className="rounded-xl bg-white/60 p-3 dark:bg-slate-900/40">
-              <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">
+              <div className="text-2xl font-bold text-theme-primary-dark">
                 5K+
               </div>
               <div className="text-xs text-slate-500">Total Views</div>

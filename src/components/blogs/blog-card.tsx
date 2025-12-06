@@ -23,52 +23,54 @@ type BlogCardProps = {
 
 const cardColors = [
   {
-    gradient: 'from-blue-500/20 via-cyan-500/10 to-blue-500/5',
-    border: 'hover:border-blue-300/60',
-    glow: 'group-hover:shadow-blue-500/10',
-    button: 'from-blue-600 to-cyan-600',
-    accent: '#3b82f6',
-    accentTo: '#06b6d4',
+    gradient: 'from-theme-primary/20 via-theme-secondary/10 to-theme-primary/5',
+    border: 'hover:border-theme-primary/60',
+    glow: 'group-hover:shadow-theme',
+    button: 'bg-gradient-theme',
+    accent: 'var(--theme-primary)',
+    accentTo: 'var(--theme-secondary)',
   },
   {
-    gradient: 'from-purple-500/20 via-violet-500/10 to-purple-500/5',
-    border: 'hover:border-purple-300/60',
-    glow: 'group-hover:shadow-purple-500/10',
-    button: 'from-purple-600 to-violet-600',
-    accent: '#8b5cf6',
-    accentTo: '#6366f1',
+    gradient:
+      'from-theme-secondary/20 via-theme-accent/10 to-theme-secondary/5',
+    border: 'hover:border-theme-secondary/60',
+    glow: 'group-hover:shadow-theme',
+    button: 'bg-gradient-theme-accent',
+    accent: 'var(--theme-secondary)',
+    accentTo: 'var(--theme-accent)',
   },
   {
-    gradient: 'from-emerald-500/20 via-teal-500/10 to-emerald-500/5',
-    border: 'hover:border-emerald-300/60',
-    glow: 'group-hover:shadow-emerald-500/10',
-    button: 'from-emerald-600 to-teal-600',
-    accent: '#10b981',
-    accentTo: '#14b8a6',
+    gradient: 'from-theme-primary/20 via-theme-secondary/10 to-theme-primary/5',
+    border: 'hover:border-theme-primary/60',
+    glow: 'group-hover:shadow-theme',
+    button: 'bg-gradient-theme',
+    accent: 'var(--theme-primary)',
+    accentTo: 'var(--theme-secondary)',
   },
   {
-    gradient: 'from-orange-500/20 via-amber-500/10 to-orange-500/5',
-    border: 'hover:border-orange-300/60',
-    glow: 'group-hover:shadow-orange-500/10',
-    button: 'from-orange-600 to-amber-600',
-    accent: '#f97316',
-    accentTo: '#f59e0b',
+    gradient: 'from-theme-accent/20 via-theme-primary/10 to-theme-accent/5',
+    border: 'hover:border-theme-accent/60',
+    glow: 'group-hover:shadow-theme',
+    button: 'bg-gradient-theme-accent',
+    accent: 'var(--theme-accent)',
+    accentTo: 'var(--theme-primary)',
   },
   {
-    gradient: 'from-pink-500/20 via-rose-500/10 to-pink-500/5',
-    border: 'hover:border-pink-300/60',
-    glow: 'group-hover:shadow-pink-500/10',
-    button: 'from-pink-600 to-rose-600',
-    accent: '#ec4899',
-    accentTo: '#f43f5e',
+    gradient:
+      'from-theme-secondary/20 via-theme-primary/10 to-theme-secondary/5',
+    border: 'hover:border-theme-secondary/60',
+    glow: 'group-hover:shadow-theme',
+    button: 'bg-gradient-theme',
+    accent: 'var(--theme-secondary)',
+    accentTo: 'var(--theme-primary)',
   },
   {
-    gradient: 'from-cyan-500/20 via-teal-500/10 to-cyan-500/5',
-    border: 'hover:border-cyan-300/60',
-    glow: 'group-hover:shadow-cyan-500/10',
-    button: 'from-cyan-600 to-teal-600',
-    accent: '#06b6d4',
-    accentTo: '#14b8a6',
+    gradient: 'from-theme-primary/20 via-theme-accent/10 to-theme-primary/5',
+    border: 'hover:border-theme-primary/60',
+    glow: 'group-hover:shadow-theme',
+    button: 'bg-gradient-theme-accent',
+    accent: 'var(--theme-primary)',
+    accentTo: 'var(--theme-accent)',
   },
 ]
 
@@ -96,7 +98,7 @@ export const BlogCard = ({
       >
         {/* Featured Glow */}
         <motion.div
-          className="absolute -inset-2 rounded-3xl bg-gradient-to-br from-emerald-500/30 via-teal-500/20 to-cyan-500/30 opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-100"
+          className="absolute -inset-2 rounded-3xl bg-gradient-to-br from-theme-primary/30 via-theme-secondary/20 to-theme-accent/30 opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-100"
           animate={isHovered ? { scale: [1, 1.02, 1] } : { scale: 1 }}
           transition={{ duration: 2, repeat: isHovered ? Infinity : 0 }}
         />
@@ -105,7 +107,7 @@ export const BlogCard = ({
           {/* Featured Badge */}
           <div className="absolute left-4 top-4 z-10">
             <motion.div
-              className="flex items-center gap-1.5 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 px-3 py-1.5 text-xs font-bold text-white shadow-lg"
+              className="flex items-center gap-1.5 rounded-full bg-gradient-theme px-3 py-1.5 text-xs font-bold text-white shadow-lg"
               animate={{ y: [0, -2, 0] }}
               transition={{ duration: 2, repeat: Infinity }}
             >
@@ -149,7 +151,7 @@ export const BlogCard = ({
             </div>
 
             {/* Title */}
-            <h2 className="text-2xl font-bold text-slate-900 transition-colors group-hover:text-emerald-600 dark:text-white dark:group-hover:text-emerald-400 lg:text-3xl">
+            <h2 className="text-2xl font-bold text-slate-900 transition-colors group-hover:text-theme-primary dark:text-white dark:group-hover:text-theme-primary-light lg:text-3xl">
               {post.title}
             </h2>
 
@@ -200,7 +202,7 @@ export const BlogCard = ({
               {/* Actions */}
               <Link to="/blogs/$slug" params={{ slug: post.slug }}>
                 <motion.button
-                  className="group/btn flex items-center gap-2 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 px-5 py-3 text-sm font-bold text-white shadow-lg transition-shadow hover:shadow-emerald-500/25"
+                  className="group/btn flex items-center gap-2 rounded-xl bg-gradient-theme px-5 py-3 text-sm font-bold text-white shadow-theme transition-shadow hover:shadow-theme-hover"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >
@@ -214,8 +216,8 @@ export const BlogCard = ({
           <BorderBeam
             size={400}
             duration={15}
-            colorFrom="#10b981"
-            colorTo="#14b8a6"
+            colorFrom="var(--theme-primary)"
+            colorTo="var(--theme-secondary)"
           />
         </div>
       </motion.article>
@@ -229,7 +231,7 @@ export const BlogCard = ({
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.3, delay: index * 0.05 }}
-          className="group flex gap-4 rounded-xl border border-slate-200/60 bg-white/80 p-4 shadow-sm backdrop-blur-sm transition-all hover:border-emerald-300/60 hover:shadow-md dark:border-slate-700/60 dark:bg-slate-800/80"
+          className="group flex gap-4 rounded-xl border border-slate-200/60 bg-white/80 p-4 shadow-sm backdrop-blur-sm transition-all hover:border-theme-primary/40 hover:shadow-md dark:border-slate-700/60 dark:bg-slate-800/80"
         >
           <div className="relative size-20 shrink-0 overflow-hidden rounded-lg">
             <img
@@ -248,7 +250,7 @@ export const BlogCard = ({
               <CategoryIcon className="size-3" />
               {post.category}
             </div>
-            <h3 className="line-clamp-2 text-sm font-bold text-slate-900 transition-colors group-hover:text-emerald-600 dark:text-white">
+            <h3 className="line-clamp-2 text-sm font-bold text-slate-900 transition-colors group-hover:text-theme-primary dark:text-white">
               {post.title}
             </h3>
             <div className="flex items-center gap-2 text-xs text-slate-500">
@@ -316,7 +318,7 @@ export const BlogCard = ({
               className={cn(
                 'rounded-lg p-2 backdrop-blur-sm transition-colors',
                 isBookmarked
-                  ? 'bg-emerald-500 text-white'
+                  ? 'bg-theme-primary text-white'
                   : 'bg-black/30 text-white hover:bg-black/50',
               )}
               whileHover={{ scale: 1.1 }}
@@ -382,7 +384,7 @@ export const BlogCard = ({
           </div>
 
           {/* Title */}
-          <h3 className="line-clamp-2 text-lg font-bold text-slate-900 transition-colors group-hover:text-emerald-600 dark:text-white dark:group-hover:text-emerald-400">
+          <h3 className="line-clamp-2 text-lg font-bold text-slate-900 transition-colors group-hover:text-theme-primary dark:text-white dark:group-hover:text-theme-primary-light">
             {post.title}
           </h3>
 
@@ -434,7 +436,7 @@ export const BlogCard = ({
             <Link to="/blogs/$slug" params={{ slug: post.slug }}>
               <motion.button
                 className={cn(
-                  'group/btn flex items-center gap-1.5 rounded-lg bg-gradient-to-r px-3 py-2 text-xs font-bold text-white shadow-md transition-shadow hover:shadow-lg',
+                  'group/btn flex items-center gap-1.5 rounded-lg px-3 py-2 text-xs font-bold text-white shadow-md transition-shadow hover:shadow-lg',
                   colors.button,
                 )}
                 whileHover={{ scale: 1.02 }}

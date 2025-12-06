@@ -12,6 +12,8 @@ import ConvexProvider from '../integrations/convex/provider'
 
 import TanStackQueryDevtools from '../integrations/tanstack-query/devtools'
 
+import { ThemeProvider } from '../contexts/theme-context'
+
 import appCss from '../styles.css?url'
 
 import type { QueryClient } from '@tanstack/react-query'
@@ -52,22 +54,24 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body>
-        <ConvexProvider>
-          <Header />
-          <main className="">{children}</main>
-          <TanStackDevtools
-            config={{
-              position: 'bottom-right',
-            }}
-            plugins={[
-              {
-                name: 'Tanstack Router',
-                render: <TanStackRouterDevtoolsPanel />,
-              },
-              TanStackQueryDevtools,
-            ]}
-          />
-        </ConvexProvider>
+        <ThemeProvider>
+          <ConvexProvider>
+            <Header />
+            <main className="">{children}</main>
+            <TanStackDevtools
+              config={{
+                position: 'bottom-right',
+              }}
+              plugins={[
+                {
+                  name: 'Tanstack Router',
+                  render: <TanStackRouterDevtoolsPanel />,
+                },
+                TanStackQueryDevtools,
+              ]}
+            />
+          </ConvexProvider>
+        </ThemeProvider>
         <Scripts />
       </body>
     </html>

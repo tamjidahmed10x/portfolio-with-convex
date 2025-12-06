@@ -41,7 +41,7 @@ function BlogDetailPage() {
           </p>
           <Link
             to="/blogs"
-            className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 px-6 py-3 font-bold text-white"
+            className="inline-flex items-center gap-2 rounded-xl bg-gradient-theme px-6 py-3 font-bold text-white"
           >
             <ArrowLeft className="size-4" />
             Back to Blogs
@@ -183,7 +183,7 @@ function BlogDetailPage() {
                 {post.tags.map((tag) => (
                   <span
                     key={tag}
-                    className="rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-sm font-medium text-emerald-600 dark:text-emerald-400"
+                    className="rounded-full border-theme-primary/20 bg-theme-primary/10 px-3 py-1 text-sm font-medium text-theme-primary"
                   >
                     #{tag}
                   </span>
@@ -198,30 +198,30 @@ function BlogDetailPage() {
                   'dark:prose-invert',
                   // Headings
                   'prose-headings:font-bold prose-headings:tracking-tight prose-headings:text-slate-900 dark:prose-headings:text-white',
-                  'prose-h2:mt-14 prose-h2:mb-6 prose-h2:text-2xl prose-h2:border-l-4 prose-h2:border-emerald-500 prose-h2:pl-4',
+                  'prose-h2:mt-14 prose-h2:mb-6 prose-h2:text-2xl prose-h2:border-l-4 prose-h2:border-[var(--theme-primary)] prose-h2:pl-4',
                   'prose-h3:mt-10 prose-h3:mb-4 prose-h3:text-xl',
                   // Paragraphs
                   'prose-p:leading-relaxed prose-p:text-slate-600 dark:prose-p:text-slate-400',
                   // Links
-                  'prose-a:text-emerald-600 dark:prose-a:text-emerald-400 prose-a:font-medium prose-a:no-underline prose-a:border-b prose-a:border-emerald-500/30 hover:prose-a:border-emerald-500 prose-a:transition-colors',
+                  'prose-a:text-[var(--theme-primary)] prose-a:font-medium prose-a:no-underline prose-a:border-b prose-a:border-[var(--theme-primary)]/30 hover:prose-a:border-[var(--theme-primary)] prose-a:transition-colors',
                   // Strong/Bold
                   'prose-strong:text-slate-900 dark:prose-strong:text-white prose-strong:font-semibold',
                   // Inline code
-                  'prose-code:rounded-md prose-code:bg-slate-100 dark:prose-code:bg-slate-800 prose-code:px-2 prose-code:py-1 prose-code:text-sm prose-code:text-emerald-600 dark:prose-code:text-emerald-400 prose-code:before:content-none prose-code:after:content-none prose-code:font-medium',
+                  'prose-code:rounded-md prose-code:bg-slate-100 dark:prose-code:bg-slate-800 prose-code:px-2 prose-code:py-1 prose-code:text-sm prose-code:text-[var(--theme-primary)] prose-code:before:content-none prose-code:after:content-none prose-code:font-medium',
                   // Code blocks
                   'prose-pre:bg-slate-950 prose-pre:text-slate-100 prose-pre:rounded-xl prose-pre:shadow-xl prose-pre:border prose-pre:border-slate-800',
                   // Images
                   'prose-img:rounded-xl prose-img:shadow-lg',
                   // Blockquotes
-                  'prose-blockquote:border-l-4 prose-blockquote:border-emerald-500 prose-blockquote:bg-emerald-50/50 dark:prose-blockquote:bg-emerald-950/20 prose-blockquote:rounded-r-xl prose-blockquote:py-2 prose-blockquote:px-6 prose-blockquote:not-italic prose-blockquote:text-slate-700 dark:prose-blockquote:text-slate-300',
+                  'prose-blockquote:border-l-4 prose-blockquote:border-[var(--theme-primary)] prose-blockquote:bg-[var(--theme-primary)]/5 prose-blockquote:rounded-r-xl prose-blockquote:py-2 prose-blockquote:px-6 prose-blockquote:not-italic prose-blockquote:text-slate-700 dark:prose-blockquote:text-slate-300',
                   // Lists
-                  'prose-ul:my-6 prose-ol:my-6 prose-li:my-2 prose-li:marker:text-emerald-500',
+                  'prose-ul:my-6 prose-ol:my-6 prose-li:my-2 prose-li:marker:text-[var(--theme-primary)]',
                   // Horizontal rule
                   'prose-hr:border-slate-200 dark:prose-hr:border-slate-800',
                 )}
               >
                 {/* Lead paragraph / Excerpt */}
-                <p className="lead text-xl font-medium leading-relaxed text-slate-700 dark:text-slate-300 !mt-0 first-letter:text-5xl first-letter:font-bold first-letter:text-emerald-600 dark:first-letter:text-emerald-400 first-letter:mr-1 first-letter:float-left first-letter:leading-none">
+                <p className="lead text-xl font-medium leading-relaxed text-slate-700 dark:text-slate-300 !mt-0 first-letter:text-5xl first-letter:font-bold first-letter:text-[var(--theme-primary)] first-letter:mr-1 first-letter:float-left first-letter:leading-none">
                   {post.excerpt}
                 </p>
 
@@ -380,7 +380,7 @@ const fetchData = async (endpoint: string) => {
                       className={cn(
                         'flex items-center gap-2 rounded-xl px-4 py-2 font-medium transition-colors',
                         isBookmarked
-                          ? 'bg-emerald-500/10 text-emerald-500'
+                          ? 'bg-theme-primary/10 text-theme-primary'
                           : 'bg-slate-100 text-slate-600 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-400 dark:hover:bg-slate-700',
                       )}
                       whileTap={{ scale: 0.95 }}
@@ -397,19 +397,19 @@ const fetchData = async (endpoint: string) => {
                       Share:
                     </span>
                     <motion.button
-                      className="rounded-lg bg-slate-100 p-2 text-slate-600 transition-colors hover:bg-blue-500 hover:text-white dark:bg-slate-800 dark:text-slate-400"
+                      className="rounded-lg bg-slate-100 p-2 text-slate-600 transition-colors hover:bg-theme-primary hover:text-white dark:bg-slate-800 dark:text-slate-400"
                       whileTap={{ scale: 0.95 }}
                     >
                       <Twitter className="size-5" />
                     </motion.button>
                     <motion.button
-                      className="rounded-lg bg-slate-100 p-2 text-slate-600 transition-colors hover:bg-blue-700 hover:text-white dark:bg-slate-800 dark:text-slate-400"
+                      className="rounded-lg bg-slate-100 p-2 text-slate-600 transition-colors hover:bg-theme-secondary hover:text-white dark:bg-slate-800 dark:text-slate-400"
                       whileTap={{ scale: 0.95 }}
                     >
                       <Linkedin className="size-5" />
                     </motion.button>
                     <motion.button
-                      className="rounded-lg bg-slate-100 p-2 text-slate-600 transition-colors hover:bg-emerald-500 hover:text-white dark:bg-slate-800 dark:text-slate-400"
+                      className="rounded-lg bg-slate-100 p-2 text-slate-600 transition-colors hover:bg-theme-primary hover:text-white dark:bg-slate-800 dark:text-slate-400"
                       whileTap={{ scale: 0.95 }}
                     >
                       <Link2 className="size-5" />
@@ -422,13 +422,13 @@ const fetchData = async (endpoint: string) => {
                     <img
                       src={post.author.avatar}
                       alt={post.author.name}
-                      className="size-16 rounded-full border-2 border-emerald-500/20"
+                      className="size-16 rounded-full border-2 border-theme-primary/20"
                     />
                     <div className="flex-1">
                       <h3 className="text-lg font-bold text-slate-900 dark:text-white">
                         {post.author.name}
                       </h3>
-                      <p className="mb-3 text-sm text-emerald-600 dark:text-emerald-400">
+                      <p className="mb-3 text-sm text-theme-primary">
                         Frontend Engineer & Technical Writer
                       </p>
                       <p className="text-sm text-slate-600 dark:text-slate-400">
@@ -461,7 +461,7 @@ const fetchData = async (endpoint: string) => {
                       key={relatedPost.id}
                       to="/blogs/$slug"
                       params={{ slug: relatedPost.slug }}
-                      className="group overflow-hidden rounded-xl border border-slate-200 bg-white transition-all hover:border-emerald-500/50 hover:shadow-lg dark:border-slate-800 dark:bg-slate-900"
+                      className="group overflow-hidden rounded-xl border border-slate-200 bg-white transition-all hover:border-theme-primary/50 hover:shadow-lg dark:border-slate-800 dark:bg-slate-900"
                     >
                       <div className="relative h-40 overflow-hidden">
                         <img
@@ -481,7 +481,7 @@ const fetchData = async (endpoint: string) => {
                         </span>
                       </div>
                       <div className="p-4">
-                        <h3 className="mb-2 line-clamp-2 font-bold text-slate-900 transition-colors group-hover:text-emerald-600 dark:text-white dark:group-hover:text-emerald-400">
+                        <h3 className="mb-2 line-clamp-2 font-bold text-slate-900 transition-colors group-hover:text-theme-primary dark:text-white">
                           {relatedPost.title}
                         </h3>
                         <div className="flex items-center gap-3 text-xs text-slate-500">

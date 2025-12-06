@@ -38,7 +38,7 @@ const blogPosts: BlogPost[] = [
       'https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=800&auto=format&fit=crop&q=60',
     category: 'React',
     categoryIcon: TrendingUp,
-    categoryColor: 'text-blue-500',
+    categoryColor: 'text-theme-primary',
     readTime: '8 min read',
     publishedAt: 'Dec 1, 2024',
     slug: 'building-scalable-react-applications',
@@ -52,7 +52,7 @@ const blogPosts: BlogPost[] = [
       'https://images.unsplash.com/photo-1507721999472-8ed4421c4af2?w=800&auto=format&fit=crop&q=60',
     category: 'CSS',
     categoryIcon: PenTool,
-    categoryColor: 'text-cyan-500',
+    categoryColor: 'text-theme-secondary',
     readTime: '6 min read',
     publishedAt: 'Nov 25, 2024',
     slug: 'mastering-tailwind-css',
@@ -66,7 +66,7 @@ const blogPosts: BlogPost[] = [
       'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&auto=format&fit=crop&q=60',
     category: 'Next.js',
     categoryIcon: BookOpen,
-    categoryColor: 'text-purple-500',
+    categoryColor: 'text-theme-primary',
     readTime: '10 min read',
     publishedAt: 'Nov 18, 2024',
     slug: 'nextjs-14-server-components',
@@ -80,7 +80,7 @@ const blogPosts: BlogPost[] = [
       'https://images.unsplash.com/photo-1516116216624-53e697fedbea?w=800&auto=format&fit=crop&q=60',
     category: 'State',
     categoryIcon: Sparkles,
-    categoryColor: 'text-emerald-500',
+    categoryColor: 'text-theme-secondary',
     readTime: '7 min read',
     publishedAt: 'Nov 10, 2024',
     slug: 'modern-state-management-zustand',
@@ -116,28 +116,32 @@ const BlogCard = ({ post, index }: { post: BlogPost; index: number }) => {
 
   const cardColors = [
     {
-      gradient: 'from-blue-500/20 via-cyan-500/10 to-blue-500/5',
-      border: 'hover:border-blue-300/60',
-      glow: 'group-hover:shadow-blue-500/10',
-      button: 'from-blue-600 to-cyan-600',
+      gradient:
+        'from-theme-primary/20 via-theme-secondary/10 to-theme-primary/5',
+      border: 'hover:border-theme-primary/60',
+      glow: 'group-hover:shadow-theme',
+      button: 'bg-gradient-theme',
     },
     {
-      gradient: 'from-cyan-500/20 via-teal-500/10 to-cyan-500/5',
-      border: 'hover:border-cyan-300/60',
-      glow: 'group-hover:shadow-cyan-500/10',
-      button: 'from-cyan-600 to-teal-600',
+      gradient:
+        'from-theme-secondary/20 via-theme-accent/10 to-theme-secondary/5',
+      border: 'hover:border-theme-secondary/60',
+      glow: 'group-hover:shadow-theme',
+      button: 'bg-gradient-theme-accent',
     },
     {
-      gradient: 'from-purple-500/20 via-violet-500/10 to-purple-500/5',
-      border: 'hover:border-purple-300/60',
-      glow: 'group-hover:shadow-purple-500/10',
-      button: 'from-purple-600 to-violet-600',
+      gradient:
+        'from-theme-primary/20 via-theme-secondary/10 to-theme-primary/5',
+      border: 'hover:border-theme-primary/60',
+      glow: 'group-hover:shadow-theme',
+      button: 'bg-gradient-theme',
     },
     {
-      gradient: 'from-emerald-500/20 via-teal-500/10 to-emerald-500/5',
-      border: 'hover:border-emerald-300/60',
-      glow: 'group-hover:shadow-emerald-500/10',
-      button: 'from-emerald-600 to-teal-600',
+      gradient:
+        'from-theme-secondary/20 via-theme-primary/10 to-theme-secondary/5',
+      border: 'hover:border-theme-secondary/60',
+      glow: 'group-hover:shadow-theme',
+      button: 'bg-gradient-theme-accent',
     },
   ]
 
@@ -220,7 +224,7 @@ const BlogCard = ({ post, index }: { post: BlogPost; index: number }) => {
           </div>
 
           {/* Title */}
-          <h3 className="line-clamp-2 text-base font-bold text-slate-900 transition-colors group-hover:text-emerald-600 dark:text-white dark:group-hover:text-emerald-400 sm:text-lg">
+          <h3 className="line-clamp-2 text-base font-bold text-slate-900 transition-colors group-hover:text-theme-primary dark:text-white dark:group-hover:text-theme-primary-light sm:text-lg">
             {post.title}
           </h3>
 
@@ -232,7 +236,7 @@ const BlogCard = ({ post, index }: { post: BlogPost; index: number }) => {
           {/* Read More Button */}
           <motion.button
             className={cn(
-              'group/btn mt-auto flex items-center justify-center gap-2 rounded-lg bg-gradient-to-r px-4 py-2.5 text-xs font-bold text-white shadow-md transition-shadow hover:shadow-lg',
+              'group/btn mt-auto flex items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-xs font-bold text-white shadow-md transition-shadow hover:shadow-lg',
               colors.button,
             )}
             whileHover={{ scale: 1.02 }}
@@ -291,12 +295,12 @@ const BlogsSection = () => {
 
       {/* Animated Gradient Orbs */}
       <motion.div
-        className="pointer-events-none absolute -left-40 top-1/3 size-[400px] rounded-full bg-gradient-to-br from-purple-500/15 via-violet-500/10 to-transparent blur-3xl"
+        className="pointer-events-none absolute -left-40 top-1/3 size-[400px] rounded-full bg-gradient-to-br from-theme-primary/15 via-theme-secondary/10 to-transparent blur-3xl"
         animate={{ x: [0, 30, 0], opacity: [0.3, 0.5, 0.3] }}
         transition={{ duration: 10, repeat: Infinity }}
       />
       <motion.div
-        className="pointer-events-none absolute -right-40 bottom-1/3 size-[400px] rounded-full bg-gradient-to-br from-emerald-500/15 via-cyan-500/10 to-transparent blur-3xl"
+        className="pointer-events-none absolute -right-40 bottom-1/3 size-[400px] rounded-full bg-gradient-to-br from-theme-secondary/15 via-theme-accent/10 to-transparent blur-3xl"
         animate={{ x: [0, -30, 0], opacity: [0.3, 0.5, 0.3] }}
         transition={{ duration: 10, repeat: Infinity, delay: 5 }}
       />
@@ -312,23 +316,23 @@ const BlogsSection = () => {
           {/* Header */}
           <motion.div variants={itemVariants} className="space-y-4 text-center">
             <motion.div
-              className="mx-auto flex w-fit items-center gap-2 rounded-full border border-purple-500/30 bg-gradient-to-r from-purple-500/10 via-violet-500/10 to-purple-500/10 px-4 py-2 shadow-lg backdrop-blur-sm"
+              className="mx-auto flex w-fit items-center gap-2 rounded-full border border-theme-primary/30 bg-gradient-to-r from-theme-primary/10 via-theme-secondary/10 to-theme-primary/10 px-4 py-2 shadow-lg backdrop-blur-sm"
               whileHover={{ scale: 1.03 }}
             >
               <motion.div
                 animate={{ rotate: 360 }}
                 transition={{ duration: 8, repeat: Infinity, ease: 'linear' }}
               >
-                <PenTool className="size-4 text-purple-500" />
+                <PenTool className="size-4 text-theme-primary" />
               </motion.div>
-              <span className="bg-gradient-to-r from-purple-600 to-violet-600 bg-clip-text text-xs font-bold text-transparent dark:from-purple-400 dark:to-violet-400">
+              <span className="text-gradient-theme text-xs font-bold">
                 Latest Articles
               </span>
             </motion.div>
 
             <h2 className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-4xl md:text-5xl">
               <span className="block">Insights &</span>
-              <span className="mt-1 block bg-gradient-to-r from-purple-600 via-violet-600 to-indigo-600 bg-clip-text text-transparent dark:from-purple-400 dark:via-violet-400 dark:to-indigo-400">
+              <span className="text-gradient-theme-accent mt-1 block">
                 Tech Articles
               </span>
             </h2>
@@ -357,7 +361,7 @@ const BlogsSection = () => {
               <span className="text-sm text-slate-600 dark:text-slate-400">
                 Want to read more?
               </span>
-              <button className="inline-flex items-center gap-1.5 rounded-lg bg-gradient-to-r from-purple-600 to-violet-600 px-3 py-1.5 text-xs font-bold text-white shadow-md transition-shadow hover:shadow-lg">
+              <button className="inline-flex items-center gap-1.5 rounded-lg bg-gradient-theme px-3 py-1.5 text-xs font-bold text-white shadow-md transition-shadow hover:shadow-lg">
                 View All Blogs
                 <ArrowRight className="size-3" />
               </button>

@@ -23,7 +23,7 @@ const experiences: Experience[] = [
     locationType: 'Remote',
     startDate: new Date('2021-12-01'),
     endDate: new Date('2022-06-30'),
-    gradient: 'from-blue-500 to-cyan-500',
+    gradient: 'bg-gradient-theme',
   },
   {
     id: 2,
@@ -33,7 +33,7 @@ const experiences: Experience[] = [
     locationType: 'On-site',
     startDate: new Date('2022-06-01'),
     endDate: new Date('2024-03-31'),
-    gradient: 'from-emerald-500 to-teal-500',
+    gradient: 'bg-gradient-theme-accent',
   },
   {
     id: 3,
@@ -43,7 +43,7 @@ const experiences: Experience[] = [
     locationType: 'Hybrid',
     startDate: new Date('2024-03-01'),
     endDate: null,
-    gradient: 'from-violet-500 to-purple-500',
+    gradient: 'bg-gradient-theme',
   },
 ]
 
@@ -99,11 +99,11 @@ const calculateDuration = (startDate: Date, endDate: Date | null) => {
 const getLocationTypeStyles = (type: string) => {
   switch (type) {
     case 'Remote':
-      return 'bg-sky-100 text-sky-700 dark:bg-sky-500/20 dark:text-sky-400'
+      return 'bg-theme-primary/10 text-theme-primary'
     case 'On-site':
-      return 'bg-amber-100 text-amber-700 dark:bg-amber-500/20 dark:text-amber-400'
+      return 'bg-theme-secondary/10 text-theme-secondary'
     case 'Hybrid':
-      return 'bg-violet-100 text-violet-700 dark:bg-violet-500/20 dark:text-violet-400'
+      return 'bg-theme-accent/10 text-theme-accent'
     default:
       return 'bg-slate-100 text-slate-700 dark:bg-slate-500/20 dark:text-slate-400'
   }
@@ -120,25 +120,23 @@ const ExperienceTimeline = () => {
     >
       {/* Section Header */}
       <motion.div variants={itemVariants} className="mb-10 text-center">
-        <div className="mx-auto mb-4 flex w-fit items-center gap-2 rounded-full border border-violet-500/20 bg-violet-500/10 px-4 py-1.5">
-          <Briefcase className="size-4 text-violet-500" />
-          <span className="text-sm font-medium text-violet-600 dark:text-violet-400">
+        <div className="mx-auto mb-4 flex w-fit items-center gap-2 rounded-full border border-theme-primary/20 bg-theme-primary/10 px-4 py-1.5">
+          <Briefcase className="size-4 text-theme-primary" />
+          <span className="text-sm font-medium text-theme-primary">
             Career Journey
           </span>
         </div>
         <h3 className="text-2xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-3xl">
-          <span className="bg-gradient-to-r from-violet-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent dark:from-violet-400 dark:via-purple-400 dark:to-indigo-400">
-            Work Experience
-          </span>
+          <span className="text-gradient-theme-accent">Work Experience</span>
         </h3>
       </motion.div>
 
       {/* Horizontal Timeline Container */}
       <div className="relative">
         {/* Desktop Timeline Line */}
-        <div className="absolute left-0 right-0 top-8 hidden h-1 rounded-full bg-gradient-to-r from-blue-500 via-emerald-500 to-violet-500 opacity-20 sm:block" />
+        <div className="absolute left-0 right-0 top-8 hidden h-1 rounded-full bg-gradient-theme opacity-20 sm:block" />
         <motion.div
-          className="absolute left-0 top-8 hidden h-1 rounded-full bg-gradient-to-r from-blue-500 via-emerald-500 to-violet-500 sm:block"
+          className="absolute left-0 top-8 hidden h-1 rounded-full bg-gradient-theme sm:block"
           initial={{ width: 0 }}
           whileInView={{ width: '100%' }}
           viewport={{ once: true }}
@@ -163,7 +161,7 @@ const ExperienceTimeline = () => {
                 <div className="absolute left-1/2 top-0 z-10 hidden -translate-x-1/2 sm:block">
                   <motion.div
                     className={cn(
-                      'flex size-16 items-center justify-center rounded-2xl bg-gradient-to-br shadow-lg',
+                      'flex size-16 items-center justify-center rounded-2xl shadow-lg',
                       exp.gradient,
                     )}
                     whileHover={{ scale: 1.1, rotate: 5 }}
@@ -174,7 +172,7 @@ const ExperienceTimeline = () => {
                   {isPresent && (
                     <motion.div
                       className={cn(
-                        'absolute inset-0 rounded-2xl bg-gradient-to-br opacity-60',
+                        'absolute inset-0 rounded-2xl opacity-60',
                         exp.gradient,
                       )}
                       animate={{
@@ -200,7 +198,7 @@ const ExperienceTimeline = () => {
                   <div className="mb-4 flex items-center gap-3 sm:hidden">
                     <div
                       className={cn(
-                        'flex size-12 items-center justify-center rounded-xl bg-gradient-to-br shadow-md',
+                        'flex size-12 items-center justify-center rounded-xl shadow-md',
                         exp.gradient,
                       )}
                     >
@@ -212,7 +210,7 @@ const ExperienceTimeline = () => {
                   {/* Present Badge */}
                   {isPresent && (
                     <motion.div
-                      className="absolute right-4 top-4 z-10 flex items-center gap-1.5 rounded-full bg-gradient-to-r from-violet-500 to-purple-500 px-3 py-1 text-xs font-bold text-white shadow-md"
+                      className="absolute right-4 top-4 z-10 flex items-center gap-1.5 rounded-full bg-gradient-theme px-3 py-1 text-xs font-bold text-white shadow-md"
                       animate={{
                         boxShadow: [
                           '0 0 0 0 rgba(139, 92, 246, 0.4)',
@@ -280,20 +278,8 @@ const ExperienceTimeline = () => {
                     size={180}
                     duration={10}
                     delay={index * 2}
-                    colorFrom={
-                      exp.gradient.includes('blue')
-                        ? '#3b82f6'
-                        : exp.gradient.includes('emerald')
-                          ? '#10b981'
-                          : '#8b5cf6'
-                    }
-                    colorTo={
-                      exp.gradient.includes('cyan')
-                        ? '#06b6d4'
-                        : exp.gradient.includes('teal')
-                          ? '#14b8a6'
-                          : '#a855f7'
-                    }
+                    colorFrom="var(--theme-primary)"
+                    colorTo="var(--theme-secondary)"
                   />
                 </motion.div>
               </motion.div>
