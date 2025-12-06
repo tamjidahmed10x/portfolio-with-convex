@@ -1,4 +1,4 @@
-import { useCallback, useState, useEffect } from 'react'
+import { useCallback, useState, useEffect, useLayoutEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import {
   Sheet,
@@ -42,17 +42,27 @@ const Header = () => {
   const [isOpen, setIsOpen] = useState(false)
   const location = useLocation()
 
-  // Check if we're on the blogs page
-  const isOnBlogsPage = location.pathname === '/blogs'
+  // Check if we're on any blogs related page (/blogs or /blogs/$slug)
+  const isOnBlogsPage = location.pathname.startsWith('/blogs')
+
+  // Immediately sync activeSection when route changes (before paint)
+  useLayoutEffect(() => {
+    if (isOnBlogsPage) {
+      setActiveSection('blogs')
+    } else if (location.pathname === '/') {
+      // When navigating to home, immediately set home
+      // (page scrolls to top on navigation, so home is always visible first)
+      setActiveSection('home')
+    }
+  }, [location.pathname, isOnBlogsPage])
 
   // Handle scroll effect
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20)
 
-      // Don't update active section based on scroll if on blogs page
+      // If on /blogs or /blogs/$slug routes, always set blogs as active
       if (isOnBlogsPage) {
-        setActiveSection('blogs')
         return
       }
 
@@ -151,9 +161,14 @@ const Header = () => {
 
   // Helper function to check if a nav link is active
   const isLinkActive = (link: (typeof NAV_LINKS)[number]) => {
-    if (link.isExternal) {
-      // For external links like /blogs, check if we're on that page
-      return location.pathname === link.id
+    // For /blogs link (external):
+    if (link.isExternal && link.id === '/blogs') {
+      // If on /blogs or /blogs/$slug routes, always active
+      if (isOnBlogsPage) return true
+      // If on landing page and blogs section is visible, active
+      if (location.pathname === '/' && activeSection === 'blogs') return true
+      // Otherwise not active
+      return false
     }
     // For anchor links, check if the section is active
     return link.id.includes(activeSection)
@@ -196,7 +211,7 @@ const Header = () => {
                 hash={link.isExternal ? undefined : link.id.split('#')[1]}
                 onClick={(e) => handleAnchorClick(e, link.isExternal)}
                 className={cn(
-                  'relative flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-medium transition-all',
+                  'relative flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-medium',
                   isActive
                     ? 'text-emerald-600 dark:text-emerald-400'
                     : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white',
@@ -261,7 +276,7 @@ const Header = () => {
 
               {/* Mobile Nav Links */}
               <nav className="flex-1 space-y-1 px-4 py-6">
-                {NAV_LINKS.map((link, index) => {
+                {NAV_LINKS.map((link) => {
                   const Icon = link.icon
                   const isActive = isLinkActive(link)
 
@@ -275,7 +290,7 @@ const Header = () => {
                           }
                           onClick={(e) => handleAnchorClick(e, link.isExternal)}
                           className={cn(
-                            'flex items-center gap-3 rounded-xl px-4 py-3 text-base font-medium transition-all',
+                            'flex items-center gap-3 rounded-xl px-4 py-3 text-base font-medium',
                             isActive
                               ? 'bg-emerald-500/10 text-emerald-600 dark:bg-emerald-500/20 dark:text-emerald-400'
                               : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-white',
