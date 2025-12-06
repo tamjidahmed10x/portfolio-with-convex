@@ -17,6 +17,7 @@ import {
   Menu,
   Sparkles,
   Code2,
+  X,
 } from 'lucide-react'
 import { Link, useLocation } from '@tanstack/react-router'
 import { ThemeSwitcher, ThemeSwitcherCompact } from './theme-switcher'
@@ -178,8 +179,9 @@ const Header = () => {
   return (
     <header
       className={cn(
-        'fixed inset-x-0 top-0 z-50 border-b border-slate-200/60 bg-white/95 backdrop-blur-xl transition-all duration-300 dark:border-slate-700/60 dark:bg-slate-900/95',
-        isScrolled && 'shadow-lg shadow-slate-900/5 dark:shadow-black/20',
+        'fixed inset-x-0 top-0 z-50 border-b border-slate-200/60 bg-white/95 backdrop-blur-xl dark:border-slate-700/60 dark:bg-slate-900/95',
+        isScrolled &&
+          'shadow-lg shadow-slate-900/5 transition-shadow duration-300 dark:shadow-black/20',
       )}
     >
       <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8">
@@ -235,7 +237,7 @@ const Header = () => {
             to="/"
             hash="contact"
             onClick={(e) => handleAnchorClick(e, false)}
-            className="inline-flex items-center gap-2 rounded-lg bg-gradient-theme px-4 py-2 text-sm font-bold text-white shadow-theme transition-all hover:shadow-theme-hover"
+            className="inline-flex items-center gap-2 rounded-lg bg-gradient-theme px-4 py-2 text-sm font-bold text-white shadow-theme transition-shadow hover:shadow-theme-hover"
           >
             <Sparkles className="size-4" />
             Hire Me
@@ -256,6 +258,7 @@ const Header = () => {
           </SheetTrigger>
           <SheetContent
             side="right"
+            hideClose
             className="w-full max-w-sm border-l border-slate-200/60 bg-white/95 p-0 backdrop-blur-xl dark:border-slate-700/60 dark:bg-slate-900/95"
           >
             <div className="flex h-full flex-col">
@@ -274,7 +277,20 @@ const Header = () => {
                     </span>
                   </div>
                 </div>
-                <ThemeSwitcherCompact />
+                {/* Theme controls and close button */}
+                <div className="flex items-center gap-2">
+                  <ThemeSwitcherCompact />
+                  <SheetClose asChild>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="size-10 rounded-xl border border-slate-200/60 bg-white/80 dark:border-slate-700/60 dark:bg-slate-800/80"
+                    >
+                      <X className="size-5 text-slate-700 dark:text-slate-300" />
+                      <span className="sr-only">Close</span>
+                    </Button>
+                  </SheetClose>
+                </div>
               </div>
 
               {/* Mobile Nav Links */}
@@ -331,7 +347,7 @@ const Header = () => {
                     to="/"
                     hash="contact"
                     onClick={(e) => handleAnchorClick(e, false)}
-                    className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-theme px-6 py-3 text-sm font-bold text-white shadow-theme"
+                    className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-theme px-6 py-3 text-sm font-bold text-white! shadow-theme"
                   >
                     <Sparkles className="size-4" />
                     Let's Work Together

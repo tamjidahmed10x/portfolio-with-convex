@@ -24,14 +24,14 @@ code {
 
 /* Theme-specific CSS custom properties */
 :root {
-  /* Default theme colors (Emerald) - These get overridden by palette */
-  --theme-primary: oklch(0.696 0.17 162.48);
-  --theme-primary-light: oklch(0.765 0.177 163.223);
-  --theme-primary-dark: oklch(0.596 0.145 163.225);
-  --theme-secondary: oklch(0.715 0.143 215.221);
-  --theme-secondary-light: oklch(0.789 0.154 211.53);
-  --theme-accent: oklch(0.623 0.214 259.815);
-  --theme-accent-light: oklch(0.707 0.165 254.624);
+  /* Default theme colors (Mahogany) - These get overridden by palette */
+  --theme-primary: oklch(0.485 0.175 22);
+  --theme-primary-light: oklch(0.58 0.18 22);
+  --theme-primary-dark: oklch(0.38 0.15 22);
+  --theme-secondary: oklch(0.42 0.16 18);
+  --theme-secondary-light: oklch(0.52 0.17 18);
+  --theme-accent: oklch(0.55 0.2 15);
+  --theme-accent-light: oklch(0.65 0.18 15);
 
   /* Gradient colors for various effects */
   --theme-gradient-from: var(--theme-primary);
@@ -39,8 +39,8 @@ code {
   --theme-gradient-to: var(--theme-accent);
 
   /* Shadow colors with theme awareness */
-  --theme-shadow: oklch(0.696 0.17 162.48 / 0.25);
-  --theme-shadow-hover: oklch(0.696 0.17 162.48 / 0.35);
+  --theme-shadow: oklch(0.485 0.175 22 / 0.25);
+  --theme-shadow-hover: oklch(0.485 0.175 22 / 0.35);
 
   /* Base semantic colors */
   --background: oklch(1 0 0);
@@ -111,6 +111,17 @@ code {
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(0.274 0.006 286.033);
   --sidebar-ring: oklch(0.442 0.017 285.786);
+
+  /* Dark mode default theme colors (Mahogany - lighter for visibility) */
+  --theme-primary: oklch(0.62 0.19 22);
+  --theme-primary-light: oklch(0.72 0.195 22);
+  --theme-primary-dark: oklch(0.52 0.17 22);
+  --theme-secondary: oklch(0.58 0.18 18);
+  --theme-secondary-light: oklch(0.68 0.185 18);
+  --theme-accent: oklch(0.7 0.21 15);
+  --theme-accent-light: oklch(0.78 0.19 15);
+  --theme-shadow: oklch(0.62 0.19 22 / 0.3);
+  --theme-shadow-hover: oklch(0.62 0.19 22 / 0.45);
 }
 
 /* ============================================
@@ -639,9 +650,21 @@ code {
   - We use an overlay for mode switching (light/dark) to prevent staggered transitions
   - Only interactive elements (buttons, links, cards) get hover/focus transitions
   - No global color transitions to avoid the odd staggered effect
+  - Initial load: transitions disabled via .theme-loading class to prevent flash
 */
 
-/* Interactive element transitions only */
+/* 
+  CRITICAL: Disable transitions on initial page load
+  The inline script adds this class, and ThemeProvider removes it after hydration
+  This prevents the flash of default colors transitioning to saved theme colors
+*/
+html:not([data-theme-palette]),
+html.theme-loading,
+html.theme-loading * {
+  transition: none !important;
+}
+
+/* Interactive element transitions only - enabled after theme is loaded */
 a,
 button,
 [role='button'],

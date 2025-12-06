@@ -26,6 +26,9 @@ interface MyRouterContext {
 // This runs before React hydration to set the correct theme immediately
 const themeInitScript = `
 (function() {
+  // Add loading class to disable transitions during initial load
+  document.documentElement.classList.add('theme-loading');
+  
   try {
     var stored = localStorage.getItem('portfolio-theme-config');
     var theme = stored ? JSON.parse(stored) : { mode: 'system', palette: 'mahogany' };
@@ -43,6 +46,14 @@ const themeInitScript = `
     document.documentElement.classList.add(systemMode);
     document.documentElement.setAttribute('data-theme-palette', 'mahogany');
   }
+  
+  // Remove loading class after a short delay to enable transitions
+  // This happens before React hydration completes
+  requestAnimationFrame(function() {
+    requestAnimationFrame(function() {
+      document.documentElement.classList.remove('theme-loading');
+    });
+  });
 })();
 `
 
