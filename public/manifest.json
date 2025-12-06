@@ -1,6 +1,7 @@
 {
-  "short_name": "TanStack App",
-  "name": "Create TanStack App Sample",
+  "short_name": "Tamjid Ahmed",
+  "name": "Tamjid Ahmed | Full Stack Developer Portfolio",
+  "description": "Full Stack Developer specializing in React, TypeScript, Node.js, and modern web technologies.",
   "icons": [
     {
       "src": "favicon.ico",
@@ -18,8 +19,10 @@
       "sizes": "512x512"
     }
   ],
-  "start_url": ".",
+  "start_url": "/",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "theme_color": "#10b981",
+  "background_color": "#0f172a",
+  "orientation": "portrait-primary",
+  "categories": ["portfolio", "developer", "technology"]
 }

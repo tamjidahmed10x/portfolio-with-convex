@@ -17,10 +17,26 @@ import {
 import { useState, useMemo } from 'react'
 import { cn } from '@/lib/utils'
 import { blogPosts } from '@/components/blogs'
+import { generateBlogSEO, generateSEOMeta } from '@/lib/seo'
 
 export const Route = createFileRoute('/blogs/$slug')({
   ssr: true,
   component: BlogDetailPage,
+  head: ({ params }) => {
+    const post = blogPosts.find((p) => p.slug === params.slug)
+
+    if (!post) {
+      return generateSEOMeta({
+        title: 'Article Not Found',
+        description:
+          'The article you are looking for does not exist or has been removed.',
+        url: `/blogs/${params.slug}`,
+        noIndex: true,
+      })
+    }
+
+    return generateBlogSEO(post)
+  },
 })
 
 function BlogDetailPage() {

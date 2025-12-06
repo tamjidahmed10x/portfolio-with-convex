@@ -22,6 +22,8 @@ import {
   type ThemePalette,
 } from '../contexts/theme-context'
 
+import { generateHomeSEO } from '../lib/seo'
+
 import appCss from '../styles.css?url'
 
 import type { QueryClient } from '@tanstack/react-query'
@@ -51,25 +53,10 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
   },
 
   head: () => {
+    const { meta, links } = generateHomeSEO()
     return {
-      meta: [
-        {
-          charSet: 'utf-8',
-        },
-        {
-          name: 'viewport',
-          content: 'width=device-width, initial-scale=1',
-        },
-        {
-          title: 'TanStack Start Starter',
-        },
-      ],
-      links: [
-        {
-          rel: 'stylesheet',
-          href: appCss,
-        },
-      ],
+      meta,
+      links: [{ rel: 'stylesheet', href: appCss }, ...links],
     }
   },
 

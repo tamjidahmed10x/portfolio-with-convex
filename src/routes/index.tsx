@@ -4,6 +4,7 @@ import ContactMe from '@/components/home/contact-me'
 import HeroSection from '@/components/home/hero-section'
 import Projects from '@/components/home/projects'
 import Skills from '@/components/home/skills'
+import { generateHomeSEO } from '@/lib/seo'
 
 import { createFileRoute } from '@tanstack/react-router'
 
@@ -21,4 +22,12 @@ const App = () => {
     </div>
   )
 }
-export const Route = createFileRoute('/')({ component: App, ssr: true })
+
+export const Route = createFileRoute('/')({
+  component: App,
+  ssr: true,
+  head: () => {
+    const { meta, links } = generateHomeSEO()
+    return { meta, links }
+  },
+})

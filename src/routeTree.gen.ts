@@ -12,6 +12,8 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as BlogsRouteImport } from './routes/blogs'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as BlogsSlugRouteImport } from './routes/blogs/$slug'
+import { Route as ApiSitemapRouteImport } from './routes/api/sitemap'
+import { Route as ApiRobotsRouteImport } from './routes/api/robots'
 
 const BlogsRoute = BlogsRouteImport.update({
   id: '/blogs',
@@ -28,34 +30,58 @@ const BlogsSlugRoute = BlogsSlugRouteImport.update({
   path: '/$slug',
   getParentRoute: () => BlogsRoute,
 } as any)
+const ApiSitemapRoute = ApiSitemapRouteImport.update({
+  id: '/api/sitemap',
+  path: '/api/sitemap',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiRobotsRoute = ApiRobotsRouteImport.update({
+  id: '/api/robots',
+  path: '/api/robots',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/blogs': typeof BlogsRouteWithChildren
+  '/api/robots': typeof ApiRobotsRoute
+  '/api/sitemap': typeof ApiSitemapRoute
   '/blogs/$slug': typeof BlogsSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/blogs': typeof BlogsRouteWithChildren
+  '/api/robots': typeof ApiRobotsRoute
+  '/api/sitemap': typeof ApiSitemapRoute
   '/blogs/$slug': typeof BlogsSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/blogs': typeof BlogsRouteWithChildren
+  '/api/robots': typeof ApiRobotsRoute
+  '/api/sitemap': typeof ApiSitemapRoute
   '/blogs/$slug': typeof BlogsSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/blogs' | '/blogs/$slug'
+  fullPaths: '/' | '/blogs' | '/api/robots' | '/api/sitemap' | '/blogs/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/blogs' | '/blogs/$slug'
-  id: '__root__' | '/' | '/blogs' | '/blogs/$slug'
+  to: '/' | '/blogs' | '/api/robots' | '/api/sitemap' | '/blogs/$slug'
+  id:
+    | '__root__'
+    | '/'
+    | '/blogs'
+    | '/api/robots'
+    | '/api/sitemap'
+    | '/blogs/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   BlogsRoute: typeof BlogsRouteWithChildren
+  ApiRobotsRoute: typeof ApiRobotsRoute
+  ApiSitemapRoute: typeof ApiSitemapRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -81,6 +107,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BlogsSlugRouteImport
       parentRoute: typeof BlogsRoute
     }
+    '/api/sitemap': {
+      id: '/api/sitemap'
+      path: '/api/sitemap'
+      fullPath: '/api/sitemap'
+      preLoaderRoute: typeof ApiSitemapRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/robots': {
+      id: '/api/robots'
+      path: '/api/robots'
+      fullPath: '/api/robots'
+      preLoaderRoute: typeof ApiRobotsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -97,6 +137,8 @@ const BlogsRouteWithChildren = BlogsRoute._addFileChildren(BlogsRouteChildren)
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BlogsRoute: BlogsRouteWithChildren,
+  ApiRobotsRoute: ApiRobotsRoute,
+  ApiSitemapRoute: ApiSitemapRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
