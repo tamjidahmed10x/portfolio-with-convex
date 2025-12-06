@@ -129,8 +129,20 @@ code {
   --theme-shadow: oklch(0.696 0.17 162.48 / 0.25);
   --theme-shadow-hover: oklch(0.696 0.17 162.48 / 0.35);
 }
+.dark [data-theme-palette='default'],
+.dark[data-theme-palette='default'] {
+  --theme-primary: oklch(0.75 0.18 162.48);
+  --theme-primary-light: oklch(0.82 0.185 163.223);
+  --theme-primary-dark: oklch(0.68 0.16 163.225);
+  --theme-secondary: oklch(0.78 0.155 215.221);
+  --theme-secondary-light: oklch(0.85 0.16 211.53);
+  --theme-accent: oklch(0.7 0.22 259.815);
+  --theme-accent-light: oklch(0.78 0.175 254.624);
+  --theme-shadow: oklch(0.75 0.18 162.48 / 0.3);
+  --theme-shadow-hover: oklch(0.75 0.18 162.48 / 0.45);
+}
 
-/* � MAHOGANY - Rich wine red with deep cherry tones */
+/* 🍷 MAHOGANY - Rich wine red with deep cherry tones */
 [data-theme-palette='mahogany'] {
   --theme-primary: oklch(0.485 0.175 22);
   --theme-primary-light: oklch(0.58 0.18 22);
@@ -141,6 +153,18 @@ code {
   --theme-accent-light: oklch(0.65 0.18 15);
   --theme-shadow: oklch(0.485 0.175 22 / 0.25);
   --theme-shadow-hover: oklch(0.485 0.175 22 / 0.35);
+}
+.dark [data-theme-palette='mahogany'],
+.dark[data-theme-palette='mahogany'] {
+  --theme-primary: oklch(0.62 0.19 22);
+  --theme-primary-light: oklch(0.72 0.195 22);
+  --theme-primary-dark: oklch(0.52 0.17 22);
+  --theme-secondary: oklch(0.58 0.18 18);
+  --theme-secondary-light: oklch(0.68 0.185 18);
+  --theme-accent: oklch(0.7 0.21 15);
+  --theme-accent-light: oklch(0.78 0.19 15);
+  --theme-shadow: oklch(0.62 0.19 22 / 0.3);
+  --theme-shadow-hover: oklch(0.62 0.19 22 / 0.45);
 }
 
 /* 🌿 OLIVE - Natural earth tones with copper warmth */
@@ -155,6 +179,18 @@ code {
   --theme-shadow: oklch(0.52 0.1 120 / 0.25);
   --theme-shadow-hover: oklch(0.52 0.1 120 / 0.35);
 }
+.dark [data-theme-palette='olive'],
+.dark[data-theme-palette='olive'] {
+  --theme-primary: oklch(0.68 0.12 120);
+  --theme-primary-light: oklch(0.78 0.14 120);
+  --theme-primary-dark: oklch(0.58 0.1 120);
+  --theme-secondary: oklch(0.72 0.15 55);
+  --theme-secondary-light: oklch(0.82 0.16 55);
+  --theme-accent: oklch(0.82 0.15 65);
+  --theme-accent-light: oklch(0.88 0.13 65);
+  --theme-shadow: oklch(0.68 0.12 120 / 0.3);
+  --theme-shadow-hover: oklch(0.68 0.12 120 / 0.45);
+}
 
 /* 🔥 FIRE - Blazing orange to golden amber flames */
 [data-theme-palette='fire'] {
@@ -168,6 +204,18 @@ code {
   --theme-shadow: oklch(0.68 0.2 45 / 0.25);
   --theme-shadow-hover: oklch(0.68 0.2 45 / 0.35);
 }
+.dark [data-theme-palette='fire'],
+.dark[data-theme-palette='fire'] {
+  --theme-primary: oklch(0.78 0.22 45);
+  --theme-primary-light: oklch(0.85 0.2 48);
+  --theme-primary-dark: oklch(0.7 0.24 42);
+  --theme-secondary: oklch(0.85 0.18 70);
+  --theme-secondary-light: oklch(0.9 0.16 75);
+  --theme-accent: oklch(0.9 0.17 85);
+  --theme-accent-light: oklch(0.94 0.15 90);
+  --theme-shadow: oklch(0.78 0.22 45 / 0.3);
+  --theme-shadow-hover: oklch(0.78 0.22 45 / 0.45);
+}
 
 /* ❤️ CRIMSON - Bold crimson with deep ocean contrast */
 [data-theme-palette='crimson'] {
@@ -180,6 +228,168 @@ code {
   --theme-accent-light: oklch(0.72 0.08 220);
   --theme-shadow: oklch(0.52 0.2 25 / 0.25);
   --theme-shadow-hover: oklch(0.52 0.2 25 / 0.35);
+}
+.dark [data-theme-palette='crimson'],
+.dark[data-theme-palette='crimson'] {
+  --theme-primary: oklch(0.68 0.22 25);
+  --theme-primary-light: oklch(0.76 0.2 25);
+  --theme-primary-dark: oklch(0.58 0.24 25);
+  --theme-secondary: oklch(0.52 0.12 240);
+  --theme-secondary-light: oklch(0.62 0.14 240);
+  --theme-accent: oklch(0.75 0.12 220);
+  --theme-accent-light: oklch(0.82 0.1 220);
+  --theme-shadow: oklch(0.68 0.22 25 / 0.3);
+  --theme-shadow-hover: oklch(0.68 0.22 25 / 0.45);
+}
+
+/* 🌲 FOREST - Deep forest greens and mossy tones */
+[data-theme-palette='forest'] {
+  --theme-primary: oklch(0.58 0.12 135);
+  --theme-primary-light: oklch(0.68 0.13 135);
+  --theme-primary-dark: oklch(0.48 0.11 135);
+  --theme-secondary: oklch(0.68 0.13 125);
+  --theme-secondary-light: oklch(0.78 0.14 125);
+  --theme-accent: oklch(0.78 0.11 115);
+  --theme-accent-light: oklch(0.85 0.1 115);
+  --theme-shadow: oklch(0.58 0.12 135 / 0.25);
+  --theme-shadow-hover: oklch(0.58 0.12 135 / 0.35);
+}
+.dark [data-theme-palette='forest'],
+.dark[data-theme-palette='forest'] {
+  --theme-primary: oklch(0.72 0.14 135);
+  --theme-primary-light: oklch(0.8 0.15 135);
+  --theme-primary-dark: oklch(0.64 0.13 135);
+  --theme-secondary: oklch(0.78 0.15 125);
+  --theme-secondary-light: oklch(0.85 0.16 125);
+  --theme-accent: oklch(0.85 0.13 115);
+  --theme-accent-light: oklch(0.9 0.11 115);
+  --theme-shadow: oklch(0.72 0.14 135 / 0.3);
+  --theme-shadow-hover: oklch(0.72 0.14 135 / 0.45);
+}
+
+/* 🍷 WINE - Dark wine with cherry accents */
+[data-theme-palette='wine'] {
+  --theme-primary: oklch(0.485 0.175 22);
+  --theme-primary-light: oklch(0.58 0.18 22);
+  --theme-primary-dark: oklch(0.38 0.15 22);
+  --theme-secondary: oklch(0.42 0.19 18);
+  --theme-secondary-light: oklch(0.52 0.2 18);
+  --theme-accent: oklch(0.38 0.17 15);
+  --theme-accent-light: oklch(0.48 0.18 15);
+  --theme-shadow: oklch(0.485 0.175 22 / 0.25);
+  --theme-shadow-hover: oklch(0.485 0.175 22 / 0.35);
+}
+.dark [data-theme-palette='wine'],
+.dark[data-theme-palette='wine'] {
+  --theme-primary: oklch(0.65 0.19 22);
+  --theme-primary-light: oklch(0.74 0.195 22);
+  --theme-primary-dark: oklch(0.55 0.17 22);
+  --theme-secondary: oklch(0.6 0.21 18);
+  --theme-secondary-light: oklch(0.7 0.22 18);
+  --theme-accent: oklch(0.58 0.19 15);
+  --theme-accent-light: oklch(0.68 0.2 15);
+  --theme-shadow: oklch(0.65 0.19 22 / 0.3);
+  --theme-shadow-hover: oklch(0.65 0.19 22 / 0.45);
+}
+
+/* 🌃 MIDNIGHT - Deep blue slate with eggshell */
+[data-theme-palette='midnight'] {
+  --theme-primary: oklch(0.45 0.05 240);
+  --theme-primary-light: oklch(0.55 0.06 240);
+  --theme-primary-dark: oklch(0.35 0.04 240);
+  --theme-secondary: oklch(0.35 0.06 235);
+  --theme-secondary-light: oklch(0.45 0.07 235);
+  --theme-accent: oklch(0.62 0.04 230);
+  --theme-accent-light: oklch(0.72 0.03 230);
+  --theme-shadow: oklch(0.45 0.05 240 / 0.25);
+  --theme-shadow-hover: oklch(0.45 0.05 240 / 0.35);
+}
+.dark [data-theme-palette='midnight'],
+.dark[data-theme-palette='midnight'] {
+  --theme-primary: oklch(0.65 0.07 240);
+  --theme-primary-light: oklch(0.75 0.08 240);
+  --theme-primary-dark: oklch(0.55 0.06 240);
+  --theme-secondary: oklch(0.55 0.08 235);
+  --theme-secondary-light: oklch(0.65 0.09 235);
+  --theme-accent: oklch(0.78 0.05 230);
+  --theme-accent-light: oklch(0.85 0.04 230);
+  --theme-shadow: oklch(0.65 0.07 240 / 0.3);
+  --theme-shadow-hover: oklch(0.65 0.07 240 / 0.45);
+}
+
+/* 🌹 ROSE - Smoky rose with rosy copper */
+[data-theme-palette='rose'] {
+  --theme-primary: oklch(0.63 0.12 25);
+  --theme-primary-light: oklch(0.73 0.13 25);
+  --theme-primary-dark: oklch(0.53 0.11 25);
+  --theme-secondary: oklch(0.52 0.08 15);
+  --theme-secondary-light: oklch(0.62 0.09 15);
+  --theme-accent: oklch(0.42 0.05 235);
+  --theme-accent-light: oklch(0.52 0.06 235);
+  --theme-shadow: oklch(0.63 0.12 25 / 0.25);
+  --theme-shadow-hover: oklch(0.63 0.12 25 / 0.35);
+}
+.dark [data-theme-palette='rose'],
+.dark[data-theme-palette='rose'] {
+  --theme-primary: oklch(0.76 0.14 25);
+  --theme-primary-light: oklch(0.84 0.15 25);
+  --theme-primary-dark: oklch(0.68 0.13 25);
+  --theme-secondary: oklch(0.68 0.1 15);
+  --theme-secondary-light: oklch(0.76 0.11 15);
+  --theme-accent: oklch(0.6 0.07 235);
+  --theme-accent-light: oklch(0.7 0.08 235);
+  --theme-shadow: oklch(0.76 0.14 25 / 0.3);
+  --theme-shadow-hover: oklch(0.76 0.14 25 / 0.45);
+}
+
+/* 🌊 OCEAN - Deep ocean blue to sky blue */
+[data-theme-palette='ocean'] {
+  --theme-primary: oklch(0.56 0.08 230);
+  --theme-primary-light: oklch(0.66 0.09 230);
+  --theme-primary-dark: oklch(0.46 0.07 230);
+  --theme-secondary: oklch(0.68 0.07 220);
+  --theme-secondary-light: oklch(0.78 0.08 220);
+  --theme-accent: oklch(0.76 0.06 215);
+  --theme-accent-light: oklch(0.86 0.05 215);
+  --theme-shadow: oklch(0.56 0.08 230 / 0.25);
+  --theme-shadow-hover: oklch(0.56 0.08 230 / 0.35);
+}
+.dark [data-theme-palette='ocean'],
+.dark[data-theme-palette='ocean'] {
+  --theme-primary: oklch(0.72 0.1 230);
+  --theme-primary-light: oklch(0.8 0.11 230);
+  --theme-primary-dark: oklch(0.64 0.09 230);
+  --theme-secondary: oklch(0.8 0.09 220);
+  --theme-secondary-light: oklch(0.86 0.1 220);
+  --theme-accent: oklch(0.84 0.08 215);
+  --theme-accent-light: oklch(0.9 0.06 215);
+  --theme-shadow: oklch(0.72 0.1 230 / 0.3);
+  --theme-shadow-hover: oklch(0.72 0.1 230 / 0.45);
+}
+
+/* 🏜️ EARTH - Rich earth tones and clay soil */
+[data-theme-palette='earth'] {
+  --theme-primary: oklch(0.52 0.08 45);
+  --theme-primary-light: oklch(0.62 0.09 45);
+  --theme-primary-dark: oklch(0.42 0.07 45);
+  --theme-secondary: oklch(0.48 0.08 40);
+  --theme-secondary-light: oklch(0.58 0.09 40);
+  --theme-accent: oklch(0.5 0.08 35);
+  --theme-accent-light: oklch(0.6 0.09 35);
+  --theme-shadow: oklch(0.52 0.08 45 / 0.25);
+  --theme-shadow-hover: oklch(0.52 0.08 45 / 0.35);
+}
+.dark [data-theme-palette='earth'],
+.dark[data-theme-palette='earth'] {
+  --theme-primary: oklch(0.68 0.1 45);
+  --theme-primary-light: oklch(0.76 0.11 45);
+  --theme-primary-dark: oklch(0.6 0.09 45);
+  --theme-secondary: oklch(0.65 0.1 40);
+  --theme-secondary-light: oklch(0.73 0.11 40);
+  --theme-accent: oklch(0.68 0.1 35);
+  --theme-accent-light: oklch(0.76 0.11 35);
+  --theme-shadow: oklch(0.68 0.1 45 / 0.3);
+  --theme-shadow-hover: oklch(0.68 0.1 45 / 0.45);
 }
 
 @theme inline {

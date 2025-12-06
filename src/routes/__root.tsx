@@ -22,6 +22,30 @@ interface MyRouterContext {
   queryClient: QueryClient
 }
 
+// Inline script to prevent theme flash on page load
+// This runs before React hydration to set the correct theme immediately
+const themeInitScript = `
+(function() {
+  try {
+    var stored = localStorage.getItem('portfolio-theme-config');
+    var theme = stored ? JSON.parse(stored) : { mode: 'system', palette: 'mahogany' };
+    var mode = theme.mode;
+    var palette = theme.palette || 'mahogany';
+    
+    if (mode === 'system') {
+      mode = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+    
+    document.documentElement.classList.add(mode);
+    document.documentElement.setAttribute('data-theme-palette', palette);
+  } catch (e) {
+    var systemMode = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    document.documentElement.classList.add(systemMode);
+    document.documentElement.setAttribute('data-theme-palette', 'mahogany');
+  }
+})();
+`
+
 export const Route = createRootRouteWithContext<MyRouterContext>()({
   head: () => ({
     meta: [
@@ -51,6 +75,8 @@ function RootDocument({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <head>
+        {/* Inline script to set theme before paint - prevents flash */}
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
         <HeadContent />
       </head>
       <body>
