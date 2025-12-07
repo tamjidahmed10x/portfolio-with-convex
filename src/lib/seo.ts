@@ -45,7 +45,7 @@ export const DEFAULT_SEO: SEOConfig = {
 }
 
 // Base URL for the site (used for absolute URLs)
-export const SITE_URL = 'https://portfolio-with-convex.tamjid10x.workers.dev'
+export const SITE_URL = 'https://portfolio.tamjid10x.workers.dev'
 
 /**
  * Generate complete SEO meta tags for TanStack Start head() function

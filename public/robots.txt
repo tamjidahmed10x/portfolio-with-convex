@@ -5,7 +5,7 @@ User-agent: *
 Allow: /
 
 # Sitemaps - Dynamic sitemap endpoint
-Sitemap: https://portfolio-with-convex.tamjid10x.workers.dev/api/sitemap
+Sitemap: https://portfolio.tamjid10x.workers.dev/api/sitemap
 
 # Crawl-delay for politeness
 Crawl-delay: 1
