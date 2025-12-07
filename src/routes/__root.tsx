@@ -9,6 +9,7 @@ import { TanStackDevtools } from '@tanstack/react-devtools'
 import { MotionConfig } from 'motion/react'
 
 import Header from '../components/Header'
+import Footer from '../components/Footer'
 
 import ConvexProvider from '../integrations/convex/provider'
 
@@ -95,6 +96,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
             <ConvexProvider>
               <Header />
               <main className="">{children}</main>
+              <Footer />
               <TanStackDevtools
                 config={{
                   position: 'bottom-right',
