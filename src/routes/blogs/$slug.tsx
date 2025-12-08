@@ -90,7 +90,7 @@ function BlogDetailPage() {
       />
 
       <main className="relative z-10">
-        <div className="relative h-[50vh] min-h-[400px] overflow-hidden">
+        <div className="relative h-[60vh] min-h-[350px] sm:min-h-[400px] overflow-hidden">
           <motion.img
             src={post.coverImage}
             alt={post.title}
@@ -116,10 +116,10 @@ function BlogDetailPage() {
             </ThemeLink>
           </motion.div>
 
-          <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-8 lg:p-12">
+          <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-8 lg:p-12">
             <div className="mx-auto max-w-4xl">
               <motion.div
-                className="mb-4 flex items-center gap-2 text-sm text-white/70"
+                className="mb-3 sm:mb-4 flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm text-white/70"
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3 }}
@@ -132,19 +132,19 @@ function BlogDetailPage() {
               </motion.div>
 
               <motion.div
-                className="mb-4"
+                className="mb-3 sm:mb-4"
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 }}
               >
-                <span className="inline-flex items-center gap-1.5 rounded-full bg-white/20 px-3 py-1.5 text-sm font-bold text-white backdrop-blur-md">
-                  <CategoryIcon className="size-4" />
+                <span className="inline-flex items-center gap-1 sm:gap-1.5 rounded-full bg-white/20 px-2.5 sm:px-3 py-1 sm:py-1.5 text-xs sm:text-sm font-bold text-white backdrop-blur-md">
+                  <CategoryIcon className="size-3 sm:size-4" />
                   {post.category}
                 </span>
               </motion.div>
 
               <motion.h1
-                className="mb-6 text-3xl font-bold leading-tight text-white sm:text-4xl lg:text-5xl"
+                className="mb-4 sm:mb-6 text-2xl font-bold leading-tight text-white sm:text-3xl md:text-4xl lg:text-5xl"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5 }}
@@ -153,7 +153,7 @@ function BlogDetailPage() {
               </motion.h1>
 
               <motion.div
-                className="flex flex-wrap items-center gap-4 text-sm text-white/80"
+                className="flex flex-col gap-3 text-sm text-white/80 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4"
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.6 }}
@@ -162,41 +162,43 @@ function BlogDetailPage() {
                   <img
                     src={post.author.avatar}
                     alt={post.author.name}
-                    className="size-10 rounded-full border-2 border-white/30"
+                    className="size-8 sm:size-10 rounded-full border-2 border-white/30"
                   />
                   <div>
-                    <div className="font-semibold text-white">
+                    <div className="text-sm font-semibold text-white">
                       {post.author.name}
                     </div>
                     <div className="text-xs text-white/60">Author</div>
                   </div>
                 </div>
-                <div className="flex items-center gap-1.5">
-                  <Calendar className="size-4" />
-                  {post.publishedAt}
-                </div>
-                <div className="flex items-center gap-1.5">
-                  <Clock className="size-4" />
-                  {post.readTime}
-                </div>
-                <div className="flex items-center gap-1.5">
-                  <Eye className="size-4" />
-                  {post.views.toLocaleString()} views
+                <div className="flex flex-wrap items-center gap-3 text-xs sm:text-sm">
+                  <div className="flex items-center gap-1.5">
+                    <Calendar className="size-3.5 sm:size-4" />
+                    {post.publishedAt}
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    <Clock className="size-3.5 sm:size-4" />
+                    {post.readTime}
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    <Eye className="size-3.5 sm:size-4" />
+                    {post.views.toLocaleString()} views
+                  </div>
                 </div>
               </motion.div>
             </div>
           </div>
         </div>
 
-        <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-4xl px-4 py-8 sm:py-12 sm:px-6 lg:px-8">
           <div className="flex gap-8">
             <motion.article
-              className="flex-1"
+              className="min-w-0 flex-1"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.7 }}
             >
-              <div className="mb-8 flex flex-wrap gap-2">
+              <div className="mb-6 sm:mb-8 flex flex-wrap gap-2">
                 {post.tags.map((tag) => (
                   <span
                     key={tag}
@@ -209,36 +211,38 @@ function BlogDetailPage() {
 
               <div
                 className={cn(
-                  // Base prose styles
-                  'prose prose-lg max-w-none',
+                  // Base prose styles - smaller on mobile
+                  'prose prose-base sm:prose-lg max-w-none overflow-hidden',
                   // Dark mode
                   'dark:prose-invert',
                   // Headings
                   'prose-headings:font-bold prose-headings:tracking-tight prose-headings:text-slate-900 dark:prose-headings:text-white',
-                  'prose-h2:mt-14 prose-h2:mb-6 prose-h2:text-2xl prose-h2:border-l-4 prose-h2:border-[var(--theme-primary)] prose-h2:pl-4',
-                  'prose-h3:mt-10 prose-h3:mb-4 prose-h3:text-xl',
+                  'prose-h2:mt-8 prose-h2:mb-4 prose-h2:text-xl sm:prose-h2:mt-14 sm:prose-h2:mb-6 sm:prose-h2:text-2xl prose-h2:border-l-4 prose-h2:border-[var(--theme-primary)] prose-h2:pl-3 sm:prose-h2:pl-4',
+                  'prose-h3:mt-6 prose-h3:mb-3 prose-h3:text-lg sm:prose-h3:mt-10 sm:prose-h3:mb-4 sm:prose-h3:text-xl',
                   // Paragraphs
                   'prose-p:leading-relaxed prose-p:text-slate-600 dark:prose-p:text-slate-400',
                   // Links
-                  'prose-a:text-[var(--theme-primary)] prose-a:font-medium prose-a:no-underline prose-a:border-b prose-a:border-[var(--theme-primary)]/30 hover:prose-a:border-[var(--theme-primary)] prose-a:transition-colors',
+                  'prose-a:text-[var(--theme-primary)] prose-a:font-medium prose-a:no-underline prose-a:border-b prose-a:border-[var(--theme-primary)]/30 hover:prose-a:border-[var(--theme-primary)] prose-a:transition-colors prose-a:break-words',
                   // Strong/Bold
                   'prose-strong:text-slate-900 dark:prose-strong:text-white prose-strong:font-semibold',
                   // Inline code
-                  'prose-code:rounded-md prose-code:bg-slate-100 dark:prose-code:bg-slate-800 prose-code:px-2 prose-code:py-1 prose-code:text-sm prose-code:text-[var(--theme-primary)] prose-code:before:content-none prose-code:after:content-none prose-code:font-medium',
-                  // Code blocks
-                  'prose-pre:bg-slate-950 prose-pre:text-slate-100 prose-pre:rounded-xl prose-pre:shadow-xl prose-pre:border prose-pre:border-slate-800',
+                  'prose-code:rounded-md prose-code:bg-slate-100 dark:prose-code:bg-slate-800 prose-code:px-1.5 prose-code:py-0.5 prose-code:text-xs sm:prose-code:px-2 sm:prose-code:py-1 sm:prose-code:text-sm prose-code:text-[var(--theme-primary)] prose-code:before:content-none prose-code:after:content-none prose-code:font-medium',
+                  // Code blocks - important for mobile overflow
+                  '[&_pre]:overflow-x-auto [&_pre]:max-w-full',
+                  'prose-pre:bg-slate-950 prose-pre:text-slate-100 prose-pre:rounded-lg sm:prose-pre:rounded-xl prose-pre:shadow-xl prose-pre:border prose-pre:border-slate-800 prose-pre:text-xs sm:prose-pre:text-sm prose-pre:p-4',
+                  '[&_pre_code]:bg-transparent [&_pre_code]:p-0 [&_pre_code]:text-inherit [&_pre_code]:whitespace-pre [&_pre_code]:block [&_pre_code]:w-max [&_pre_code]:min-w-full',
                   // Images
-                  'prose-img:rounded-xl prose-img:shadow-lg',
+                  'prose-img:rounded-lg sm:prose-img:rounded-xl prose-img:shadow-lg',
                   // Blockquotes
-                  'prose-blockquote:border-l-4 prose-blockquote:border-[var(--theme-primary)] prose-blockquote:bg-[var(--theme-primary)]/5 prose-blockquote:rounded-r-xl prose-blockquote:py-2 prose-blockquote:px-6 prose-blockquote:not-italic prose-blockquote:text-slate-700 dark:prose-blockquote:text-slate-300',
+                  'prose-blockquote:border-l-4 prose-blockquote:border-[var(--theme-primary)] prose-blockquote:bg-[var(--theme-primary)]/5 prose-blockquote:rounded-r-lg sm:prose-blockquote:rounded-r-xl prose-blockquote:py-2 prose-blockquote:px-4 sm:prose-blockquote:px-6 prose-blockquote:not-italic prose-blockquote:text-slate-700 dark:prose-blockquote:text-slate-300 prose-blockquote:my-4 sm:prose-blockquote:my-6',
                   // Lists
-                  'prose-ul:my-6 prose-ol:my-6 prose-li:my-2 prose-li:marker:text-[var(--theme-primary)]',
+                  'prose-ul:my-4 prose-ol:my-4 sm:prose-ul:my-6 sm:prose-ol:my-6 prose-li:my-1 sm:prose-li:my-2 prose-li:marker:text-[var(--theme-primary)]',
                   // Horizontal rule
                   'prose-hr:border-slate-200 dark:prose-hr:border-slate-800',
                 )}
               >
                 {/* Lead paragraph / Excerpt */}
-                <p className="lead text-xl font-medium leading-relaxed text-slate-700 dark:text-slate-300 !mt-0 first-letter:text-5xl first-letter:font-bold first-letter:text-[var(--theme-primary)] first-letter:mr-1 first-letter:float-left first-letter:leading-none">
+                <p className="lead text-base sm:text-xl font-medium leading-relaxed text-slate-700 dark:text-slate-300 !mt-0 first-letter:text-4xl sm:first-letter:text-5xl first-letter:font-bold first-letter:text-[var(--theme-primary)] first-letter:mr-1 first-letter:float-left first-letter:leading-none">
                   {post.excerpt}
                 </p>
 
@@ -373,13 +377,13 @@ const fetchData = async (endpoint: string) => {
                 </p>
               </div>
 
-              <div className="mt-12 border-t border-slate-200 pt-8 dark:border-slate-800">
-                <div className="flex flex-wrap items-center justify-between gap-4">
-                  <div className="flex items-center gap-4">
+              <div className="mt-8 sm:mt-12 border-t border-slate-200 pt-6 sm:pt-8 dark:border-slate-800">
+                <div className="flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
+                  <div className="flex items-center gap-2 sm:gap-4">
                     <motion.button
                       onClick={() => setIsLiked(!isLiked)}
                       className={cn(
-                        'flex items-center gap-2 rounded-xl px-4 py-2 font-medium transition-colors',
+                        'flex flex-1 sm:flex-none items-center justify-center gap-2 rounded-xl px-3 sm:px-4 py-2.5 text-sm sm:text-base font-medium transition-colors',
                         isLiked
                           ? 'bg-red-500/10 text-red-500'
                           : 'bg-slate-100 text-slate-600 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-400 dark:hover:bg-slate-700',
@@ -387,7 +391,10 @@ const fetchData = async (endpoint: string) => {
                       whileTap={{ scale: 0.95 }}
                     >
                       <Heart
-                        className={cn('size-5', isLiked && 'fill-current')}
+                        className={cn(
+                          'size-4 sm:size-5',
+                          isLiked && 'fill-current',
+                        )}
                       />
                       {post.likes + (isLiked ? 1 : 0)}
                     </motion.button>
@@ -395,7 +402,7 @@ const fetchData = async (endpoint: string) => {
                     <motion.button
                       onClick={() => setIsBookmarked(!isBookmarked)}
                       className={cn(
-                        'flex items-center gap-2 rounded-xl px-4 py-2 font-medium transition-colors',
+                        'flex flex-1 sm:flex-none items-center justify-center gap-2 rounded-xl px-3 sm:px-4 py-2.5 text-sm sm:text-base font-medium transition-colors',
                         isBookmarked
                           ? 'bg-theme-primary/10 text-theme-primary'
                           : 'bg-slate-100 text-slate-600 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-400 dark:hover:bg-slate-700',
@@ -403,52 +410,55 @@ const fetchData = async (endpoint: string) => {
                       whileTap={{ scale: 0.95 }}
                     >
                       <Bookmark
-                        className={cn('size-5', isBookmarked && 'fill-current')}
+                        className={cn(
+                          'size-4 sm:size-5',
+                          isBookmarked && 'fill-current',
+                        )}
                       />
                       Save
                     </motion.button>
                   </div>
 
-                  <div className="flex items-center gap-2">
-                    <span className="text-sm font-medium text-slate-500">
+                  <div className="flex items-center justify-center gap-2 sm:justify-start">
+                    <span className="text-xs sm:text-sm font-medium text-slate-500">
                       Share:
                     </span>
                     <motion.button
                       className="rounded-lg bg-slate-100 p-2 text-slate-600 transition-colors hover:bg-theme-primary hover:text-white dark:bg-slate-800 dark:text-slate-400"
                       whileTap={{ scale: 0.95 }}
                     >
-                      <Twitter className="size-5" />
+                      <Twitter className="size-4 sm:size-5" />
                     </motion.button>
                     <motion.button
                       className="rounded-lg bg-slate-100 p-2 text-slate-600 transition-colors hover:bg-theme-secondary hover:text-white dark:bg-slate-800 dark:text-slate-400"
                       whileTap={{ scale: 0.95 }}
                     >
-                      <Linkedin className="size-5" />
+                      <Linkedin className="size-4 sm:size-5" />
                     </motion.button>
                     <motion.button
                       className="rounded-lg bg-slate-100 p-2 text-slate-600 transition-colors hover:bg-theme-primary hover:text-white dark:bg-slate-800 dark:text-slate-400"
                       whileTap={{ scale: 0.95 }}
                     >
-                      <Link2 className="size-5" />
+                      <Link2 className="size-4 sm:size-5" />
                     </motion.button>
                   </div>
                 </div>
 
-                <div className="mt-8 rounded-2xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-slate-900">
-                  <div className="flex items-start gap-4">
+                <div className="mt-6 sm:mt-8 rounded-xl sm:rounded-2xl border border-slate-200 bg-white p-4 sm:p-6 dark:border-slate-800 dark:bg-slate-900">
+                  <div className="flex flex-col items-center gap-3 text-center sm:flex-row sm:items-start sm:gap-4 sm:text-left">
                     <img
                       src={post.author.avatar}
                       alt={post.author.name}
-                      className="size-16 rounded-full border-2 border-theme-primary/20"
+                      className="size-14 sm:size-16 rounded-full border-2 border-theme-primary/20"
                     />
                     <div className="flex-1">
-                      <h3 className="text-lg font-bold text-slate-900 dark:text-white">
+                      <h3 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white">
                         {post.author.name}
                       </h3>
-                      <p className="mb-3 text-sm text-theme-primary">
+                      <p className="mb-2 sm:mb-3 text-xs sm:text-sm text-theme-primary">
                         Frontend Engineer & Technical Writer
                       </p>
-                      <p className="text-sm text-slate-600 dark:text-slate-400">
+                      <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400">
                         Passionate about creating beautiful user experiences and
                         sharing knowledge with the developer community. Follow
                         along for more insights on modern web development.
@@ -462,15 +472,15 @@ const fetchData = async (endpoint: string) => {
 
           {relatedPosts.length > 0 && (
             <motion.section
-              className="mt-16 border-t border-slate-200 pt-12 dark:border-slate-800"
+              className="mt-10 sm:mt-16 border-t border-slate-200 pt-8 sm:pt-12 dark:border-slate-800"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.8 }}
             >
-              <h2 className="mb-8 text-2xl font-bold text-slate-900 dark:text-white">
+              <h2 className="mb-6 sm:mb-8 text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">
                 Related Articles
               </h2>
-              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              <div className="grid gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 {relatedPosts.map((relatedPost) => {
                   const RelatedIcon = relatedPost.categoryIcon
                   return (
@@ -480,7 +490,7 @@ const fetchData = async (endpoint: string) => {
                       params={{ slug: relatedPost.slug }}
                       className="group overflow-hidden rounded-xl border border-slate-200 bg-white transition-all hover:border-theme-primary/50 hover:shadow-lg dark:border-slate-800 dark:bg-slate-900"
                     >
-                      <div className="relative h-40 overflow-hidden">
+                      <div className="relative h-32 sm:h-40 overflow-hidden">
                         <img
                           src={relatedPost.coverImage}
                           alt={relatedPost.title}
@@ -489,25 +499,25 @@ const fetchData = async (endpoint: string) => {
                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                         <span
                           className={cn(
-                            'absolute bottom-3 left-3 flex items-center gap-1 rounded-full bg-white/90 px-2 py-1 text-xs font-semibold backdrop-blur-sm',
+                            'absolute bottom-2 left-2 sm:bottom-3 sm:left-3 flex items-center gap-1 rounded-full bg-white/90 px-2 py-1 text-[10px] sm:text-xs font-semibold backdrop-blur-sm',
                             relatedPost.categoryColor,
                           )}
                         >
-                          <RelatedIcon className="size-3" />
+                          <RelatedIcon className="size-2.5 sm:size-3" />
                           {relatedPost.category}
                         </span>
                       </div>
-                      <div className="p-4">
-                        <h3 className="mb-2 line-clamp-2 font-bold text-slate-900 transition-colors group-hover:text-theme-primary dark:text-white">
+                      <div className="p-3 sm:p-4">
+                        <h3 className="mb-1.5 sm:mb-2 line-clamp-2 text-sm sm:text-base font-bold text-slate-900 transition-colors group-hover:text-theme-primary dark:text-white">
                           {relatedPost.title}
                         </h3>
-                        <div className="flex items-center gap-3 text-xs text-slate-500">
+                        <div className="flex items-center gap-2 sm:gap-3 text-[10px] sm:text-xs text-slate-500">
                           <span className="flex items-center gap-1">
-                            <Clock className="size-3" />
+                            <Clock className="size-2.5 sm:size-3" />
                             {relatedPost.readTime}
                           </span>
                           <span className="flex items-center gap-1">
-                            <Eye className="size-3" />
+                            <Eye className="size-2.5 sm:size-3" />
                             {relatedPost.views.toLocaleString()}
                           </span>
                         </div>

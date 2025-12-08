@@ -328,51 +328,56 @@ export const ThemeSwitcherCompact = () => {
 
   const currentPalette = themePalettes.find((p) => p.id === theme.palette)
 
+  const openWithTab = (tab: 'mode' | 'palette') => {
+    setActiveTab(tab)
+    setIsOpen(true)
+  }
+
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
-      <SheetTrigger asChild>
-        <div className="flex items-center gap-2">
-          {/* Theme Mode Toggle */}
-          <motion.button
-            className="flex size-10 items-center justify-center rounded-xl border border-slate-200/60 bg-white/80 transition-colors hover:bg-white dark:border-slate-700/60 dark:bg-slate-800/80 dark:hover:bg-slate-800"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+      <div className="flex items-center gap-2">
+        {/* Theme Mode Toggle - opens Mode tab */}
+        <motion.button
+          onClick={() => openWithTab('mode')}
+          className="flex size-10 items-center justify-center rounded-xl border border-slate-200/60 bg-white/80 transition-colors hover:bg-white dark:border-slate-700/60 dark:bg-slate-800/80 dark:hover:bg-slate-800"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          <motion.div
+            key={theme.mode}
+            initial={{ rotate: -90, opacity: 0 }}
+            animate={{ rotate: 0, opacity: 1 }}
+            transition={{ duration: 0.2 }}
           >
-            <motion.div
-              key={theme.mode}
-              initial={{ rotate: -90, opacity: 0 }}
-              animate={{ rotate: 0, opacity: 1 }}
-              transition={{ duration: 0.2 }}
-            >
-              {theme.mode === 'dark' ? (
-                <Moon className="size-5 text-slate-600 dark:text-slate-400" />
-              ) : (
-                <Sun className="size-5 text-slate-600 dark:text-slate-400" />
-              )}
-            </motion.div>
-          </motion.button>
+            {theme.mode === 'dark' ? (
+              <Moon className="size-5 text-slate-600 dark:text-slate-400" />
+            ) : (
+              <Sun className="size-5 text-slate-600 dark:text-slate-400" />
+            )}
+          </motion.div>
+        </motion.button>
 
-          {/* Palette Button */}
-          <motion.button
-            className="flex size-10 items-center justify-center gap-0.5 rounded-xl border border-slate-200/60 bg-white/80 transition-colors hover:bg-white dark:border-slate-700/60 dark:bg-slate-800/80 dark:hover:bg-slate-800"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <div
-              className="size-2.5 rounded-full"
-              style={{ backgroundColor: currentPalette?.preview.primary }}
-            />
-            <div
-              className="size-2.5 rounded-full"
-              style={{ backgroundColor: currentPalette?.preview.secondary }}
-            />
-            <div
-              className="size-2.5 rounded-full"
-              style={{ backgroundColor: currentPalette?.preview.accent }}
-            />
-          </motion.button>
-        </div>
-      </SheetTrigger>
+        {/* Palette Button - opens Colors tab */}
+        <motion.button
+          onClick={() => openWithTab('palette')}
+          className="flex size-10 items-center justify-center gap-0.5 rounded-xl border border-slate-200/60 bg-white/80 transition-colors hover:bg-white dark:border-slate-700/60 dark:bg-slate-800/80 dark:hover:bg-slate-800"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          <div
+            className="size-2.5 rounded-full"
+            style={{ backgroundColor: currentPalette?.preview.primary }}
+          />
+          <div
+            className="size-2.5 rounded-full"
+            style={{ backgroundColor: currentPalette?.preview.secondary }}
+          />
+          <div
+            className="size-2.5 rounded-full"
+            style={{ backgroundColor: currentPalette?.preview.accent }}
+          />
+        </motion.button>
+      </div>
 
       <SheetContent
         side="bottom"
