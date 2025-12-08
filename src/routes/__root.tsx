@@ -16,6 +16,7 @@ import 'mac-scrollbar/dist/mac-scrollbar.css'
 import { GlobalScrollbar } from 'mac-scrollbar'
 
 import TanStackQueryDevtools from '../integrations/tanstack-query/devtools'
+import { useIsMobile } from '../hooks/use-is-mobile'
 
 import {
   ThemeProvider,
@@ -74,6 +75,9 @@ function RootDocument({ children }: { children: React.ReactNode }) {
   // Parse theme from search params
   const initialTheme = parseThemeFromSearch(search as Record<string, unknown>)
 
+  // Disable GlobalScrollbar on mobile devices
+  const isMobile = useIsMobile()
+
   return (
     <html lang="en" className={initialTheme.mode}>
       <head>
@@ -99,7 +103,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
               <Header />
               <main className="">{children}</main>
               <Footer />
-              <GlobalScrollbar />
+              {!isMobile && <GlobalScrollbar />}
               <TanStackDevtools
                 config={{
                   position: 'bottom-right',
