@@ -9,12 +9,28 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
+import { Route as ManifestDotjsonRouteImport } from './routes/manifest[.]json'
 import { Route as BlogsRouteImport } from './routes/blogs'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as BlogsSlugRouteImport } from './routes/blogs/$slug'
-import { Route as ApiSitemapRouteImport } from './routes/api/sitemap'
-import { Route as ApiRobotsRouteImport } from './routes/api/robots'
 
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RobotsDottxtRoute = RobotsDottxtRouteImport.update({
+  id: '/robots.txt',
+  path: '/robots.txt',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ManifestDotjsonRoute = ManifestDotjsonRouteImport.update({
+  id: '/manifest.json',
+  path: '/manifest.json',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const BlogsRoute = BlogsRouteImport.update({
   id: '/blogs',
   path: '/blogs',
@@ -30,62 +46,90 @@ const BlogsSlugRoute = BlogsSlugRouteImport.update({
   path: '/$slug',
   getParentRoute: () => BlogsRoute,
 } as any)
-const ApiSitemapRoute = ApiSitemapRouteImport.update({
-  id: '/api/sitemap',
-  path: '/api/sitemap',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiRobotsRoute = ApiRobotsRouteImport.update({
-  id: '/api/robots',
-  path: '/api/robots',
-  getParentRoute: () => rootRouteImport,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/blogs': typeof BlogsRouteWithChildren
-  '/api/robots': typeof ApiRobotsRoute
-  '/api/sitemap': typeof ApiSitemapRoute
+  '/manifest.json': typeof ManifestDotjsonRoute
+  '/robots.txt': typeof RobotsDottxtRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/blogs/$slug': typeof BlogsSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/blogs': typeof BlogsRouteWithChildren
-  '/api/robots': typeof ApiRobotsRoute
-  '/api/sitemap': typeof ApiSitemapRoute
+  '/manifest.json': typeof ManifestDotjsonRoute
+  '/robots.txt': typeof RobotsDottxtRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/blogs/$slug': typeof BlogsSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/blogs': typeof BlogsRouteWithChildren
-  '/api/robots': typeof ApiRobotsRoute
-  '/api/sitemap': typeof ApiSitemapRoute
+  '/manifest.json': typeof ManifestDotjsonRoute
+  '/robots.txt': typeof RobotsDottxtRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/blogs/$slug': typeof BlogsSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/blogs' | '/api/robots' | '/api/sitemap' | '/blogs/$slug'
+  fullPaths:
+    | '/'
+    | '/blogs'
+    | '/manifest.json'
+    | '/robots.txt'
+    | '/sitemap.xml'
+    | '/blogs/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/blogs' | '/api/robots' | '/api/sitemap' | '/blogs/$slug'
+  to:
+    | '/'
+    | '/blogs'
+    | '/manifest.json'
+    | '/robots.txt'
+    | '/sitemap.xml'
+    | '/blogs/$slug'
   id:
     | '__root__'
     | '/'
     | '/blogs'
-    | '/api/robots'
-    | '/api/sitemap'
+    | '/manifest.json'
+    | '/robots.txt'
+    | '/sitemap.xml'
     | '/blogs/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   BlogsRoute: typeof BlogsRouteWithChildren
-  ApiRobotsRoute: typeof ApiRobotsRoute
-  ApiSitemapRoute: typeof ApiSitemapRoute
+  ManifestDotjsonRoute: typeof ManifestDotjsonRoute
+  RobotsDottxtRoute: typeof RobotsDottxtRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/robots.txt': {
+      id: '/robots.txt'
+      path: '/robots.txt'
+      fullPath: '/robots.txt'
+      preLoaderRoute: typeof RobotsDottxtRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/manifest.json': {
+      id: '/manifest.json'
+      path: '/manifest.json'
+      fullPath: '/manifest.json'
+      preLoaderRoute: typeof ManifestDotjsonRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/blogs': {
       id: '/blogs'
       path: '/blogs'
@@ -107,20 +151,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BlogsSlugRouteImport
       parentRoute: typeof BlogsRoute
     }
-    '/api/sitemap': {
-      id: '/api/sitemap'
-      path: '/api/sitemap'
-      fullPath: '/api/sitemap'
-      preLoaderRoute: typeof ApiSitemapRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/robots': {
-      id: '/api/robots'
-      path: '/api/robots'
-      fullPath: '/api/robots'
-      preLoaderRoute: typeof ApiRobotsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
   }
 }
 
@@ -137,8 +167,9 @@ const BlogsRouteWithChildren = BlogsRoute._addFileChildren(BlogsRouteChildren)
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BlogsRoute: BlogsRouteWithChildren,
-  ApiRobotsRoute: ApiRobotsRoute,
-  ApiSitemapRoute: ApiSitemapRoute,
+  ManifestDotjsonRoute: ManifestDotjsonRoute,
+  RobotsDottxtRoute: RobotsDottxtRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

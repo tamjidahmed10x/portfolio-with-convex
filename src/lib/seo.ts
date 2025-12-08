@@ -3,6 +3,8 @@
  * Provides reusable meta tags for Open Graph, Twitter Cards, and basic SEO
  */
 
+import { getOriginFromRequest } from './sitemap/utils'
+
 export interface SEOConfig {
   title: string
   description: string
@@ -22,6 +24,8 @@ export interface SEOConfig {
   noIndex?: boolean
   canonical?: string
 }
+
+export { getOriginFromRequest }
 
 // Default site configuration
 export const DEFAULT_SEO: SEOConfig = {
@@ -44,30 +48,64 @@ export const DEFAULT_SEO: SEOConfig = {
   ],
 }
 
-// Base URL for the site (used for absolute URLs)
-export const SITE_URL = 'https://portfolio.tamjid10x.workers.dev'
+/**
+ * Get site URL dynamically
+ * - Server-side: Use request to get origin
+ * - Client-side: Use window.location.origin
+ * - Fallback: Use environment variable or default
+ */
+export function getSiteUrl(request?: Request): string {
+  // Server-side: try to get from request
+  if (request) {
+    try {
+      return getOriginFromRequest(request)
+    } catch {
+      // Fall through to other methods
+    }
+  }
+
+  // Client-side: use window.location.origin
+  if (typeof window !== 'undefined' && window.location?.origin) {
+    return window.location.origin
+  }
+
+  // Fallback to environment variable (for build time)
+  const envUrl = (import.meta as any).env?.VITE_SITE_URL
+  if (envUrl) {
+    return envUrl
+  }
+
+  // Final fallback for SSR without request context
+  return 'https://portfolio.tamjid10x.workers.dev'
+}
 
 /**
  * Generate complete SEO meta tags for TanStack Start head() function
+ * @param config - SEO configuration options
+ * @param request - Optional Request object for dynamic URL resolution (server-side)
  */
-export function generateSEOMeta(config: Partial<SEOConfig> = {}) {
+export function generateSEOMeta(
+  config: Partial<SEOConfig> = {},
+  request?: Request,
+) {
   const seo = { ...DEFAULT_SEO, ...config }
+  const siteUrl = getSiteUrl(request)
 
   // Build absolute URL for image
   const imageUrl = seo.image
     ? seo.image.startsWith('http')
       ? seo.image
-      : `${SITE_URL}${seo.image.startsWith('/') ? '' : '/'}${seo.image}`
-    : `${SITE_URL}/tamjid-ahmed.webp`
+      : `${siteUrl}${seo.image.startsWith('/') ? '' : '/'}${seo.image}`
+    : `${siteUrl}/tamjid-ahmed.webp`
 
   // Build canonical URL
   const canonicalUrl = seo.canonical
     ? seo.canonical.startsWith('http')
       ? seo.canonical
-      : `${SITE_URL}${seo.canonical.startsWith('/') ? '' : '/'}${seo.canonical}`
+      : `${siteUrl}${seo.canonical.startsWith('/') ? '' : '/'}${seo.canonical}`
     : seo.url
-      ? `${SITE_URL}${seo.url.startsWith('/') ? '' : '/'}${seo.url}`
-      : SITE_URL
+      ? `${siteUrl}${seo.url.startsWith('/') ? '' : '/'}${seo.url}`
+      : siteUrl
 
   // Build full title
   const fullTitle =
@@ -174,56 +212,72 @@ export function generateSEOMeta(config: Partial<SEOConfig> = {}) {
 
 /**
  * Generate SEO for blog posts
+ * @param post - Blog post data
+ * @param request - Optional Request object for dynamic URL resolution
  */
-export function generateBlogSEO(post: {
-  title: string
-  excerpt: string
-  coverImage: string
-  slug: string
-  publishedAt: string
-  author: { name: string }
-  category: string
-  tags: string[]
-}) {
-  return generateSEOMeta({
-    title: post.title,
-    description: post.excerpt,
-    image: post.coverImage,
-    url: `/blogs/${post.slug}`,
-    type: 'article',
-    author: post.author.name,
-    publishedTime: new Date(post.publishedAt).toISOString(),
-    section: post.category,
-    tags: post.tags,
-  })
+export function generateBlogSEO(
+  post: {
+    title: string
+    excerpt: string
+    coverImage: string
+    slug: string
+    publishedAt: string
+    author: { name: string }
+    category: string
+    tags: string[]
+  },
+  request?: Request,
+) {
+  return generateSEOMeta(
+    {
+      title: post.title,
+      description: post.excerpt,
+      image: post.coverImage,
+      url: `/blogs/${post.slug}`,
+      type: 'article',
+      author: post.author.name,
+      publishedTime: new Date(post.publishedAt).toISOString(),
+      section: post.category,
+      tags: post.tags,
+    },
+    request,
+  )
 }
 
 /**
  * Generate SEO for blog listing page
+ * @param request - Optional Request object for dynamic URL resolution
  */
-export function generateBlogListingSEO() {
-  return generateSEOMeta({
-    title: 'Blog',
-    description:
-      'Explore articles on React, TypeScript, Next.js, and modern web development. Tips, tutorials, and insights from a full-stack developer.',
-    url: '/blogs',
-    keywords: [
-      'Web Development Blog',
-      'React Tutorials',
-      'TypeScript Guide',
-      'Frontend Development',
-      'Programming Articles',
-    ],
-  })
+export function generateBlogListingSEO(request?: Request) {
+  return generateSEOMeta(
+    {
+      title: 'Blog',
+      description:
+        'Explore articles on React, TypeScript, Next.js, and modern web development. Tips, tutorials, and insights from a full-stack developer.',
+      url: '/blogs',
+      keywords: [
+        'Web Development Blog',
+        'React Tutorials',
+        'TypeScript Guide',
+        'Frontend Development',
+        'Programming Articles',
+      ],
+    },
+    request,
+  )
 }
 
 /**
  * Generate SEO for home page
+ * @param request - Optional Request object for dynamic URL resolution
  */
-export function generateHomeSEO() {
-  return generateSEOMeta({
-    title: DEFAULT_SEO.title,
-    description: DEFAULT_SEO.description,
-    url: '/',
-  })
+export function generateHomeSEO(request?: Request) {
+  return generateSEOMeta(
+    {
+      title: DEFAULT_SEO.title,
+      description: DEFAULT_SEO.description,
+      url: '/',
+    },
+    request,
+  )
 }
