@@ -2,7 +2,7 @@ import { BorderBeam } from '@/components/magicui/border-beam'
 import { DotPattern } from '@/components/magicui/dot-pattern'
 import { cn } from '@/lib/utils'
 import { motion, type Variants } from 'motion/react'
-import { SiGithub, SiX } from '@icons-pack/react-simple-icons'
+import { SiGithub, SiX, SiFacebook } from '@icons-pack/react-simple-icons'
 import {
   Mail,
   MapPin,
@@ -53,8 +53,8 @@ const contactDetails: ContactInfo[] = [
   {
     icon: Mail,
     label: 'Email',
-    value: 'tamjidahammad10@gmail.com',
-    href: 'mailto:tamjidahammad10@gmail.com',
+    value: 'tamjid10x@gmail.com',
+    href: 'mailto:tamjid10x@gmail.com',
   },
   {
     icon: Phone,
@@ -80,20 +80,26 @@ const socialLinks: SocialLink[] = [
   {
     icon: SiGithub,
     label: 'GitHub',
-    href: 'https://github.com/tamjid-ahammad',
+    href: 'https://github.com/tamjidahmed10x',
     color: 'hover:text-slate-900 dark:hover:text-white',
   },
   {
     icon: Linkedin,
     label: 'LinkedIn',
-    href: 'https://linkedin.com/in/tamjid-ahammad',
+    href: 'https://www.linkedin.com/in/tamjid-ahmed-b11683230/',
     color: 'hover:text-theme-primary',
   },
   {
     icon: SiX,
-    label: 'Twitter',
-    href: 'https://twitter.com/tamjid_ahammad',
+    label: 'X (Twitter)',
+    href: 'https://x.com/tamjid10x',
     color: 'hover:text-slate-900 dark:hover:text-white',
+  },
+  {
+    icon: SiFacebook,
+    label: 'Facebook',
+    href: 'https://www.facebook.com/tamjid.ahmed.913505',
+    color: 'hover:text-blue-600 dark:hover:text-blue-400',
   },
 ]
 

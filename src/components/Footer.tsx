@@ -1,25 +1,31 @@
-import { Heart, Github, Linkedin, Mail, Twitter } from 'lucide-react'
+import { Heart, Github, Linkedin, Mail } from 'lucide-react'
+import { SiX, SiFacebook } from '@icons-pack/react-simple-icons'
 import { ThemeLink } from './theme-link'
 
 const SOCIAL_LINKS = [
   {
     name: 'GitHub',
-    href: 'https://github.com/tamjid10x',
+    href: 'https://github.com/tamjidahmed10x',
     icon: Github,
   },
   {
     name: 'LinkedIn',
-    href: 'https://linkedin.com/in/tamjid10x',
+    href: 'https://www.linkedin.com/in/tamjid-ahmed-b11683230/',
     icon: Linkedin,
   },
   {
-    name: 'Twitter',
-    href: 'https://twitter.com/tamjid10x',
-    icon: Twitter,
+    name: 'X',
+    href: 'https://x.com/tamjid10x',
+    icon: SiX,
+  },
+  {
+    name: 'Facebook',
+    href: 'https://www.facebook.com/tamjid.ahmed.913505',
+    icon: SiFacebook,
   },
   {
     name: 'Email',
-    href: 'mailto:contact@tamjid10x.com',
+    href: 'mailto:tamjid10x@gmail.com',
     icon: Mail,
   },
 ] as const

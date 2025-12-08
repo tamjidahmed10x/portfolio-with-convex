@@ -155,17 +155,17 @@ const HeroSection = () => {
           {/* Stats or Social Proof */}
           <motion.div className="flex flex-wrap items-center justify-center gap-6 pt-4 md:justify-start">
             <a
-              href="https://github.com/tamjid-ahammad"
+              href="https://github.com/tamjidahmed10x"
               target="_blank"
               rel="noreferrer"
               className="group flex items-center gap-2 text-sm text-slate-500 transition-colors hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
             >
               <SiGithub className="size-5" />
-              <span className="font-medium">@tamjid-ahammad</span>
+              <span className="font-medium">@tamjidahmed10x</span>
             </a>
             <div className="hidden h-5 w-px bg-slate-300 dark:bg-slate-700 sm:block" />
             <a
-              href="/resume.pdf"
+              href="/TamjidCV.pdf"
               download
               className="group flex items-center gap-2 text-sm font-medium text-theme-primary transition-colors hover:text-theme-primary-dark"
             >
