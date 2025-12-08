@@ -180,7 +180,7 @@ const Header = () => {
   return (
     <header
       className={cn(
-        'fixed inset-x-0 top-0 z-50 border-b border-slate-200/60 bg-white/95 backdrop-blur-xl dark:border-slate-700/60 dark:bg-slate-900/95',
+        'fixed inset-x-0 top-0 z-20 border-b border-slate-200/60 bg-white/95 backdrop-blur-xl dark:border-slate-700/60 dark:bg-slate-900/95',
         isScrolled &&
           'shadow-lg shadow-slate-900/5 transition-shadow duration-300 dark:shadow-black/20',
       )}

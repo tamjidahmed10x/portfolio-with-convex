@@ -62,6 +62,9 @@ importers:
       lucide-react:
         specifier: ^0.544.0
         version: 0.544.0(react@19.2.0)
+      mac-scrollbar:
+        specifier: ^0.13.8
+        version: 0.13.8
       motion:
         specifier: ^12.23.24
         version: 12.23.24(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
@@ -2844,6 +2847,9 @@ packages:
   lz-string@1.5.0:
     resolution: {integrity: sha512-h5bgJWpxJNswbU7qCrV0tIKQCaS3blPDrqKWx+QxzuzL1zGUzij9XCWLrSLsJPu5t+eWA/ycetzYAO5IOMcWAQ==}
     hasBin: true
+
+  mac-scrollbar@0.13.8:
+    resolution: {integrity: sha512-lpu9fV8lx7oUHzM4CwgbMOXlLJ+1OGdmxwXmreadq8+8pmnFAEJ1khUdqpFOhbD32vJORLu6RE8GO2+ODpf12w==}
 
   magic-string@0.30.21:
     resolution: {integrity: sha512-vd2F4YUyEXKGcLHoq+TEyCjxueSeHnFxyyjNp80yg0XV4vUhnDer/lvvlqM/arB5bXQN5K2/3oinyCRyx8T2CQ==}
@@ -6224,6 +6230,8 @@ snapshots:
       react: 19.2.0
 
   lz-string@1.5.0: {}
+
+  mac-scrollbar@0.13.8: {}
 
   magic-string@0.30.21:
     dependencies:

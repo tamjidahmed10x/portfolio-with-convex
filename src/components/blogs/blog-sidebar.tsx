@@ -589,7 +589,7 @@ export const BlogSidebar = ({
               animate={{ x: 0 }}
               exit={{ x: '-100%' }}
               transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-              className="fixed inset-y-0 left-0 z-50 w-80 border-r border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900 lg:hidden"
+              className="fixed inset-y-0 left-0 z-20 w-80 border-r border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900 lg:hidden"
             >
               {sidebarContent}
             </motion.aside>

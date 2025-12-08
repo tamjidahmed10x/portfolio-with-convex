@@ -296,7 +296,7 @@ export const BlogLandingPage = () => {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.8 }}
             onClick={scrollToTop}
-            className="fixed bottom-6 right-6 z-50 rounded-full bg-gradient-theme p-3 text-white shadow-theme transition-shadow hover:shadow-theme-hover"
+            className="fixed bottom-6 right-6 z-20 rounded-full bg-gradient-theme p-3 text-white shadow-theme transition-shadow hover:shadow-theme-hover"
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
           >

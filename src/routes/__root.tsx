@@ -12,6 +12,8 @@ import Header from '../components/Header'
 import Footer from '../components/Footer'
 
 import ConvexProvider from '../integrations/convex/provider'
+import 'mac-scrollbar/dist/mac-scrollbar.css'
+import { GlobalScrollbar } from 'mac-scrollbar'
 
 import TanStackQueryDevtools from '../integrations/tanstack-query/devtools'
 
@@ -97,6 +99,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
               <Header />
               <main className="">{children}</main>
               <Footer />
+              <GlobalScrollbar />
               <TanStackDevtools
                 config={{
                   position: 'bottom-right',

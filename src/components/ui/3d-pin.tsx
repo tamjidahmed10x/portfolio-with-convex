@@ -44,7 +44,7 @@ export const PinContainer = ({
   return (
     <a
       className={cn(
-        'relative group/pin z-50  cursor-pointer',
+        'relative group/pin z-20  cursor-pointer',
         containerClassName,
       )}
       onMouseEnter={onMouseEnter}
@@ -64,7 +64,7 @@ export const PinContainer = ({
           }}
           className={cn(cardBaseClass, cardVariantClass)}
         >
-          <div className={cn(' relative z-50 ', childVariantClass, className)}>
+          <div className={cn(' relative z-20 ', childVariantClass, className)}>
             {children}
           </div>
         </div>
