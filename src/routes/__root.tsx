@@ -1,10 +1,8 @@
 import {
   HeadContent,
   Scripts,
-  Outlet,
   createRootRouteWithContext,
   retainSearchParams,
-  useMatches,
 } from '@tanstack/react-router'
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 import { TanStackDevtools } from '@tanstack/react-devtools'
@@ -68,7 +66,6 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
   },
 
   shellComponent: RootDocument,
-  component: RootComponent,
 })
 
 function RootDocument({ children }: { children: React.ReactNode }) {
@@ -103,7 +100,9 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <MotionConfig reducedMotion="user">
           <ThemeProvider initialTheme={initialTheme}>
             <ConvexProvider>
-              {children}
+              <Header />
+              <main className="pt-16">{children}</main>
+              <Footer />
               {!isMobile && <GlobalScrollbar />}
               <TanStackDevtools
                 config={{
@@ -123,29 +122,5 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <Scripts />
       </body>
     </html>
-  )
-}
-
-// RootComponent handles layout based on route
-function RootComponent() {
-  const matches = useMatches()
-  
-  // Check if current route is dashboard
-  const isDashboard = matches.some(match => match.pathname.startsWith('/dashboard'))
-
-  if (isDashboard) {
-    // Dashboard has its own layout - no header/footer
-    return <Outlet />
-  }
-
-  // Normal pages with header and footer
-  return (
-    <>
-      <Header />
-      <main className="pt-16">
-        <Outlet />
-      </main>
-      <Footer />
-    </>
   )
 }
