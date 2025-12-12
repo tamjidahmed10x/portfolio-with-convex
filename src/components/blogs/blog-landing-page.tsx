@@ -1,20 +1,11 @@
-import { cn } from '@/lib/utils'
-import { motion, AnimatePresence } from 'motion/react'
 import { DotPattern } from '@/components/magicui/dot-pattern'
-import { BlogSidebar, type SortOption, type Category } from './blog-sidebar'
+import { cn } from '@/lib/utils'
+import { ArrowUp, BookOpen, Newspaper, Sparkles } from 'lucide-react'
+import { AnimatePresence, motion } from 'motion/react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { BlogCard } from './blog-card'
 import { blogPosts } from './blog-data'
-import {
-  PenTool,
-  BookOpen,
-  Sparkles,
-  Menu,
-  LayoutGrid,
-  List,
-  Newspaper,
-  ArrowUp,
-} from 'lucide-react'
-import { useState, useMemo, useCallback, useEffect } from 'react'
+import { BlogSidebar, type Category, type SortOption } from './blog-sidebar'
 
 // Map categories for filtering
 const categoryMap: Record<Category, string[]> = {

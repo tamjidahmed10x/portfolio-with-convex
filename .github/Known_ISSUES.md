@@ -6,3 +6,4 @@
 6. /BLOGS ER sob kisui static.
 7. responsive design e Color pallate e jeno dropdown er moton kisu thake.
 8. footer nai -f
+9. filter e responsive kaj kore na. /blogs quick filter.e

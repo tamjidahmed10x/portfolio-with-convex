@@ -28,7 +28,7 @@ const HeroSection = () => {
   return (
     <section
       id="home"
-      className="relative mt-4 w-full overflow-hidden bg-gradient-to-b from-slate-50 via-white to-slate-100/50 py-16 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 md:mt-16 lg:py-28"
+      className="relative  w-full overflow-hidden bg-gradient-to-b from-slate-50 via-white to-slate-100/50 py-16 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 lg:py-28"
     >
       {/* Background Pattern */}
       {!prefersReducedMotion && (
