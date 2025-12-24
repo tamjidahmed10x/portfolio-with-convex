@@ -425,9 +425,7 @@ const Projects = () => {
             : { x: 0, opacity: 0.4 }
         }
         transition={
-          shouldAnimate
-            ? { duration: 10, repeat: Infinity }
-            : { duration: 0 }
+          shouldAnimate ? { duration: 10, repeat: Infinity } : { duration: 0 }
         }
       />
       <motion.div
@@ -514,10 +512,7 @@ const Projects = () => {
                   color: 'bg-gradient-theme-accent',
                 },
               ].map((stat, index) => (
-                <div
-                  key={index}
-                  className="text-center"
-                >
+                <div key={index} className="text-center">
                   <motion.div
                     className={cn(
                       'mx-auto mb-2 flex size-10 items-center justify-center rounded-xl shadow-md sm:size-12',

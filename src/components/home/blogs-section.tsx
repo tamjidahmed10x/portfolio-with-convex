@@ -312,9 +312,7 @@ const BlogsSection = () => {
             : { x: 0, opacity: 0.4 }
         }
         transition={
-          shouldAnimate
-            ? { duration: 10, repeat: Infinity }
-            : { duration: 0 }
+          shouldAnimate ? { duration: 10, repeat: Infinity } : { duration: 0 }
         }
       />
       <motion.div

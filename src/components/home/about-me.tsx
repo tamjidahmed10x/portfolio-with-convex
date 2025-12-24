@@ -56,8 +56,6 @@ const contactInfo: ContactInfo = {
   permanentAddress: 'Tangail, Bangladesh',
 }
 
-
-
 const highlights = [
   {
     icon: Code2,

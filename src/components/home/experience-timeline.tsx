@@ -48,8 +48,6 @@ const experiences: Experience[] = [
   },
 ]
 
-
-
 const formatDate = (date: Date) => {
   return date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' })
 }
@@ -119,10 +117,7 @@ const ExperienceTimeline = () => {
             const isPresent = exp.endDate === null
 
             return (
-              <div
-                key={exp.id}
-                className="relative"
-              >
+              <div key={exp.id} className="relative">
                 {/* Timeline Node - Desktop */}
                 <div className="absolute left-1/2 top-0 z-10 hidden -translate-x-1/2 sm:block">
                   <motion.div
