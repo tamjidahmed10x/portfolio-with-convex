@@ -1,7 +1,8 @@
 import { BorderBeam } from '@/components/magicui/border-beam'
 import { DotPattern } from '@/components/magicui/dot-pattern'
 import { cn } from '@/lib/utils'
-import { motion, type Variants } from 'motion/react'
+import { motion, useInView } from 'motion/react'
+import { useRef } from 'react'
 import {
   BookOpen,
   Calendar,
@@ -149,8 +150,7 @@ const BlogCard = ({ post, index }: { post: BlogPost; index: number }) => {
   const colors = cardColors[index]
 
   return (
-    <motion.article
-      variants={itemVariants}
+    <article
       className="group relative"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -274,19 +274,23 @@ const BlogCard = ({ post, index }: { post: BlogPost; index: number }) => {
           }
         />
       </div>
-    </motion.article>
+    </article>
   )
 }
 
 const BlogsSection = () => {
   const prefersReducedMotion = useReducedMotion()
+  const sectionRef = useRef(null)
+  const isInView = useInView(sectionRef, { amount: 0.1 })
+  const shouldAnimate = !prefersReducedMotion && isInView
 
   return (
     <section
+      ref={sectionRef}
       id="blogs"
       className="relative w-full overflow-hidden bg-gradient-to-br from-slate-50 via-white to-slate-100 py-8 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 sm:py-10"
     >
-      {/* Background Pattern - Only on desktop */}
+      {/* Background Pattern */}
       {!prefersReducedMotion && (
         <DotPattern
           className="absolute inset-0 z-0 text-slate-300/40 dark:text-foreground/10 [mask-image:radial-gradient(1200px_circle_at_center,white,transparent)]"
@@ -295,47 +299,42 @@ const BlogsSection = () => {
           cx={1}
           cy={1}
           cr={1.2}
+          isInView={isInView}
         />
       )}
 
-      {/* Animated Gradient Orbs - Static on mobile */}
+      {/* Animated Gradient Orbs - Only animate when in view */}
       <motion.div
         className="pointer-events-none absolute -left-40 top-1/3 size-[400px] rounded-full bg-gradient-to-br from-theme-primary/15 via-theme-secondary/10 to-transparent blur-3xl"
         animate={
-          prefersReducedMotion
-            ? { x: 0, opacity: 0.4 }
-            : { x: [0, 30, 0], opacity: [0.3, 0.5, 0.3] }
+          shouldAnimate
+            ? { x: [0, 30, 0], opacity: [0.3, 0.5, 0.3] }
+            : { x: 0, opacity: 0.4 }
         }
         transition={
-          prefersReducedMotion
-            ? { duration: 0 }
-            : { duration: 10, repeat: Infinity }
+          shouldAnimate
+            ? { duration: 10, repeat: Infinity }
+            : { duration: 0 }
         }
       />
       <motion.div
         className="pointer-events-none absolute -right-40 bottom-1/3 size-[400px] rounded-full bg-gradient-to-br from-theme-secondary/15 via-theme-accent/10 to-transparent blur-3xl"
         animate={
-          prefersReducedMotion
-            ? { x: 0, opacity: 0.4 }
-            : { x: [0, -30, 0], opacity: [0.3, 0.5, 0.3] }
+          shouldAnimate
+            ? { x: [0, -30, 0], opacity: [0.3, 0.5, 0.3] }
+            : { x: 0, opacity: 0.4 }
         }
         transition={
-          prefersReducedMotion
-            ? { duration: 0 }
-            : { duration: 10, repeat: Infinity, delay: 5 }
+          shouldAnimate
+            ? { duration: 10, repeat: Infinity, delay: 5 }
+            : { duration: 0 }
         }
       />
 
       <div className="container relative z-10 mx-auto max-w-7xl px-4 sm:px-6">
-        <motion.div
-          className="space-y-12"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: '-50px' }}
-        >
+        <div className="space-y-12">
           {/* Header */}
-          <motion.div variants={itemVariants} className="space-y-4 text-center">
+          <div className="space-y-4 text-center">
             <motion.div
               className="mx-auto flex w-fit items-center gap-2 rounded-full border border-theme-primary/30 bg-gradient-to-r from-theme-primary/10 via-theme-secondary/10 to-theme-primary/10 px-4 py-2 shadow-lg backdrop-blur-sm"
               whileHover={{ scale: 1.03 }}
@@ -361,20 +360,17 @@ const BlogsSection = () => {
               Sharing knowledge about web development, best practices, and
               modern technologies.
             </p>
-          </motion.div>
+          </div>
 
           {/* Blog Grid - 4 Columns */}
-          <motion.div
-            className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4"
-            variants={containerVariants}
-          >
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {blogPosts.map((post, index) => (
               <BlogCard key={post.id} post={post} index={index} />
             ))}
-          </motion.div>
+          </div>
 
           {/* View All Blogs CTA */}
-          <motion.div variants={itemVariants} className="text-center">
+          <div className="text-center">
             <motion.div
               className="inline-flex items-center gap-3 rounded-xl border border-slate-200/60 bg-white/80 px-5 py-3 shadow-lg backdrop-blur-sm dark:border-slate-700/60 dark:bg-slate-800/80"
               whileHover={{ scale: 1.02, y: -2 }}
@@ -387,8 +383,8 @@ const BlogsSection = () => {
                 <ArrowRight className="size-3" />
               </button>
             </motion.div>
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
       </div>
     </section>
   )

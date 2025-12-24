@@ -17,6 +17,7 @@ import { useReducedMotion } from '@/hooks/use-reduced-motion'
  * @param {number} [cr=1] - The radius of each dot
  * @param {string} [className] - Additional CSS classes to apply to the SVG container
  * @param {boolean} [glow=false] - Whether dots should have a glowing animation effect
+ * @param {boolean} [isInView=true] - Whether the pattern is in view and should animate
  */
 interface DotPatternProps extends React.SVGProps<SVGSVGElement> {
   width?: number
@@ -28,6 +29,7 @@ interface DotPatternProps extends React.SVGProps<SVGSVGElement> {
   cr?: number
   className?: string
   glow?: boolean
+  isInView?: boolean
   [key: string]: unknown
 }
 
@@ -71,11 +73,13 @@ export function DotPattern({
   cr = 1,
   className,
   glow = false,
+  isInView = true,
   ...props
 }: DotPatternProps) {
   const id = useId()
   const containerRef = useRef<SVGSVGElement>(null)
   const prefersReducedMotion = useReducedMotion()
+  const shouldAnimate = !prefersReducedMotion && isInView
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 })
 
   useEffect(() => {
@@ -108,8 +112,8 @@ export function DotPattern({
     }
   })
 
-  // On mobile, disable glow animation for performance
-  const shouldAnimate = glow && !prefersReducedMotion
+  // Only animate glow when in view
+  const shouldAnimateGlow = glow && shouldAnimate
 
   return (
     <svg
@@ -136,10 +140,10 @@ export function DotPattern({
           fill={glow ? `url(#${id}-gradient)` : 'currentColor'}
           className="text-neutral-400/80"
           initial={
-            shouldAnimate ? { opacity: 0.4, scale: 1 } : { opacity: 0.6 }
+            shouldAnimateGlow ? { opacity: 0.4, scale: 1 } : { opacity: 0.6 }
           }
           animate={
-            shouldAnimate
+            shouldAnimateGlow
               ? {
                   opacity: [0.4, 1, 0.4],
                   scale: [1, 1.5, 1],
@@ -147,7 +151,7 @@ export function DotPattern({
               : { opacity: 0.6 }
           }
           transition={
-            shouldAnimate
+            shouldAnimateGlow
               ? {
                   duration: dot.duration,
                   repeat: Infinity,
