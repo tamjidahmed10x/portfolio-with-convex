@@ -98,7 +98,7 @@ export const BlogCard = ({
       >
         {/* Featured Glow */}
         <motion.div
-          className="absolute -inset-2 rounded-3xl bg-gradient-to-br from-theme-primary/30 via-theme-secondary/20 to-theme-accent/30 opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-100"
+          className="absolute -inset-2 rounded-3xl bg-linear-to-br from-theme-primary/30 via-theme-secondary/20 to-theme-accent/30 opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-100"
           animate={isHovered ? { scale: [1, 1.02, 1] } : { scale: 1 }}
           transition={{ duration: 2, repeat: isHovered ? Infinity : 0 }}
         />
@@ -124,7 +124,7 @@ export const BlogCard = ({
               animate={isHovered ? { scale: 1.05 } : { scale: 1 }}
               transition={{ duration: 0.6 }}
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent lg:bg-gradient-to-r" />
+            <div className="absolute inset-0 bg-linear-to-t from-black/60 via-black/20 to-transparent lg:bg-linear-to-r" />
           </div>
 
           {/* Content */}
@@ -280,7 +280,7 @@ export const BlogCard = ({
       {/* Glow Effect */}
       <motion.div
         className={cn(
-          'absolute -inset-1 rounded-2xl bg-gradient-to-br opacity-0 blur-xl transition-opacity duration-500 group-hover:opacity-100',
+          'absolute -inset-1 rounded-2xl bg-linear-to-br opacity-0 blur-xl transition-opacity duration-500 group-hover:opacity-100',
           colors.gradient,
         )}
         animate={isHovered ? { scale: [1, 1.02, 1] } : { scale: 1 }}
@@ -306,7 +306,7 @@ export const BlogCard = ({
           />
 
           {/* Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+          <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/30 to-transparent" />
 
           {/* Top Actions */}
           <div className="absolute right-3 top-3 flex items-center gap-2">

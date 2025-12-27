@@ -4,18 +4,17 @@ import { cn } from '@/lib/utils'
 import { motion, useInView } from 'motion/react'
 import { useRef } from 'react'
 import {
-  BookOpen,
   Calendar,
   Clock,
   ArrowRight,
-  Sparkles,
   PenTool,
-  TrendingUp,
   Eye,
   type LucideIcon,
 } from 'lucide-react'
 import { useState } from 'react'
 import { useReducedMotion } from '@/hooks/use-reduced-motion'
+import { blogPosts } from '@/components/blogs/blog-data'
+import { ThemeLink } from '@/components/theme-link'
 
 type BlogPost = {
   id: number
@@ -28,88 +27,6 @@ type BlogPost = {
   readTime: string
   publishedAt: string
   slug: string
-}
-
-const blogPosts: BlogPost[] = [
-  {
-    id: 1,
-    title: 'Building Scalable React Applications with TypeScript',
-    excerpt:
-      'Learn how to structure your React projects for scalability using TypeScript, custom hooks, and modern best practices.',
-    coverImage:
-      'https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=800&auto=format&fit=crop&q=60',
-    category: 'React',
-    categoryIcon: TrendingUp,
-    categoryColor: 'text-theme-primary',
-    readTime: '8 min read',
-    publishedAt: 'Dec 1, 2024',
-    slug: 'building-scalable-react-applications',
-  },
-  {
-    id: 2,
-    title: 'Mastering Tailwind CSS: Tips & Tricks',
-    excerpt:
-      'Discover advanced Tailwind CSS techniques to build beautiful, responsive designs faster than ever before.',
-    coverImage:
-      'https://images.unsplash.com/photo-1507721999472-8ed4421c4af2?w=800&auto=format&fit=crop&q=60',
-    category: 'CSS',
-    categoryIcon: PenTool,
-    categoryColor: 'text-theme-secondary',
-    readTime: '6 min read',
-    publishedAt: 'Nov 25, 2024',
-    slug: 'mastering-tailwind-css',
-  },
-  {
-    id: 3,
-    title: 'Next.js 14: Server Components Deep Dive',
-    excerpt:
-      'Explore the power of React Server Components in Next.js 14 and learn how to optimize your application performance.',
-    coverImage:
-      'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&auto=format&fit=crop&q=60',
-    category: 'Next.js',
-    categoryIcon: BookOpen,
-    categoryColor: 'text-theme-primary',
-    readTime: '10 min read',
-    publishedAt: 'Nov 18, 2024',
-    slug: 'nextjs-14-server-components',
-  },
-  {
-    id: 4,
-    title: 'Modern State Management with Zustand',
-    excerpt:
-      'A comprehensive guide to managing state in React applications using Zustand - the lightweight alternative to Redux.',
-    coverImage:
-      'https://images.unsplash.com/photo-1516116216624-53e697fedbea?w=800&auto=format&fit=crop&q=60',
-    category: 'State',
-    categoryIcon: Sparkles,
-    categoryColor: 'text-theme-secondary',
-    readTime: '7 min read',
-    publishedAt: 'Nov 10, 2024',
-    slug: 'modern-state-management-zustand',
-  },
-]
-
-const containerVariants: Variants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.01,
-    },
-  },
-}
-
-const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 20, scale: 0.95 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    transition: {
-      duration: 0.05,
-      ease: [0.25, 0.46, 0.45, 0.94],
-    },
-  },
 }
 
 const BlogCard = ({ post, index }: { post: BlogPost; index: number }) => {
@@ -150,131 +67,131 @@ const BlogCard = ({ post, index }: { post: BlogPost; index: number }) => {
   const colors = cardColors[index]
 
   return (
-    <article
-      className="group relative"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
-      {/* Glow Effect */}
-      <motion.div
-        className={cn(
-          'absolute -inset-1 rounded-2xl bg-gradient-to-br opacity-0 blur-xl transition-opacity duration-500 group-hover:opacity-100',
-          colors.gradient,
-        )}
-        animate={isHovered ? { scale: [1, 1.02, 1] } : { scale: 1 }}
-        transition={{ duration: 2, repeat: isHovered ? Infinity : 0 }}
-      />
-
-      <div
-        className={cn(
-          'relative flex h-full flex-col overflow-hidden rounded-xl border border-slate-200/60 bg-white/95 shadow-lg backdrop-blur-sm transition-all duration-300 dark:border-slate-700/60 dark:bg-slate-800/90',
-          colors.border,
-          colors.glow,
-          'group-hover:shadow-xl',
-        )}
+    <ThemeLink to="/blogs/$slug" params={{ slug: post.slug }}>
+      <article
+        className="group relative"
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
       >
-        {/* Image Container */}
-        <div className="relative h-40 overflow-hidden sm:h-44">
-          <motion.img
-            src={post.coverImage}
-            alt={post.title}
-            className="h-full w-full object-cover"
-            animate={isHovered ? { scale: 1.08 } : { scale: 1 }}
-            transition={{ duration: 0.6, ease: 'easeOut' }}
-          />
+        {/* Glow Effect */}
+        <motion.div
+          className={cn(
+            'absolute -inset-1 rounded-2xl bg-linear-to-br opacity-0 blur-xl transition-opacity duration-500 group-hover:opacity-100',
+            colors.gradient,
+          )}
+          animate={isHovered ? { scale: [1, 1.02, 1] } : { scale: 1 }}
+          transition={{ duration: 2, repeat: isHovered ? Infinity : 0 }}
+        />
 
-          {/* Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+        <div
+          className={cn(
+            'relative flex h-full flex-col overflow-hidden rounded-xl border border-slate-200/60 bg-white/95 shadow-lg backdrop-blur-sm transition-all duration-300 dark:border-slate-700/60 dark:bg-slate-800/90',
+            colors.border,
+            colors.glow,
+            'group-hover:shadow-xl',
+          )}
+        >
+          {/* Image Container */}
+          <div className="relative h-40 overflow-hidden sm:h-44">
+            <motion.img
+              src={post.coverImage}
+              alt={post.title}
+              className="h-full w-full object-cover"
+              animate={isHovered ? { scale: 1.08 } : { scale: 1 }}
+              transition={{ duration: 0.6, ease: 'easeOut' }}
+            />
 
-          {/* Category Badge */}
-          <motion.div
-            className="absolute left-3 top-3"
-            initial={{ opacity: 0, x: -10 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: index * 0.01 + 0.02 }}
-          >
-            <div
-              className={cn(
-                'flex items-center gap-1.5 rounded-lg bg-white/95 px-2.5 py-1.5 text-xs font-bold shadow-md backdrop-blur-sm dark:bg-slate-900/95',
-                post.categoryColor,
-              )}
+            {/* Overlay */}
+            <div className="absolute inset-0 bg-linear-to-t from-black/60 via-black/20 to-transparent" />
+
+            {/* Category Badge */}
+            <motion.div
+              className="absolute left-3 top-3"
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: index * 0.01 + 0.02 }}
             >
-              <CategoryIcon className="size-3.5" />
-              <span>{post.category}</span>
-            </div>
-          </motion.div>
+              <div
+                className={cn(
+                  'flex items-center gap-1.5 rounded-lg bg-white/95 px-2.5 py-1.5 text-xs font-bold shadow-md backdrop-blur-sm dark:bg-slate-900/95',
+                  post.categoryColor,
+                )}
+              >
+                <CategoryIcon className="size-3.5" />
+                <span>{post.category}</span>
+              </div>
+            </motion.div>
 
-          {/* Read Time Badge */}
-          <motion.div
-            className="absolute bottom-3 right-3 flex items-center gap-1.5 rounded-lg bg-black/50 px-2 py-1 text-xs font-medium text-white backdrop-blur-sm"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: index * 0.01 + 0.03 }}
-          >
-            <Clock className="size-3" />
-            {post.readTime}
-          </motion.div>
-        </div>
-
-        {/* Content */}
-        <div className="flex flex-1 flex-col gap-3 p-4">
-          {/* Date */}
-          <div className="flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400">
-            <Calendar className="size-3.5" />
-            <span>{post.publishedAt}</span>
+            {/* Read Time Badge */}
+            <motion.div
+              className="absolute bottom-3 right-3 flex items-center gap-1.5 rounded-lg bg-black/50 px-2 py-1 text-xs font-medium text-white backdrop-blur-sm"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: index * 0.01 + 0.03 }}
+            >
+              <Clock className="size-3" />
+              {post.readTime}
+            </motion.div>
           </div>
 
-          {/* Title */}
-          <h3 className="line-clamp-2 text-base font-bold text-slate-900 transition-colors group-hover:text-theme-primary dark:text-white dark:group-hover:text-theme-primary-light sm:text-lg">
-            {post.title}
-          </h3>
+          {/* Content */}
+          <div className="flex flex-1 flex-col gap-3 p-4">
+            {/* Date */}
+            <div className="flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400">
+              <Calendar className="size-3.5" />
+              <span>{post.publishedAt}</span>
+            </div>
 
-          {/* Excerpt */}
-          <p className="line-clamp-2 flex-1 text-xs leading-relaxed text-slate-600 dark:text-slate-400 sm:text-sm">
-            {post.excerpt}
-          </p>
+            {/* Title */}
+            <h3 className="line-clamp-2 text-base font-bold text-slate-900 transition-colors group-hover:text-theme-primary dark:text-white dark:group-hover:text-theme-primary-light sm:text-lg">
+              {post.title}
+            </h3>
 
-          {/* Read More Button */}
-          <motion.button
-            className={cn(
-              'group/btn mt-auto flex items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-xs font-bold text-white shadow-md transition-shadow hover:shadow-lg',
-              colors.button,
-            )}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-          >
-            <Eye className="size-3.5" />
-            <span>Read Article</span>
-            <ArrowRight className="size-3.5 transition-transform group-hover/btn:translate-x-1" />
-          </motion.button>
-        </div>
+            {/* Excerpt */}
+            <p className="line-clamp-2 flex-1 text-xs leading-relaxed text-slate-600 dark:text-slate-400 sm:text-sm">
+              {post.excerpt}
+            </p>
 
-        {/* Border Beam */}
-        <BorderBeam
-          size={200}
-          duration={15}
-          delay={index * 2}
-          colorFrom={
-            index === 0
-              ? '#3b82f6'
-              : index === 1
+            {/* Read More Button */}
+            <div
+              className={cn(
+                'group/btn mt-auto flex items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-xs font-bold text-white shadow-md',
+                colors.button,
+              )}
+            >
+              <Eye className="size-3.5" />
+              <span>Read Article</span>
+              <ArrowRight className="size-3.5" />
+            </div>
+          </div>
+
+          {/* Border Beam */}
+          <BorderBeam
+            size={200}
+            duration={15}
+            delay={index * 2}
+            colorFrom={
+              index === 0
+                ? '#3b82f6'
+                : index === 1
+                  ? '#06b6d4'
+                  : index === 2
+                    ? '#8b5cf6'
+                    : '#10b981'
+            }
+            colorTo={
+              index === 0
                 ? '#06b6d4'
-                : index === 2
-                  ? '#8b5cf6'
-                  : '#10b981'
-          }
-          colorTo={
-            index === 0
-              ? '#06b6d4'
-              : index === 1
-                ? '#14b8a6'
-                : index === 2
-                  ? '#6366f1'
-                  : '#14b8a6'
-          }
-        />
-      </div>
-    </article>
+                : index === 1
+                  ? '#14b8a6'
+                  : index === 2
+                    ? '#6366f1'
+                    : '#14b8a6'
+            }
+          />
+        </div>
+      </article>
+    </ThemeLink>
   )
 }
 
@@ -288,12 +205,12 @@ const BlogsSection = () => {
     <section
       ref={sectionRef}
       id="blogs"
-      className="relative w-full overflow-hidden bg-gradient-to-br from-slate-50 via-white to-slate-100 py-8 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 sm:py-10"
+      className="relative w-full overflow-hidden bg-linear-to-br from-slate-50 via-white to-slate-100 py-8 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 sm:py-10"
     >
       {/* Background Pattern */}
       {!prefersReducedMotion && (
         <DotPattern
-          className="absolute inset-0 z-0 text-slate-300/40 dark:text-foreground/10 [mask-image:radial-gradient(1200px_circle_at_center,white,transparent)]"
+          className="absolute inset-0 z-0 text-slate-300/40 dark:text-foreground/10 mask-[radial-gradient(1200px_circle_at_center,white,transparent)]"
           width={20}
           height={20}
           cx={1}
@@ -305,7 +222,7 @@ const BlogsSection = () => {
 
       {/* Animated Gradient Orbs - Only animate when in view */}
       <motion.div
-        className="pointer-events-none absolute -left-40 top-1/3 size-[400px] rounded-full bg-gradient-to-br from-theme-primary/15 via-theme-secondary/10 to-transparent blur-3xl"
+        className="pointer-events-none absolute -right-40 bottom-1/3 size-[400px] rounded-full bg-linear-to-br from-theme-secondary/15 via-theme-accent/10 to-transparent blur-3xl"
         animate={
           shouldAnimate
             ? { x: [0, 30, 0], opacity: [0.3, 0.5, 0.3] }
@@ -316,7 +233,7 @@ const BlogsSection = () => {
         }
       />
       <motion.div
-        className="pointer-events-none absolute -right-40 bottom-1/3 size-[400px] rounded-full bg-gradient-to-br from-theme-secondary/15 via-theme-accent/10 to-transparent blur-3xl"
+        className="pointer-events-none absolute -right-40 bottom-1/3 size-[400px] rounded-full bg-linear-to-br from-theme-secondary/15 via-theme-accent/10 to-transparent blur-3xl"
         animate={
           shouldAnimate
             ? { x: [0, -30, 0], opacity: [0.3, 0.5, 0.3] }
@@ -334,7 +251,7 @@ const BlogsSection = () => {
           {/* Header */}
           <div className="space-y-4 text-center">
             <motion.div
-              className="mx-auto flex w-fit items-center gap-2 rounded-full border border-theme-primary/30 bg-gradient-to-r from-theme-primary/10 via-theme-secondary/10 to-theme-primary/10 px-4 py-2 shadow-lg backdrop-blur-sm"
+              className="mx-auto flex w-fit items-center gap-2 rounded-full border border-theme-primary/30 bg-linear-to-r from-theme-primary/10 via-theme-secondary/10 to-theme-primary/10 px-4 py-2 shadow-lg backdrop-blur-sm"
               whileHover={{ scale: 1.03 }}
             >
               <motion.div
@@ -362,7 +279,7 @@ const BlogsSection = () => {
 
           {/* Blog Grid - 4 Columns */}
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {blogPosts.map((post, index) => (
+            {blogPosts.slice(0, 4).map((post, index) => (
               <BlogCard key={post.id} post={post} index={index} />
             ))}
           </div>
@@ -376,10 +293,12 @@ const BlogsSection = () => {
               <span className="text-sm text-slate-600 dark:text-slate-400">
                 Want to read more?
               </span>
-              <button className="inline-flex items-center gap-1.5 rounded-lg bg-gradient-theme px-3 py-1.5 text-xs font-bold text-white shadow-md transition-shadow hover:shadow-lg">
-                View All Blogs
-                <ArrowRight className="size-3" />
-              </button>
+              <ThemeLink to="/blogs">
+                <button className="inline-flex items-center gap-1.5 rounded-lg bg-gradient-theme px-3 py-1.5 text-xs font-bold text-white shadow-md transition-shadow hover:shadow-lg">
+                  View All Blogs
+                  <ArrowRight className="size-3" />
+                </button>
+              </ThemeLink>
             </motion.div>
           </div>
         </div>

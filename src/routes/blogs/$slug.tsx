@@ -79,7 +79,7 @@ function BlogDetailPage() {
   )
 
   return (
-    <div className="relative min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
+    <div className="relative min-h-screen bg-linear-to-br from-slate-50 via-white to-slate-100 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
       <LightRays
         className="fixed inset-0 z-0"
         count={5}
@@ -99,7 +99,7 @@ function BlogDetailPage() {
             animate={{ scale: 1 }}
             transition={{ duration: 0.8 }}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20" />
+          <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/40 to-black/20" />
 
           <motion.div
             className="absolute left-4 top-20 sm:left-8"
@@ -242,7 +242,7 @@ function BlogDetailPage() {
                 )}
               >
                 {/* Lead paragraph / Excerpt */}
-                <p className="lead text-base sm:text-xl font-medium leading-relaxed text-slate-700 dark:text-slate-300 !mt-0 first-letter:text-4xl sm:first-letter:text-5xl first-letter:font-bold first-letter:text-[var(--theme-primary)] first-letter:mr-1 first-letter:float-left first-letter:leading-none">
+                <p className="lead text-base sm:text-xl font-medium leading-relaxed text-slate-700 dark:text-slate-300 mt-0! first-letter:text-4xl sm:first-letter:text-5xl first-letter:font-bold first-letter:text-theme-primary first-letter:mr-1 first-letter:float-left first-letter:leading-none">
                   {post.excerpt}
                 </p>
 
@@ -496,7 +496,7 @@ const fetchData = async (endpoint: string) => {
                           alt={relatedPost.title}
                           className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                        <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent" />
                         <span
                           className={cn(
                             'absolute bottom-2 left-2 sm:bottom-3 sm:left-3 flex items-center gap-1 rounded-full bg-white/90 px-2 py-1 text-[10px] sm:text-xs font-semibold backdrop-blur-sm',

@@ -1,6 +1,13 @@
 import { DotPattern } from '@/components/magicui/dot-pattern'
 import { cn } from '@/lib/utils'
-import { ArrowUp, BookOpen, Menu, Newspaper, Sparkles, Filter } from 'lucide-react'
+import {
+  ArrowUp,
+  BookOpen,
+  Menu,
+  Newspaper,
+  Sparkles,
+  Filter,
+} from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { BlogCard } from './blog-card'
@@ -124,10 +131,10 @@ export const BlogLandingPage = () => {
   )
 
   return (
-    <div className="relative min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
+    <div className="relative min-h-screen bg-linear-to-br from-slate-50 via-white to-slate-100 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
       {/* Background Pattern */}
       <DotPattern
-        className="fixed inset-0 z-0 text-slate-300/40 dark:text-foreground/10 [mask-image:radial-gradient(1500px_circle_at_center,white,transparent)]"
+        className="fixed inset-0 z-0 text-slate-300/40 dark:text-foreground/10 mask-[radial-gradient(1500px_circle_at_center,white,transparent)]"
         width={20}
         height={20}
         cx={1}
@@ -177,7 +184,9 @@ export const BlogLandingPage = () => {
           </button>
           <div className="flex items-center gap-2">
             <Filter className="size-4 text-theme-primary" />
-            <span className="text-sm font-medium text-slate-700 dark:text-slate-300">Blog</span>
+            <span className="text-sm font-medium text-slate-700 dark:text-slate-300">
+              Blog
+            </span>
           </div>
           <div className="w-20" /> {/* Spacer for centering */}
         </div>
@@ -185,114 +194,114 @@ export const BlogLandingPage = () => {
         {/* Content Area */}
         <div className="px-4 py-8 sm:px-6 lg:px-8">
           <div className="max-w-7xl mx-auto w-full">
-          <AnimatePresence mode="wait">
-            {filteredPosts.length === 0 ? (
-              <motion.div
-                key="empty"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                className="flex flex-col items-center justify-center py-20 text-center"
-              >
+            <AnimatePresence mode="wait">
+              {filteredPosts.length === 0 ? (
                 <motion.div
-                  className="mb-6 rounded-full bg-slate-100 p-6 dark:bg-slate-800"
-                  animate={{ scale: [1, 1.05, 1] }}
-                  transition={{ duration: 2, repeat: Infinity }}
+                  key="empty"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  className="flex flex-col items-center justify-center py-20 text-center"
                 >
-                  <Newspaper className="size-12 text-slate-400" />
-                </motion.div>
-                <h3 className="mb-2 text-xl font-bold text-slate-900 dark:text-white">
-                  No articles found
-                </h3>
-                <p className="max-w-md text-slate-500 dark:text-slate-400">
-                  Try adjusting your search or filter criteria to find what
-                  you're looking for.
-                </p>
-              </motion.div>
-            ) : (
-              <motion.div
-                key="content"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className="space-y-8"
-              >
-                {/* Featured Post - Only show when no filters active */}
-                {featuredPost &&
-                  !searchQuery &&
-                  selectedCategory === 'all' &&
-                  selectedTags.length === 0 && (
-                    <section>
-                      <div className="mb-6 flex items-center gap-2">
-                        <Sparkles className="size-5 text-theme-accent" />
-                        <h2 className="text-lg font-bold text-slate-900 dark:text-white">
-                          Featured Article
-                        </h2>
-                      </div>
-                      <BlogCard
-                        post={featuredPost}
-                        index={0}
-                        variant="featured"
-                      />
-                    </section>
-                  )}
-
-                {/* All Posts */}
-                <section>
-                  <div className="mb-6 flex items-center gap-2">
-                    <BookOpen className="size-5 text-theme-primary" />
-                    <h2 className="text-lg font-bold text-slate-900 dark:text-white">
-                      {searchQuery ||
-                      selectedCategory !== 'all' ||
-                      selectedTags.length > 0
-                        ? 'Search Results'
-                        : 'All Articles'}
-                    </h2>
-                  </div>
-
-                  <div
-                    className={cn(
-                      'gap-6',
-                      viewMode === 'grid'
-                        ? 'grid sm:grid-cols-2 xl:grid-cols-3'
-                        : 'flex flex-col',
-                    )}
+                  <motion.div
+                    className="mb-6 rounded-full bg-slate-100 p-6 dark:bg-slate-800"
+                    animate={{ scale: [1, 1.05, 1] }}
+                    transition={{ duration: 2, repeat: Infinity }}
                   >
-                    {regularPosts.map((post, index) => (
-                      <BlogCard
-                        key={post.id}
-                        post={post}
-                        index={index}
-                        variant={viewMode === 'list' ? 'compact' : 'default'}
-                      />
-                    ))}
-                  </div>
-                </section>
-
-                {/* Load More */}
+                    <Newspaper className="size-12 text-slate-400" />
+                  </motion.div>
+                  <h3 className="mb-2 text-xl font-bold text-slate-900 dark:text-white">
+                    No articles found
+                  </h3>
+                  <p className="max-w-md text-slate-500 dark:text-slate-400">
+                    Try adjusting your search or filter criteria to find what
+                    you're looking for.
+                  </p>
+                </motion.div>
+              ) : (
                 <motion.div
+                  key="content"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  transition={{ delay: 0.5 }}
-                  className="flex justify-center pt-8"
+                  exit={{ opacity: 0 }}
+                  className="space-y-8"
                 >
-                  <motion.button
-                    className="group flex items-center gap-2 rounded-xl bg-gradient-theme px-6 py-3 font-bold text-white shadow-theme transition-shadow hover:shadow-theme-hover"
-                    whileHover={{ scale: 1.02, y: -2 }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    Load More Articles
-                    <motion.div
-                      animate={{ y: [0, 3, 0] }}
-                      transition={{ duration: 1.5, repeat: Infinity }}
+                  {/* Featured Post - Only show when no filters active */}
+                  {featuredPost &&
+                    !searchQuery &&
+                    selectedCategory === 'all' &&
+                    selectedTags.length === 0 && (
+                      <section>
+                        <div className="mb-6 flex items-center gap-2">
+                          <Sparkles className="size-5 text-theme-accent" />
+                          <h2 className="text-lg font-bold text-slate-900 dark:text-white">
+                            Featured Article
+                          </h2>
+                        </div>
+                        <BlogCard
+                          post={featuredPost}
+                          index={0}
+                          variant="featured"
+                        />
+                      </section>
+                    )}
+
+                  {/* All Posts */}
+                  <section>
+                    <div className="mb-6 flex items-center gap-2">
+                      <BookOpen className="size-5 text-theme-primary" />
+                      <h2 className="text-lg font-bold text-slate-900 dark:text-white">
+                        {searchQuery ||
+                        selectedCategory !== 'all' ||
+                        selectedTags.length > 0
+                          ? 'Search Results'
+                          : 'All Articles'}
+                      </h2>
+                    </div>
+
+                    <div
+                      className={cn(
+                        'gap-6',
+                        viewMode === 'grid'
+                          ? 'grid sm:grid-cols-2 xl:grid-cols-3'
+                          : 'flex flex-col',
+                      )}
                     >
-                      ↓
-                    </motion.div>
-                  </motion.button>
+                      {regularPosts.map((post, index) => (
+                        <BlogCard
+                          key={post.id}
+                          post={post}
+                          index={index}
+                          variant={viewMode === 'list' ? 'compact' : 'default'}
+                        />
+                      ))}
+                    </div>
+                  </section>
+
+                  {/* Load More */}
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.5 }}
+                    className="flex justify-center pt-8"
+                  >
+                    <motion.button
+                      className="group flex items-center gap-2 rounded-xl bg-gradient-theme px-6 py-3 font-bold text-white shadow-theme transition-shadow hover:shadow-theme-hover"
+                      whileHover={{ scale: 1.02, y: -2 }}
+                      whileTap={{ scale: 0.98 }}
+                    >
+                      Load More Articles
+                      <motion.div
+                        animate={{ y: [0, 3, 0] }}
+                        transition={{ duration: 1.5, repeat: Infinity }}
+                      >
+                        ↓
+                      </motion.div>
+                    </motion.button>
+                  </motion.div>
                 </motion.div>
-              </motion.div>
-            )}
-          </AnimatePresence>
+              )}
+            </AnimatePresence>
           </div>
         </div>
       </motion.main>
