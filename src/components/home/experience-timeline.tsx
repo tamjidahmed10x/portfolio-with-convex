@@ -1,5 +1,5 @@
 import { cn } from '@/lib/utils'
-import { motion, type Variants } from 'motion/react'
+import { motion } from 'motion/react'
 import { Briefcase, MapPin, Building2, Calendar } from 'lucide-react'
 import { BorderBeam } from '@/components/magicui/border-beam'
 import { useReducedMotion } from '@/hooks/use-reduced-motion'
@@ -48,29 +48,6 @@ const experiences: Experience[] = [
   },
 ]
 
-const containerVariants: Variants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.15,
-    },
-  },
-}
-
-const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 30, scale: 0.95 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    transition: {
-      duration: 0.5,
-      ease: [0.25, 0.46, 0.45, 0.94],
-    },
-  },
-}
-
 const formatDate = (date: Date) => {
   return date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' })
 }
@@ -114,15 +91,9 @@ const ExperienceTimeline = () => {
   const prefersReducedMotion = useReducedMotion()
 
   return (
-    <motion.div
-      className="mt-14"
-      variants={containerVariants}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, margin: '-50px' }}
-    >
+    <div className="mt-14">
       {/* Section Header */}
-      <motion.div variants={itemVariants} className="mb-10 text-center">
+      <div className="mb-10 text-center">
         <div className="mx-auto mb-4 flex w-fit items-center gap-2 rounded-full border border-theme-primary/20 bg-theme-primary/10 px-4 py-1.5">
           <Briefcase className="size-4 text-theme-primary" />
           <span className="text-sm font-medium text-theme-primary">
@@ -132,34 +103,21 @@ const ExperienceTimeline = () => {
         <h3 className="text-2xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-3xl">
           <span className="text-gradient-theme-accent">Work Experience</span>
         </h3>
-      </motion.div>
+      </div>
 
       {/* Horizontal Timeline Container */}
       <div className="relative">
         {/* Desktop Timeline Line */}
         <div className="absolute left-0 right-0 top-8 hidden h-1 rounded-full bg-gradient-theme opacity-20 sm:block" />
-        <motion.div
-          className="absolute left-0 top-8 hidden h-1 rounded-full bg-gradient-theme sm:block"
-          initial={{ width: 0 }}
-          whileInView={{ width: '100%' }}
-          viewport={{ once: true }}
-          transition={{ duration: 1.5, ease: 'easeOut', delay: 0.3 }}
-        />
+        <div className="absolute left-0 top-8 hidden h-1 w-full rounded-full bg-gradient-theme sm:block" />
 
         {/* Timeline Cards */}
-        <motion.div
-          className="grid grid-cols-1 gap-6 sm:grid-cols-3 sm:gap-8"
-          variants={containerVariants}
-        >
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-3 sm:gap-8">
           {experiences.map((exp, index) => {
             const isPresent = exp.endDate === null
 
             return (
-              <motion.div
-                key={exp.id}
-                variants={itemVariants}
-                className="relative"
-              >
+              <div key={exp.id} className="relative">
                 {/* Timeline Node - Desktop */}
                 <div className="absolute left-1/2 top-0 z-10 hidden -translate-x-1/2 sm:block">
                   <motion.div
@@ -293,12 +251,12 @@ const ExperienceTimeline = () => {
                     colorTo="var(--theme-secondary)"
                   />
                 </motion.div>
-              </motion.div>
+              </div>
             )
           })}
-        </motion.div>
+        </div>
       </div>
-    </motion.div>
+    </div>
   )
 }
 

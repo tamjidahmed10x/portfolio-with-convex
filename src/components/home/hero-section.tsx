@@ -1,7 +1,7 @@
 import { AnimatedGridPattern } from '@/components/ui/animated-grid-pattern'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
-import { motion } from 'motion/react'
+import { motion, useInView } from 'motion/react'
 import { SiGithub } from '@icons-pack/react-simple-icons'
 import {
   ArrowRight,
@@ -13,6 +13,7 @@ import {
 } from 'lucide-react'
 import { ThemeLink } from '@/components/theme-link'
 import { useReducedMotion } from '@/hooks/use-reduced-motion'
+import { useRef } from 'react'
 
 const HERO_IMAGE = '/tamjid-ahmed.webp'
 
@@ -24,9 +25,13 @@ const floatingIcons = [
 
 const HeroSection = () => {
   const prefersReducedMotion = useReducedMotion()
+  const sectionRef = useRef(null)
+  const isInView = useInView(sectionRef, { amount: 0.1 })
+  const shouldAnimate = !prefersReducedMotion && isInView
 
   return (
     <section
+      ref={sectionRef}
       id="home"
       className="relative  w-full overflow-hidden bg-gradient-to-b from-slate-50 via-white to-slate-100/50 py-16 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 lg:py-28"
     >
@@ -42,48 +47,49 @@ const HeroSection = () => {
             '[mask-image:radial-gradient(700px_circle_at_center,white,transparent)]',
             'absolute inset-0 h-full w-full text-slate-400 dark:text-foreground/20',
           )}
+          isInView={isInView}
         />
       )}
 
-      {/* Gradient Orbs - Only animate on desktop */}
+      {/* Gradient Orbs - Only animate when in view */}
       <motion.div
         className="pointer-events-none absolute -left-32 top-1/4 size-[400px] rounded-full bg-gradient-to-br from-theme-primary/20 via-theme-secondary/15 to-transparent blur-3xl"
         animate={
-          prefersReducedMotion
-            ? { scale: 1, opacity: 0.5 }
-            : {
+          shouldAnimate
+            ? {
                 scale: [1, 1.1, 1],
                 opacity: [0.4, 0.6, 0.4],
               }
+            : { scale: 1, opacity: 0.5 }
         }
         transition={
-          prefersReducedMotion
-            ? { duration: 0 }
-            : {
+          shouldAnimate
+            ? {
                 duration: 8,
                 repeat: Infinity,
                 ease: 'easeInOut',
               }
+            : { duration: 0 }
         }
       />
       <motion.div
         className="pointer-events-none absolute -right-32 bottom-1/4 size-[350px] rounded-full bg-gradient-to-br from-theme-accent/20 via-theme-secondary/15 to-transparent blur-3xl"
         animate={
-          prefersReducedMotion
-            ? { scale: 1, opacity: 0.5 }
-            : {
+          shouldAnimate
+            ? {
                 scale: [1.1, 1, 1.1],
                 opacity: [0.4, 0.6, 0.4],
               }
+            : { scale: 1, opacity: 0.5 }
         }
         transition={
-          prefersReducedMotion
-            ? { duration: 0 }
-            : {
+          shouldAnimate
+            ? {
                 duration: 10,
                 repeat: Infinity,
                 ease: 'easeInOut',
               }
+            : { duration: 0 }
         }
       />
 
@@ -177,8 +183,8 @@ const HeroSection = () => {
 
         {/* Right Content - Image */}
         <motion.div className="relative order-first flex-1 md:order-last">
-          {/* Floating Icons - Only on desktop */}
-          {!prefersReducedMotion &&
+          {/* Floating Icons - Only when in view */}
+          {shouldAnimate &&
             floatingIcons.map((item, index) => {
               const Icon = item.icon
               return (
@@ -207,40 +213,40 @@ const HeroSection = () => {
 
           {/* Main Image Container */}
           <div className="relative mx-auto aspect-square max-w-[280px] md:max-w-[380px]">
-            {/* Gradient Ring - Static on mobile */}
+            {/* Gradient Ring - Only animate when in view */}
             <motion.div
               className="absolute -inset-3 rounded-full bg-gradient-theme-diagonal opacity-20 blur-2xl"
               animate={
-                prefersReducedMotion
-                  ? { scale: 1, opacity: 0.25 }
-                  : {
+                shouldAnimate
+                  ? {
                       scale: [1, 1.05, 1],
                       opacity: [0.2, 0.3, 0.2],
                     }
+                  : { scale: 1, opacity: 0.25 }
               }
               transition={
-                prefersReducedMotion
-                  ? { duration: 0 }
-                  : {
+                shouldAnimate
+                  ? {
                       duration: 4,
                       repeat: Infinity,
                       ease: 'easeInOut',
                     }
+                  : { duration: 0 }
               }
             />
 
-            {/* Rotating Border - Static on mobile */}
+            {/* Rotating Border - Only animate when in view */}
             <motion.div
               className="absolute -inset-1 rounded-full bg-gradient-theme-diagonal"
-              animate={prefersReducedMotion ? { rotate: 0 } : { rotate: 360 }}
+              animate={shouldAnimate ? { rotate: 360 } : { rotate: 0 }}
               transition={
-                prefersReducedMotion
-                  ? { duration: 0 }
-                  : {
+                shouldAnimate
+                  ? {
                       duration: 20,
                       repeat: Infinity,
                       ease: 'linear',
                     }
+                  : { duration: 0 }
               }
               style={{
                 maskImage:
@@ -262,8 +268,8 @@ const HeroSection = () => {
                 className="h-full w-full object-cover object-center"
               />
 
-              {/* Overlay Shine Effect - Only on desktop */}
-              {!prefersReducedMotion && (
+              {/* Overlay Shine Effect - Only when in view */}
+              {shouldAnimate && (
                 <motion.div
                   className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/20 to-transparent"
                   initial={{ x: '-100%', y: '100%' }}

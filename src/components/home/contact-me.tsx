@@ -1,7 +1,8 @@
 import { BorderBeam } from '@/components/magicui/border-beam'
 import { DotPattern } from '@/components/magicui/dot-pattern'
 import { cn } from '@/lib/utils'
-import { motion, type Variants } from 'motion/react'
+import { motion, useInView } from 'motion/react'
+import { useRef } from 'react'
 import { SiGithub, SiX, SiFacebook } from '@icons-pack/react-simple-icons'
 import {
   Mail,
@@ -113,6 +114,9 @@ const ContactMe = () => {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
   const prefersReducedMotion = useReducedMotion()
+  const sectionRef = useRef(null)
+  const isInView = useInView(sectionRef, { amount: 0.1 })
+  const shouldAnimate = !prefersReducedMotion && isInView
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
@@ -131,10 +135,11 @@ const ContactMe = () => {
 
   return (
     <section
+      ref={sectionRef}
       id="contact"
       className="relative w-full overflow-hidden bg-gradient-to-br from-slate-50 via-white to-slate-100 py-8 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 sm:py-10"
     >
-      {/* Background Pattern - Only on desktop */}
+      {/* Background Pattern */}
       {!prefersReducedMotion && (
         <DotPattern
           className="absolute inset-0 z-0 text-slate-300/40 dark:text-foreground/10 [mask-image:radial-gradient(1000px_circle_at_center,white,transparent)]"
@@ -143,61 +148,56 @@ const ContactMe = () => {
           cx={1}
           cy={1}
           cr={1.2}
+          isInView={isInView}
         />
       )}
 
-      {/* Animated Gradient Orbs - Static on mobile */}
+      {/* Animated Gradient Orbs - Only animate when in view */}
       <motion.div
         className="pointer-events-none absolute -right-40 top-1/4 size-[500px] rounded-full bg-gradient-to-br from-theme-primary/15 via-theme-secondary/10 to-transparent blur-3xl"
         animate={
-          prefersReducedMotion
-            ? { scale: 1, opacity: 0.4 }
-            : {
+          shouldAnimate
+            ? {
                 scale: [1, 1.1, 1],
                 opacity: [0.3, 0.5, 0.3],
               }
+            : { scale: 1, opacity: 0.4 }
         }
         transition={
-          prefersReducedMotion
-            ? { duration: 0 }
-            : {
+          shouldAnimate
+            ? {
                 duration: 8,
                 repeat: Infinity,
                 ease: 'easeInOut',
               }
+            : { duration: 0 }
         }
       />
       <motion.div
         className="pointer-events-none absolute -left-40 bottom-1/4 size-[400px] rounded-full bg-gradient-to-br from-theme-secondary/15 via-theme-accent/10 to-transparent blur-3xl"
         animate={
-          prefersReducedMotion
-            ? { scale: 1, opacity: 0.4 }
-            : {
+          shouldAnimate
+            ? {
                 scale: [1.1, 1, 1.1],
                 opacity: [0.3, 0.5, 0.3],
               }
+            : { scale: 1, opacity: 0.4 }
         }
         transition={
-          prefersReducedMotion
-            ? { duration: 0 }
-            : {
+          shouldAnimate
+            ? {
                 duration: 10,
                 repeat: Infinity,
                 ease: 'easeInOut',
               }
+            : { duration: 0 }
         }
       />
 
       <div className="container relative z-10 mx-auto max-w-6xl px-4 sm:px-6">
-        <motion.div
-          className="space-y-12"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: '-100px' }}
-        >
+        <div className="space-y-12">
           {/* Section Header */}
-          <motion.div variants={itemVariants} className="space-y-4 text-center">
+          <div className="space-y-4 text-center">
             <div className="mx-auto mb-4 flex w-fit items-center gap-2 rounded-full border border-theme-primary/20 bg-theme-primary/10 px-4 py-1.5">
               <MessageSquare className="size-4 text-theme-primary" />
               <span className="text-sm font-medium text-theme-primary">
@@ -214,15 +214,12 @@ const ContactMe = () => {
               Have a project in mind or want to collaborate? I'd love to hear
               from you. Drop me a message and let's create something amazing.
             </p>
-          </motion.div>
+          </div>
 
           {/* Main Content Grid */}
           <div className="grid gap-8 lg:grid-cols-5 lg:gap-12">
             {/* Contact Info Card */}
-            <motion.div
-              variants={itemVariants}
-              className="space-y-6 lg:col-span-2"
-            >
+            <div className="space-y-6 lg:col-span-2">
               {/* Contact Details */}
               <div className="group relative overflow-hidden rounded-2xl border border-slate-200/60 bg-white/80 p-6 shadow-xl shadow-slate-900/5 backdrop-blur-sm transition-all duration-300 hover:shadow-2xl dark:border-slate-700/60 dark:bg-slate-800/60 dark:shadow-black/20">
                 <h3 className="mb-5 flex items-center gap-2 text-lg font-bold text-slate-900 dark:text-white">
@@ -325,10 +322,10 @@ const ContactMe = () => {
                   Available for freelance projects
                 </p>
               </motion.div>
-            </motion.div>
+            </div>
 
             {/* Contact Form */}
-            <motion.div variants={itemVariants} className="lg:col-span-3">
+            <div className="lg:col-span-3">
               <div className="group relative overflow-hidden rounded-2xl border border-slate-200/60 bg-white/80 p-6 shadow-xl shadow-slate-900/5 backdrop-blur-sm transition-all duration-300 hover:shadow-2xl dark:border-slate-700/60 dark:bg-slate-800/60 dark:shadow-black/20 sm:p-8">
                 <h3 className="mb-6 text-lg font-bold text-slate-900 dark:text-white">
                   Send a Message
@@ -469,18 +466,18 @@ const ContactMe = () => {
                   colorTo="var(--theme-secondary)"
                 />
               </div>
-            </motion.div>
+            </div>
           </div>
 
           {/* Footer Text */}
-          <motion.div variants={itemVariants} className="pt-4 text-center">
+          <div className="pt-4 text-center">
             <p className="text-sm text-slate-500 dark:text-slate-400">
               I typically respond within{' '}
               <span className="font-semibold text-theme-primary">24 hours</span>
               . Looking forward to connecting with you!
             </p>
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
       </div>
     </section>
   )

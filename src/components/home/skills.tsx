@@ -1,7 +1,8 @@
 import { BorderBeam } from '@/components/magicui/border-beam'
 import { DotPattern } from '@/components/magicui/dot-pattern'
 import { cn } from '@/lib/utils'
-import { motion, type Variants } from 'motion/react'
+import { motion, useInView } from 'motion/react'
+import { useRef } from 'react'
 import {
   SiReact,
   SiNextdotjs,
@@ -148,7 +149,6 @@ const SkillCard = ({ skill }: { skill: Skill }) => {
   const Icon = skill.icon
   return (
     <motion.div
-      variants={skillVariants}
       whileHover={{
         scale: 1.05,
         y: -5,
@@ -190,8 +190,7 @@ const CategoryCard = ({
 }) => {
   const CategoryIcon = category.icon
   return (
-    <motion.div
-      variants={itemVariants}
+    <div
       className={cn(
         'group relative overflow-hidden rounded-2xl bg-white/80 p-6 shadow-xl shadow-slate-900/5 backdrop-blur-sm transition-all duration-300 hover:shadow-2xl hover:shadow-slate-900/10 dark:bg-slate-800/60 dark:shadow-black/20',
         index === skillCategories.length - 1 && 'md:col-span-2 lg:col-span-1',
@@ -208,17 +207,11 @@ const CategoryCard = ({
       </div>
 
       {/* Skills Grid */}
-      <motion.div
-        className="grid grid-cols-1 gap-3 sm:grid-cols-2"
-        variants={containerVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: '-50px' }}
-      >
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
         {category.skills.map((skill) => (
           <SkillCard key={skill.name} skill={skill} />
         ))}
-      </motion.div>
+      </div>
 
       <BorderBeam
         size={250}
@@ -227,7 +220,7 @@ const CategoryCard = ({
         colorFrom="var(--theme-primary)"
         colorTo="var(--theme-accent)"
       />
-    </motion.div>
+    </div>
   )
 }
 
@@ -237,13 +230,16 @@ const Skills = () => {
     0,
   )
   const prefersReducedMotion = useReducedMotion()
+  const sectionRef = useRef(null)
+  const isInView = useInView(sectionRef, { amount: 0.1 })
 
   return (
     <section
+      ref={sectionRef}
       id="skills"
       className="relative w-full overflow-hidden bg-gradient-to-br from-slate-50 via-white to-slate-100 py-8 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 sm:py-10"
     >
-      {/* Background Pattern - Only on desktop */}
+      {/* Background Pattern */}
       {!prefersReducedMotion && (
         <DotPattern
           className="absolute inset-0 z-0 text-slate-300/40 dark:text-foreground/10 [mask-image:radial-gradient(900px_circle_at_center,white,transparent)]"
@@ -252,19 +248,14 @@ const Skills = () => {
           cx={1}
           cy={1}
           cr={1.5}
+          isInView={isInView}
         />
       )}
 
       <div className="container relative z-10 mx-auto max-w-6xl px-4 sm:px-6">
-        <motion.div
-          className="space-y-10"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: '-100px' }}
-        >
+        <div className="space-y-10">
           {/* Section Header */}
-          <motion.div variants={itemVariants} className="space-y-4 text-center">
+          <div className="space-y-4 text-center">
             <div className="mx-auto mb-4 flex w-fit items-center gap-2 rounded-full border border-theme-primary/20 bg-theme-primary/10 px-4 py-1.5">
               <Zap className="size-4 text-theme-primary" />
               <span className="text-sm font-medium text-theme-primary">
@@ -279,13 +270,10 @@ const Skills = () => {
               A curated collection of technologies I use to build modern,
               scalable, and performant web applications.
             </p>
-          </motion.div>
+          </div>
 
           {/* Skills Grid */}
-          <motion.div
-            className="grid gap-6 md:grid-cols-2 lg:grid-cols-3"
-            variants={containerVariants}
-          >
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {skillCategories.map((category, index) => (
               <CategoryCard
                 key={category.title}
@@ -293,16 +281,16 @@ const Skills = () => {
                 index={index}
               />
             ))}
-          </motion.div>
+          </div>
 
           {/* Additional Info */}
-          <motion.div variants={itemVariants} className="pt-6 text-center">
+          <div className="pt-6 text-center">
             <p className="text-sm text-slate-500 dark:text-slate-400">
               Always learning and exploring new technologies to stay ahead of
               the curve ✨
             </p>
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
       </div>
     </section>
   )

@@ -1,8 +1,8 @@
 import { BorderBeam } from '@/components/magicui/border-beam'
 import { DotPattern } from '@/components/magicui/dot-pattern'
 import { cn } from '@/lib/utils'
-import { motion, type Variants } from 'motion/react'
-import { useState } from 'react'
+import { motion, useInView } from 'motion/react'
+import { useState, useRef } from 'react'
 import {
   User,
   Briefcase,
@@ -20,7 +20,6 @@ import {
   Sparkles,
   ExternalLink,
   Eye,
-  EyeOff,
 } from 'lucide-react'
 import ExperienceTimeline from './experience-timeline'
 import { useReducedMotion } from '@/hooks/use-reduced-motion'
@@ -55,28 +54,6 @@ const contactInfo: ContactInfo = {
   linkedin: 'https://www.linkedin.com/in/tamjid-ahmed-b11683230/',
   presentAddress: 'Mirpur 2, Dhaka',
   permanentAddress: 'Tangail, Bangladesh',
-}
-
-const containerVariants: Variants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.01,
-    },
-  },
-}
-
-const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.05,
-      ease: [0.25, 0.46, 0.45, 0.94],
-    },
-  },
 }
 
 const highlights = [
@@ -132,13 +109,17 @@ const AboutMe = () => {
   const experience = calculateExperience(personalInfo.startDate)
   const [showPhone, setShowPhone] = useState(false)
   const prefersReducedMotion = useReducedMotion()
+  const sectionRef = useRef(null)
+  const isInView = useInView(sectionRef, { amount: 0.1 })
+  const shouldAnimate = !prefersReducedMotion && isInView
 
   return (
     <section
+      ref={sectionRef}
       id="aboutMe"
       className="relative w-full overflow-hidden bg-gradient-to-br from-slate-50 via-white to-slate-100 py-8 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 sm:py-10"
     >
-      {/* Background Pattern - Only on desktop */}
+      {/* Background Pattern */}
       {!prefersReducedMotion && (
         <DotPattern
           className="absolute inset-0 z-0 text-slate-300/40 dark:text-foreground/10 [mask-image:radial-gradient(900px_circle_at_center,white,transparent)]"
@@ -147,61 +128,56 @@ const AboutMe = () => {
           cx={1}
           cy={1}
           cr={1.5}
+          isInView={isInView}
         />
       )}
 
-      {/* Animated Gradient Orbs - Static on mobile */}
+      {/* Animated Gradient Orbs - Only animate when in view */}
       <motion.div
         className="pointer-events-none absolute -left-40 top-1/4 size-[450px] rounded-full bg-gradient-to-br from-theme-primary/15 via-theme-secondary/10 to-transparent blur-3xl"
         animate={
-          prefersReducedMotion
-            ? { scale: 1, opacity: 0.4 }
-            : {
+          shouldAnimate
+            ? {
                 scale: [1, 1.1, 1],
                 opacity: [0.3, 0.5, 0.3],
               }
+            : { scale: 1, opacity: 0.4 }
         }
         transition={
-          prefersReducedMotion
-            ? { duration: 0 }
-            : {
+          shouldAnimate
+            ? {
                 duration: 8,
                 repeat: Infinity,
                 ease: 'easeInOut',
               }
+            : { duration: 0 }
         }
       />
       <motion.div
         className="pointer-events-none absolute -right-40 bottom-1/4 size-[400px] rounded-full bg-gradient-to-br from-theme-accent/15 via-theme-secondary/10 to-transparent blur-3xl"
         animate={
-          prefersReducedMotion
-            ? { scale: 1, opacity: 0.4 }
-            : {
+          shouldAnimate
+            ? {
                 scale: [1.1, 1, 1.1],
                 opacity: [0.3, 0.5, 0.3],
               }
+            : { scale: 1, opacity: 0.4 }
         }
         transition={
-          prefersReducedMotion
-            ? { duration: 0 }
-            : {
+          shouldAnimate
+            ? {
                 duration: 10,
                 repeat: Infinity,
                 ease: 'easeInOut',
               }
+            : { duration: 0 }
         }
       />
 
       <div className="container relative z-10 mx-auto max-w-6xl px-4 sm:px-6">
-        <motion.div
-          className="space-y-12"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: '-100px' }}
-        >
+        <div className="space-y-12">
           {/* Section Header */}
-          <motion.div variants={itemVariants} className="space-y-4 text-center">
+          <div className="space-y-4 text-center">
             <div className="mx-auto mb-4 flex w-fit items-center gap-2 rounded-full border border-theme-primary/20 bg-theme-primary/10 px-4 py-1.5">
               <User className="size-4 text-theme-primary" />
               <span className="text-sm font-medium text-theme-primary">
@@ -212,13 +188,10 @@ const AboutMe = () => {
               <span className="block">About</span>
               <span className="mt-1 block text-gradient-theme-accent">Me</span>
             </h2>
-          </motion.div>
+          </div>
 
           {/* Bio Section */}
-          <motion.div
-            variants={itemVariants}
-            className="mx-auto max-w-4xl text-center"
-          >
+          <div className="mx-auto max-w-4xl text-center">
             <div className="relative rounded-2xl border border-slate-200/60 bg-white/80 p-6 shadow-xl backdrop-blur-sm dark:border-slate-700/60 dark:bg-slate-800/60 sm:p-8">
               <div className="absolute -top-4 left-1/2 -translate-x-1/2">
                 <div className="flex size-8 items-center justify-center rounded-full bg-gradient-theme shadow-lg">
@@ -247,14 +220,11 @@ const AboutMe = () => {
                 colorTo="var(--theme-accent)"
               />
             </div>
-          </motion.div>
+          </div>
 
           {/* Highlights Stats */}
-          <motion.div
-            variants={itemVariants}
-            className="grid grid-cols-2 gap-4 sm:grid-cols-4"
-          >
-            {highlights.map((item, index) => {
+          <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+            {highlights.map((item) => {
               const Icon = item.icon
               return (
                 <motion.div
@@ -280,17 +250,14 @@ const AboutMe = () => {
                 </motion.div>
               )
             })}
-          </motion.div>
+          </div>
           {/* Experience Timeline Section */}
           <ExperienceTimeline />
 
           {/* Info Cards Grid */}
           <div className="grid gap-6 lg:grid-cols-2">
             {/* Personal Information Card */}
-            <motion.div
-              variants={itemVariants}
-              className="group relative overflow-hidden rounded-2xl border border-slate-200/60 bg-white/80 p-6 shadow-xl backdrop-blur-sm transition-all duration-300 hover:shadow-2xl dark:border-slate-700/60 dark:bg-slate-800/60"
-            >
+            <div className="group relative overflow-hidden rounded-2xl border border-slate-200/60 bg-white/80 p-6 shadow-xl backdrop-blur-sm transition-all duration-300 hover:shadow-2xl dark:border-slate-700/60 dark:bg-slate-800/60">
               <div className="mb-5 flex items-center gap-3">
                 <div className="flex size-10 items-center justify-center rounded-xl bg-gradient-theme shadow-md">
                   <User className="size-5 text-white" />
@@ -363,13 +330,10 @@ const AboutMe = () => {
                 colorFrom="var(--theme-primary)"
                 colorTo="var(--theme-secondary)"
               />
-            </motion.div>
+            </div>
 
             {/* Contact Information Card */}
-            <motion.div
-              variants={itemVariants}
-              className="group relative overflow-hidden rounded-2xl border border-slate-200/60 bg-white/80 p-6 shadow-xl backdrop-blur-sm transition-all duration-300 hover:shadow-2xl dark:border-slate-700/60 dark:bg-slate-800/60"
-            >
+            <div className="group relative overflow-hidden rounded-2xl border border-slate-200/60 bg-white/80 p-6 shadow-xl backdrop-blur-sm transition-all duration-300 hover:shadow-2xl dark:border-slate-700/60 dark:bg-slate-800/60">
               <div className="mb-5 flex items-center gap-3">
                 <div className="flex size-10 items-center justify-center rounded-xl bg-gradient-theme shadow-md">
                   <Mail className="size-5 text-white" />
@@ -505,11 +469,11 @@ const AboutMe = () => {
                 colorFrom="var(--theme-primary)"
                 colorTo="var(--theme-secondary)"
               />
-            </motion.div>
+            </div>
           </div>
 
           {/* Call to Action */}
-          <motion.div variants={itemVariants} className="pt-4 text-center">
+          <div className="pt-4 text-center">
             <motion.a
               href="#contact"
               className="inline-flex items-center gap-2 rounded-xl bg-gradient-theme px-6 py-3 text-sm font-bold text-white shadow-theme transition-all hover:shadow-theme-hover"
@@ -519,8 +483,8 @@ const AboutMe = () => {
               <Sparkles className="size-4" />
               Let's Work Together
             </motion.a>
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
       </div>
     </section>
   )

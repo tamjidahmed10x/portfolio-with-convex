@@ -20,6 +20,7 @@ export interface AnimatedGridPatternProps extends ComponentPropsWithoutRef<'svg'
   maxOpacity?: number
   duration?: number
   repeatDelay?: number
+  isInView?: boolean
 }
 
 export function AnimatedGridPattern({
@@ -32,11 +33,13 @@ export function AnimatedGridPattern({
   className,
   maxOpacity = 0.5,
   duration = 4,
+  isInView = true,
   ...props
 }: AnimatedGridPatternProps) {
   const id = useId()
   const containerRef = useRef(null)
   const prefersReducedMotion = useReducedMotion()
+  const shouldAnimate = !prefersReducedMotion && isInView
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 })
 
   // Reduce number of squares on mobile for better performance
@@ -136,16 +139,16 @@ export function AnimatedGridPattern({
         {squares.map(({ pos: [x, y], id }, index) => (
           <motion.rect
             initial={{ opacity: 0 }}
-            animate={{ opacity: maxOpacity }}
+            animate={{ opacity: shouldAnimate ? maxOpacity : 0 }}
             transition={{
-              duration: prefersReducedMotion ? 0.3 : duration,
-              repeat: prefersReducedMotion ? 0 : 1,
-              delay: prefersReducedMotion ? 0 : index * 0.1,
+              duration: shouldAnimate ? duration : 0.3,
+              repeat: shouldAnimate ? 1 : 0,
+              delay: shouldAnimate ? index * 0.1 : 0,
               repeatType: 'reverse',
             }}
             onAnimationComplete={() => {
-              // Skip repositioning on mobile/reduced motion for performance
-              if (!prefersReducedMotion) {
+              // Skip repositioning when not in view or reduced motion
+              if (shouldAnimate) {
                 updateSquarePosition(id)
               }
             }}
