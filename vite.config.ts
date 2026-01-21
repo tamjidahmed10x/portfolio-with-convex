@@ -11,7 +11,8 @@ const config = defineConfig({
     devtools(),
     nitro({
       preset: 'netlifyEdge',
-      buildDir: 'dist',
+      buildDir: 'dist/client',
+      dir
     }),
     // this is the plugin that enables path aliases
     viteTsConfigPaths({
