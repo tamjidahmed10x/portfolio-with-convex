@@ -10,7 +10,7 @@ const config = defineConfig({
   plugins: [
     devtools(),
     nitro({
-      noExternals: true,
+      preset:'netlify-edge'
     }),
     // this is the plugin that enables path aliases
     viteTsConfigPaths({
