@@ -14,7 +14,6 @@
   },
   "dependencies": {
     "@cloudflare/vite-plugin": "^1.13.8",
-    "@convex-dev/react-query": "0.0.0-alpha.11",
     "@icons-pack/react-simple-icons": "^13.8.0",
     "@radix-ui/react-dialog": "^1.1.15",
     "@radix-ui/react-slot": "^1.2.4",
@@ -30,7 +29,6 @@
     "@tanstack/router-plugin": "^1.132.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "convex": "^1.27.3",
     "lucide-react": "^0.544.0",
     "mac-scrollbar": "^0.13.8",
     "motion": "^12.23.24",

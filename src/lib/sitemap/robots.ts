@@ -23,7 +23,6 @@ export interface RobotsConfig {
 const DEFAULT_DISALLOW_PATHS = [
   '/api/',
   '/_serverFn/',
-  '/_convex/',
   '/admin/',
   '/private/',
 ]

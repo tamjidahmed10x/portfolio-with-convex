@@ -11,9 +11,9 @@ import { MotionConfig } from 'motion/react'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 
-import ConvexProvider from '../integrations/convex/provider'
+import { lazy, Suspense } from 'react'
 import 'mac-scrollbar/dist/mac-scrollbar.css'
-import { GlobalScrollbar } from 'mac-scrollbar'
+const GlobalScrollbar = lazy(() => import('mac-scrollbar').then(m => ({ default: m.GlobalScrollbar })))
 
 import TanStackQueryDevtools from '../integrations/tanstack-query/devtools'
 import { useIsMobile } from '../hooks/use-is-mobile'
@@ -99,24 +99,26 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       <body>
         <MotionConfig reducedMotion="user">
           <ThemeProvider initialTheme={initialTheme}>
-            <ConvexProvider>
-              <Header />
-              <main className="pt-16">{children}</main>
-              <Footer />
-              {!isMobile && <GlobalScrollbar />}
-              <TanStackDevtools
-                config={{
-                  position: 'bottom-right',
-                }}
-                plugins={[
-                  {
-                    name: 'Tanstack Router',
-                    render: <TanStackRouterDevtoolsPanel />,
-                  },
-                  TanStackQueryDevtools,
-                ]}
-              />
-            </ConvexProvider>
+            <Header />
+            <main className="pt-16">{children}</main>
+            <Footer />
+            {!isMobile && (
+              <Suspense fallback={null}>
+                <GlobalScrollbar />
+              </Suspense>
+            )}
+            <TanStackDevtools
+              config={{
+                position: 'bottom-right',
+              }}
+              plugins={[
+                {
+                  name: 'Tanstack Router',
+                  render: <TanStackRouterDevtoolsPanel />,
+                },
+                TanStackQueryDevtools,
+              ]}
+            />
           </ThemeProvider>
         </MotionConfig>
         <Scripts />

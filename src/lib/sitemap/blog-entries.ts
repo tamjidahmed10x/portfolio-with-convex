@@ -1,11 +1,6 @@
 /**
  * Blog Sitemap Entries
  * Generates sitemap entries from blog data
- *
- * NOTE: This file is designed to be easily replaceable with Convex queries.
- * When you integrate Convex, you can either:
- * 1. Replace the import and function call here
- * 2. Create a new function that fetches from Convex
  */
 
 import type { SitemapEntry } from './types'
@@ -59,17 +54,6 @@ function blogPostToSitemapEntry(post: BlogPostData): SitemapEntry {
 
 /**
  * Get all blog posts as sitemap entries
- *
- * Current implementation: Uses static blogPosts array
- * Future implementation: Can be replaced with Convex query
- *
- * Example Convex replacement:
- * ```ts
- * export async function getBlogSitemapEntries(convex: ConvexClient): Promise<SitemapEntry[]> {
- *   const posts = await convex.query(api.blogs.getAllPosts)
- *   return posts.map(blogPostToSitemapEntry)
- * }
- * ```
  */
 export function getBlogSitemapEntries(): SitemapEntry[] {
   return blogPosts.map((post) =>

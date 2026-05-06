@@ -32,7 +32,6 @@ export const Route = createFileRoute('/robots.txt')({
           disallowPaths: [
             '/api/', // API endpoints
             '/_serverFn/', // TanStack server functions
-            '/_convex/', // Convex internal routes
             '/admin/', // Admin routes (if any)
             '/*.json$', // Block direct JSON access
             '/private/', // Private routes

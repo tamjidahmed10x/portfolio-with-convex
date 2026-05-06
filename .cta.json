@@ -12,7 +12,6 @@
     "eslint",
     "cloudflare",
     "start",
-    "convex",
     "compiler",
     "shadcn",
     "tanstack-query"
